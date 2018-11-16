@@ -1,0 +1,1 @@
+unmount /volume1/web/wp/theme/modificate/youtube/lecture_02

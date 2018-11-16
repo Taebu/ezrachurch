@@ -1,0 +1,36 @@
+/****************************
+ * BODY
+****************************/
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+* {
+	font-family: 'Nanum Gothic', 'NanumGothic', '굴림', '돋움', 'arial','sans-serif';
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+
+/****************************
+ * FOOTER
+****************************/
+#footer {
+	margin-top: 30px;
+	background-color: #222;
+	color: #eee;
+}
+
+#footer .copyright {
+	text-align: center;
+	padding: 10px;
+}
+
+#footer .credit {
+	color: #666;
+	text-align: right;
+	font-style: italic;
+	padding: 5px 10px;
+	border-top: 1px solid #555;
+}
+

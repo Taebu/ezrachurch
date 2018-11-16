@@ -1,0 +1,115 @@
+.rtop, .rbottom{display:block; background: #ffffff;}  
+.rtop *, .rbottom *{display: block; height: 1px; overflow: hidden; background: #F0F0F0;}
+.rtop2, .rbottom2{display:block; background: #f0f0f0;}
+.rtop2 *, .rbottom2 *{display: block; height: 1px; overflow: hidden; background: #f9f9f9;} 
+.rtop3, .rbottom3{display:block; background: #ffffff;}  
+.rtop3 *, .rbottom3 *{display: block; height: 1px; overflow: hidden; background: #0099FF;}
+.rtop5, .rbottom5{display:block; background: #ffffff;}  
+.rtop5 *, .rbottom5 *{display: block; height: 1px; overflow: hidden; background: #0099FF;}
+.rtop6, .rbottom6{display:block; background: #ffffff;}  
+.rtop6 *, .rbottom6 *{display: block; height: 1px; overflow: hidden; background: #0099FF;}
+.r1{margin: 0 5px} 
+.r2{margin: 0 3px} 
+.r3{margin: 0 2px} 
+.r4{margin: 0 1px;height: 2px} 
+.r5{margin: 0 5px} 
+.r6{margin: 0 3px} 
+.r7{margin: 0 2px} 
+.r8{margin: 0 1px;height: 2px} 
+.rtop {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rbottom {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rtop * {
+	DISPLAY: block; BACKGROUND: #f0f0f0; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rbottom * {
+	DISPLAY: block; BACKGROUND: #f0f0f0; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rtop2 {
+	DISPLAY: block; BACKGROUND: #f0f0f0
+}
+.rbottom2 {
+	DISPLAY: block; BACKGROUND: #f0f0f0
+}
+.rtop2 * {
+	DISPLAY: block; BACKGROUND: #f9f9f9; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rbottom2 * {
+	DISPLAY: block; BACKGROUND: #f9f9f9; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rtop3 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rbottom3 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rtop3 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rbottom3 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rtop5 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rbottom5 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rtop5 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rbottom5 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rtop6 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rbottom6 {
+	DISPLAY: block; BACKGROUND: #ffffff
+}
+.rtop6 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.rbottom6 * {
+	DISPLAY: block; BACKGROUND: #0099ff; HEIGHT: 1px; OVERFLOW: hidden
+}
+.r1 {
+	MARGIN: 0px 5px
+}
+.r2 {
+	MARGIN: 0px 3px
+}
+.r3 {
+	MARGIN: 0px 2px
+}
+.r4 {
+	MARGIN: 0px 1px; HEIGHT: 2px
+}
+.r5 {
+	MARGIN: 0px 5px
+}
+.r6 {
+	MARGIN: 0px 3px
+}
+.r7 {
+	MARGIN: 0px 2px
+}
+.r8 {
+	MARGIN: 0px 1px; HEIGHT: 2px
+}
+.sr{
+	float:right;
+	padding-right:5px;
+}
+.sl{
+	FONT-FAMILY: 굴림;
+	COLOR: #6a6a6a;
+	FONT-SIZE: 9pt;
+	width:157px;
+	overflow:hidden;
+	height:12pt;
+	float:left
+}

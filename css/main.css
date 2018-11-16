@@ -1,0 +1,37 @@
+body,div{margin:0;padding:0}
+.blind{display:none;overflow:hidden;position:relative;z-index:-10;height:13px;font-size:13px;white-space:nowrap;}
+a{cursor:hand}
+#mn_01{width:1010px}
+#mn_01 a{display:inline-block;overflow:hidden;height:100px;margin:0;margin-right:-5px;padding:0;background:url('/img/ezra_main.png') no-repeat ;line-height:999px;vertical-align:top}
+#mn_01 a.mn01{width:271px;background-position:0 0}
+#mn_01 a.mn02{width:119px;background-position:-271px 0}
+#mn_01 a.mn03{width:154px;background-position:-390px 0}
+#mn_01 a.mn04{width:126px;background-position:-544px 0}
+#mn_01 a.mn05{width:106px;background-position:-670px 0}
+#mn_01 a.mn06{width:109px;background-position:-776px 0}
+#mn_01 a.mn07{width:115px;background-position:-885px 0}
+#mn_01 a.mn08{width:1001px;height:680px;background-position:0 -100px}
+#ezrabible{position:absolute;top:433px;left:174px;width:110px;height:53px;}
+#mn_01 a.ezrabible{width:134px;height:45px;background-position:-175px -433px}
+#mn_01 a.mn13{width:300px;height:22px;background-position:-502px -800px}
+#mn_01 a.mn14{width:312px;height:23px;background-position:-502px -800px}
+#mn_01 a.mn15{width:336px;height:78px;background-position:-502px -800px}
+#mn_01 a.mn16{width:136px;height:78px;background-position:-502px -800px}
+
+#notice{position:absolute;top:531px;left:0px;width:342px;height:153px;}
+#gallery{position:absolute;top:531px;left:340px;width:316px;height:132px;}
+#map2_1{position:absolute;top:586px;left:679px;width:75px;height:56px;}
+#map2_2{position:absolute;top:586px;left:753px;width:75px;height:56px;}
+#map2_3{position:absolute;top:586px;left:828px;width:75px;height:56px;}
+#map2_4{position:absolute;top:586px;left:899px;width:78px;height:56px;}
+.mn13{position:absolute;top:502px;left:31px}
+.mn14{position:absolute;top:500px;left:350px}
+.mn15{position:absolute;top:500px;left:679px;}
+.mn16{position:absolute;top:502px;left:800px;width:75px;height:56px;}
+#mn_01 a.map21{width:74px;height:54px;background-position:-678px -587px}
+#mn_01 a.map22{width:74px;height:54px;background-position:-752px -587px}
+#mn_01 a.map23{width:74px;height:54px;background-position:-826px -587px}
+#mn_01 a.map24{width:78px;height:54px;background-position:-896px -587px}
+#outlogin{width:650px; height:10px; position:absolute; left:470px;top:0px;z-index:5;}
+#new_comm{width:350px; height:500px; position:absolute; left:1010px;top:30px;z-index:1;}
+#banner{width:450px; height:60px; position:absolute; left:450px; top:100px;z-index:1;}

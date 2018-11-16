@@ -1,0 +1,6 @@
+/wp/data
+/cloud
+*.zip
+*.sql
+*.tar
+/data

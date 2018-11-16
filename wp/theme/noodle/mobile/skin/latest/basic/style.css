@@ -1,0 +1,21 @@
+@charset "utf-8";
+/*SIR*/
+
+/* 최근게시물 스킨 (latest) */
+.lt {position:relative;padding:15px}
+.lt ul {margin:20px 0 0 0 ;padding:0;list-style:none;}
+.lt ul li{border-bottom:1px solid #c6bcad;margin-bottom:5px}
+.lt a {display:block;padding:5px 0;color:#000;color:#fff;text-decoration:none}
+.lt .lt_title {display:inline-block;padding:10px 0;font-size:1.2em}
+.lt .lt_more {position:absolute;top:20px;right:10px;width:22px;height:22px;background:url(img/more.png) 0 0 no-repeat; text-indent:-9999px}
+.lt .lt_more:hover {background:url(img/more.png) 0 -22px no-repeat;}
+.lt .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
+.lt .no_bd{text-align:center;margin-top:20%}
+
+@media (max-width: 378px){
+    .lt ul li{height:30px; overflow:hidden}
+}
+
+@media (min-width: 1200px){
+    .lt ul li{height:30px; overflow:hidden}
+}

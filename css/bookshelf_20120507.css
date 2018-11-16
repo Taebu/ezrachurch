@@ -1,0 +1,360 @@
+@charset "utf-8";
+@import url(common.css);
+/* NHN Services Webstandard Development part - 090714 */
+body.nonbg {background-image:none;}
+
+.wrapbg {width:50%;}
+.wrapbg_inner {position:relative; width:200%; margin:0 -1px; background:url(http://bookimg.naver.com/bookshelf/img/bg_wrap_ff.jpg) center repeat-y; *background:url(http://bookimg.naver.com/bookshelf/img/bg_wrap.jpg) center repeat-y;}
+.wrapbg_inner2 {background:url(http://bookimg.naver.com/bookshelf/img/bg_header.jpg) repeat-x;}
+.wrapbg_inner .bg_l {position:absolute; left:0; top:0; width:50%; height:59px; margin-right:480px; background:url(http://bookimg.naver.com/bookshelf/img/bg_left.jpg) right top no-repeat; z-index:0; }
+.wrapbg_inner .bg_r {position:absolute; left:50%; top:0; width:50%; height:59px; background:url(http://bookimg.naver.com/bookshelf/img/bg_right.jpg) 480px top no-repeat; z-index:0;}
+.wrapbg_inner .bg_r2{position:absolute; left:50%; top:59px; width:50%; background-position:480px 0; background-repeat:no-repeat; z-index:0;}
+
+#wrap {position:relative; width:960px; margin:0 auto; z-index:1; text-align:left; background:#fff;}
+.t #wrap {width:auto; overflow:hidden}
+.t .wrapbg_inner {margin:0}
+.t #footer{width:auto;margin:0 15px}
+#wrap:after {content:""; display:block; clear:both;}
+
+/* header & lnb */
+#header {overflow:hidden; height:59px; margin:0 auto; background:#262626;}
+#header h1 {float:left; padding:6px 0 0 10px}
+#header h2 {float:left; padding:16px 17px 0 2px}
+#header h2 a {display:inline-block; padding:1px 0 2px 0}
+
+#container {width:100%; margin:0 auto; padding:35px 0;}
+#container:after {content:""; display:block; clear:both;}
+#snb {float:left; display:inline; overflow:hidden; width:147px; margin:0 0 0 15px; padding-bottom:24px;}
+#footer {clear:both; overflow:hidden; width:930px; margin:0 0 0 15px; padding-bottom:30px; border-top:2px solid #373737; text-align:center;}
+
+.lnb {float:left; overflow:hidden; padding:16px 0 0}
+.lnb li {float:left; margin:0 1px 0 -1px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -650px; font-size:0px; line-height:0}
+.lnb a {display:block; margin:0 0 0 2px; padding:6px 10px 7px 9px}
+.gnb {float:right; padding:21px 5px 0 0; color:#6a6a6a; line-height:14px}
+.gnb a {color:#6a6a6a}
+.gnb span.visitor {display:block; float:left; margin:3px 6px 0 -1px; padding:0 0 0 8px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -246px;}
+.gnb a.btn {font-size:11px; color:#444; line-height:13px; letter-spacing:-1px; text-align:center; text-decoration:none}
+.gnb a.btn {display:block; float:left; width:50px; height:14px; *height:16px; margin:1px 10px 0 2px; *margin:0 10px 0 2px; padding:2px 0 0; *padding:3px 0 0; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat 0 -514px; color:#444}
+.gnb ul {float:left; overflow:hidden; margin:2px 0 0 1px}
+.gnb ul li {float:left; margin:0 2px 0 -1px; padding:0 5px 0 8px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -244px; letter-spacing:-1px}
+
+/* container = snb + contents */
+/* snb */
+.nav {border-top:2px solid #1e1e1e; margin:0 0 23px 0;} /* 091106 */
+.nav li {padding:15px 0 14px; border-bottom:1px solid #ececec; color:#5c5c5c; font-size:12px; line-height:15px; letter-spacing:-1px;}
+.nav li:after {content:""; display:block; clear:both;}
+.nav li a {display:block; position:relative; padding-left:55px; color:#4c4c4c; text-decoration:none; overflow:hidden; zoom:1;}
+.nav li a img {position:absolute; left:0; top:0; filter:gray(); opacity:0.7;}
+.nav li a img.mask {display:none;}
+.nav li a img.ico_new {position:static; margin:0.2em 0 4px; vertical-align:middle;}
+.nav li a em {display:block; margin:0 0 4px 0; color:#a2a2a2; font:9px/13px tahoma,AppleGothic,sans-serif; letter-spacing:0}
+.nav li a:hover {zoom:1; color:#1cb100; text-decoration:none; border:0;}
+.nav li.selected a {color:#1cb100; font-weight:bold;}
+.nav li.selected a em {color:#1cb100;}
+.nav li a img.mask,
+.nav li a:hover img,
+.nav li.selected a img {filter:none; opacity:100}
+.nav li a:hover img.mask,
+.nav li.selected a img.mask {z-index:1; display:block;}
+
+.viewall a {display:block; margin:0 0 26px 0; padding:0 0 0 6px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -109px -537px;}
+
+/* 091106*/
+#snb .section {overflow:hidden; zoom:1; border:3px solid #dfdfdf;}
+.nav2 {margin:0;}
+.nav2 li {font-size:0; padding:0; background:#fdfdfd url(http://bookimg.naver.com/bookshelf/img/bg_nav2.gif) no-repeat center top; line-height:0;}
+
+.nav3 {margin-bottom:31px;}
+.nav3 li {font-size:0; padding:10px 0 18px; background:#fdfdfd url(http://bookimg.naver.com/bookshelf/img/bg_tab_shelf.gif) no-repeat left bottom; line-height:0;}
+.nav3 li img {vertical-align:top;} 
+/* //091106*/
+
+/* contents - mystoryshelf & mystorybook */
+#contents {float:left; width:740px; _width:783px; padding:0 0 0 43px; zoom:1;}
+#contents:after {clear:both; display:block; content:" ";}
+.spot {position:relative; width:798px; margin:-35px 0 0 -43px;}
+
+.tab {overflow:hidden; position:absolute; left:43px; width:100%;}
+.tab li {float:left; margin-left:-3px; font-size:0; zoom:1;}
+.tab li.first {margin-left:0px;}
+.tab li a.on {position:relative;}
+
+.btn_area {clear:both;width:740px; overflow:hidden; margin:60px 0 56px 0; padding:10px 0 0 0; border-top:1px solid #b5b5b5; zoom:1; font-size:0;}
+.btn_area .btn_copy {float:left;}
+.btn_area .btn_copy a {margin:0 4px 0 0;}
+.btn_area .btn_mystorybook {float:right; margin:0 0 0 4px;}
+
+/* contents - summary */
+.h_area {}
+.h_area:after {clear:both; display:block; content:"";}
+.h_area h3 {padding:49px 0; border-top:2px solid #373737; border-bottom:2px solid #373737;}
+.h_area2 {overflow:hidden; width:100%; margin-bottom:40px; padding-bottom:10px; border-bottom:1px solid #ECECEC;}
+.h_area2 h4 {float:left; font-size:12px; color:#999}
+.h_area2 .view_type {margin:0;}
+/* 091106 */
+.h_area3 {width:100%; margin-bottom:60px; border-top:2px solid #373737;} 
+.h_area3:after {clear:both; display:block; content:"";}
+.h_area3 .flash_area {float:left; margin-top:63px;} 
+.h_area3 h3 {float:left; margin-top:63px;} 
+/* //091106 */
+
+.h_area4 {width:100%; border-top:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0;}
+.h_area4 p {position:relative; padding:18px 0 18px 15px; font-size:0;}
+.h_area4 p a.btn {position:absolute; right:0; top:13px; font-size:0;}
+
+.view_type {float:right; margin:12px 0 28px 0;}
+.view_type li {float:left; margin:0 0 0 15px;}
+.view_type li a img {vertical-align:top;}
+
+.result_area {overflow:hidden; width:100%; margin:0 0 45px 0;}
+.result_area p {float:left; color:#5c5c5c;}
+
+
+/* sub - 소개 */
+
+/* 091106 */
+.section_intro {clear:both; padding:0 15px;} 
+.section_intro h4 {padding:20px 0 20px 14px;}
+
+.section_top {overflow:hidden; width:100%; height:187px; margin:0 15px;}
+.section_top h4 {margin-bottom:12px; font-size:0;}
+.section_top p {margin-bottom:18px;}
+.section_top img {vertical-align:top;}
+
+.intro_episode {width:352px; float:left; margin-right:25px; border-right:1px solid #e5e5e5;}
+
+.intro_recommend {width:330px; float:left;} /* 091109 */
+.intro_recommend a.btn_recommend {display:inline-block;}
+
+.email_box {width:322px; padding:1px; border:1px solid #e8e8e8;}
+.inner_box {padding:11px 20px 9px; background:#f7f7f7;}
+.email_box img {vertical-align:top;}
+.inner_box {font-size:12px;}
+.email_box form .text {width:190px; height:21px; margin:-1px 3px 0; padding:1px 3px 0 10px; *padding:0 3px 0 10px; color:#999;}
+.email_box form .btn_input {margin:1px 0 1px;}
+
+.section_tip {margin:0 15px 30px; border-top:2px solid #696969;}
+.section_tip h4 {margin:30px 0 11px;}
+
+.openlayer {width:710px; height:34px; background:url(http://bookimg.naver.com/bookshelf/img/bg_openlayer.gif) left top no-repeat; text-align:center;}
+.closelayer {display:none; width:710px; background:url(http://bookimg.naver.com/bookshelf/img/bg_closelayer.gif) left top no-repeat; text-align:center;}
+.closelayer p {padding-top:17px;}
+/* //091106 */
+
+.notice {margin:29px 0 0; padding-left:6px;}
+.notice dl {width:427px; overflow:hidden; padding:17px 0 18px; color:#858585; border-top:2px solid #4c4c4c; border-bottom:2px solid #4c4c4c;}
+.notice dl img {vertical-align:top;}
+.notice dl dt {float:left; width:120px; padding-right:20px;}
+.notice dl dd {float:left; width:278px; _width:287px; padding:1px 0 1px 9px; border-bottom:1px solid #efefef; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -107px -682px;}
+.notice dl dd img {vertical-align:middle; margin:-1ox 0 1px;} 
+
+.selectbox-naked * {display:inline;}
+.selectbox-naked input,
+.selectbox-naked select {display:inline;}
+.selectbox-naked select * {}
+.selectbox-naked .selectbox-layer {display:none;}
+.selectbox-applied {float:left; position:relative; _margin-top:1px; z-index:10;}
+.selectbox-applied select {display:none;}
+.selectbox-applied .selectbox-box {width:78px; border:1px solid #ccc; color:#666; font-size:11px; line-height:16px; letter-spacing:0; text-align:left; background:#fff url(http://bookimg.naver.com/bookshelf/img/btn_arrow_select.gif) no-repeat right 50%; cursor:pointer; _cursor:hand;}
+
+.selectbox-applied .selectbox-label {margin:1px 4px 1px; overflow:hidden;}
+.selectbox-applied .selectbox-layer {position:absolute; width:78px; margin-top:1px; border:1px solid #ccc; overflow:hidden; z-index:99999;}
+.selectbox-applied .selectbox-list {width:100%; font-size:12px; line-height:15px; overflow-y:auto; }
+.selectbox-applied .selectbox-list li {float:left; width:100%; padding-top:1px; letter-spacing:0; text-align:left; text-indent:4px; background:#fff; cursor:pointer; _cursor:hand;}
+.selectbox-applied .selectbox-list li.selectbox-item-hovered {background:#eee;}
+#Email {margin-left:2px;}
+
+.tx_shop {width:710px; margin-bottom:30px; table-layout:fixed; border-collapse:collapse; text-align:left; letter-spacing:-1px;}/* 091106 */
+.tx_shop caption {display:none;}
+.tx_shop thead th {padding:14px 0 14px 15px; vertical-align:middle; background-color:#f7f7f7;}
+.tx_shop tbody tr.first td {border:0;}
+.tx_shop tbody td {padding:9px 0 6px; *padding:8px 0 6px; border-top:1px solid #f0f0f0; text-indent:15px; color:#979797; font-size:11px; letter-spacing:-1px;}
+.tx_shop tbody td a {display:block; color:#979797; font-size:11px; letter-spacing:-1px;}
+
+/* contents - 추천책 책제목보기 */
+.tx_title {width:740px; margin:0 0 30px 0; padding:0; border-collapse:collapse; font-size:11px; text-align:left; letter-spacing:-1px;}
+.tx_title caption,
+.tx_title thead th {display:none;}
+.tx_title tbody tr.odd {background-color:#fafafa;}
+.tx_title tbody td {padding:10px 0 7px; text-indent:24px;}
+.tx_title tbody td a {color:#979797;}
+.tx_title tbody td a:hover {font-weight:bold; text-decoration:none; color:#979797;}
+
+/* contents - 추천책 책표지보기 */
+.lx_cover {overflow:hidden; position:relative; width:744px; *width:752px; margin:0 0 2px -4px; padding:0 4px 30px; background:url(http://bookimg.naver.com/bookshelf/img/bg_shelf2.gif) repeat-y 8px -46px; text-align:left;}
+.lx_cover li {float:left; position:relative; height:250px; padding:0 0 0 4px;list-style:none}
+.lx_cover li div.cover {width:120px; background:url(http://bookimg.naver.com/bookshelf/img/bg_cover2.gif) no-repeat; text-align:center}
+.lx_cover li p {position:absolute; overflow:hidden; top:159px; left:11px; width:100px; margin-top:20px; font-size:11px; color:#c9c9c9; letter-spacing:-1px; line-height:13px;}
+.lx_cover li p strong {display:block; margin:3px 0; font-size:12px; color:#323943}
+.lx_cover li p strong a {color:#323943}
+.lx_cover li p .author {margin:0 2px 0 0; color:#888}
+.lx_cover li p .publisher {margin:0 0 0 2px}
+
+/* sub - 지식인 전체보기 */
+.lx_shelf {overflow:hidden;width:756px; margin-left:-5px; padding:30px 0 0 0;}
+.lx_shelf li {float:left; display:inline; width:247px; height:131px; margin-left:5px; color:#5c5c5c; font-size:12px; line-height:15px; letter-spacing:-1px;}
+.lx_shelf li:after {content:""; display:block; clear:both;}
+.lx_shelf li a {display:inline-block; position:relative; padding-left:104px; color:#4c4c4c; text-decoration:none;}
+.lx_shelf li a * {cursor:pointer;}
+.lx_shelf li a img {position:absolute; left:0; top:0;}
+.lx_shelf li a img.mask {z-index:-1}
+.lx_shelf li a em {display:block; padding:6px 0 4px 1px; color:#a2a2a2; font-size:9px; font-family:Tahoma, Geneva, sans-serif; letter-spacing:0;}
+.lx_shelf li a strong {font-size:14px; margin:0 0 0 -1px;}
+.lx_shelf li a .job {display:inline-block; margin:0 0 0 6px; padding:0 0 0 4px; font-size:12px; color:#323943; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -626px;}
+.lx_shelf li a .txt {display:block; padding:12px 0 5px 0; color:#a2a2a2; line-height:16px; background-image:none;}
+.lx_shelf li a:hover {_display:inline; color:#1cb100; text-decoration:none;}
+.lx_shelf li a:hover img.mask {z-index:1;}
+
+/* sub - 추천책 전체보기_분야별 */
+.lx_cate {overflow:hidden; width:720px; _width:740px; margin:0 0 20px 0;  padding:42px 0 18px 20px; background:#fafafa; border-top:#ececec 1px solid;}
+.lx_cate li {float:left; overflow:hidden; height:22px; width:180px;}
+.lx_cate li a {display:inline-block; color:#323232; line-height:14px;}
+.lx_cate li span {display:inline-block; height:14px; margin:-2px 0 2px; padding:0 0 0 6px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -595px; font-family:tahoma,AppleGothic,sans-serif; font-size:11px; line-height:14px; color:#868686; vertical-align:middle;}
+.lx_cate li.selected a {font-weight:bold;}
+
+/* sub - 추천책 전체보기_추천TOP보기 */
+.lx_best {width:783px; overflow:hidden; margin:0 0 0 -34px; padding:0; zoom:1;}
+.lx_best li { display:inline; float:left; position:relative; width:353px; height:130px; margin:0 0 49px 34px; zoom:1;}
+.lx_best li dl {_width:233px; margin:0; zoom:1;}
+.lx_best li dl dt {margin:10px 0 3px -1px; font-size:14px; letter-spacing:-1px; line-height:16px}
+.lx_best li dl dt strong a {color:#323943}
+.lx_best li dl dd.info {font-size:11px; margin:0 0 12px -1px; color:#c9c9c9; letter-spacing:-1px; line-height:13px}
+.lx_best li dl dd.info .author {margin:0 3px 0 0; color:#888}
+.lx_best li dl dd.info .publisher {margin:0 0 0 3px}
+.lx_best li dl dd.recommend {padding:15px 0 0 0; line-height:16px; background:url(http://bookimg.naver.com/bookshelf/img/bg_recommend.gif) repeat-x; letter-spacing:-1px; text-align:justify;}
+.lx_best li dl dd.recommend h4 {margin:0 0 7px 0;}
+.lx_best li dl dd.recommend a {color:#666;}
+.lx_best li .thumb {float:left; position:relative; height:141px; margin:0 27px 0 0; background:url(http://bookimg.naver.com/bookshelf/img/bg_cover.gif) no-repeat left bottom;}
+.lx_best li .rank {position:absolute; left:69px; top:7px; z-index:1; width:34px; height:34px; background-repeat:no-repeat; background-position:0 0;}
+.lx_best li .rank1 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking1.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking1.png',sizingMethod='image');}
+.lx_best li .rank2 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking2.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking2.png',sizingMethod='image');}
+.lx_best li .rank3 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking3.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking3.png',sizingMethod='image');}
+.lx_best li .rank4 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking4.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking4.png',sizingMethod='image');}
+.lx_best li .rank5 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking5.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking5.png',sizingMethod='image');}
+.lx_best li .rank6 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking6.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking6.png',sizingMethod='image');}
+.lx_best li .rank7 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking7.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking7.png',sizingMethod='image');}
+.lx_best li .rank8 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking8.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking8.png',sizingMethod='image');}
+.lx_best li .rank9 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking9.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking9.png',sizingMethod='image');}
+.lx_best li .rank10 {background-image:url(http://bookimg.naver.com/bookshelf/img/ranking10.png); _background:none; _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://bookimg.naver.com/bookshelf/img/ranking10.png',sizingMethod='image');}
+
+/* sub - 내인생과서재*/
+.tmp_area {margin:0 0 15px; padding:0; width:100%; overflow:hidden;}
+
+.tmp_flash {overflow:hidden;margin:0 0 58px 0;zoom:1}
+.tmp_flash .play {float:left;width:400px}
+.tmp_flash .play .video{overflow:hidden;height:251px}
+.tmp_flash .play .menu{height:19px;_height:27px;padding:7px 5px 0 0;border-bottom:1px solid #d3d3d3;text-align:right;font-size:10px;line-height:10px}
+.tmp_flash .play .menu a{display:inline-block;padding:2px;vertical-align:middle}
+.tmp_flash .play .bar{display:inline-block;margin:0 2px;color:e9e9ea;font-family:'돋움',dotum;font-size:11px;vertical-align:middle;_vertical-align:1px}
+.tmp_flash .profile {float:left;width:328px; height:278px; margin-left:10px;background:url(http://bookimg.naver.com/bookshelf/img/bg_profile.jpg) no-repeat left top; zoom:1;}
+.tmp_flash .profile h4 {margin:40px 0 50px 34px; padding:0;}
+.tmp_flash .profile .intro {overflow:hidden; margin:0 30px 0 34px;} 
+
+.tmp {clear:both; overflow:hidden; margin-bottom:50px;}
+.tmp h4 {padding:0 0 16px 0; font-size:16px; line-height:22px; letter-spacing:-1px;}
+.tmp p,
+.tmp .article {margin-bottom:20px; color:#4b4b4b; text-align:justify; line-height:20px;}
+.tmp .btn2{overflow:hidden;zoom:1;width:743px;margin-right:-3px;}
+.tmp .btn2 a {float:left;margin-right:3px;}
+/*.tmptype2 .thumb {margin-bottom:25px;}*/
+.tmptype2 .thumb {margin-top:25px;}
+.tmptype3 .thumb {float:left; margin:3px 26px 20px 0;}
+.tmptype4 .thumb {float:right; margin:3px 0 20px 26px;}
+/* 100119 */
+.tmptype5 {margin-bottom:0;}
+.tmptype5 .btn a {font-size:0; line-height:0;}
+.tmptype5 .btn a img {vertical-align:top;}
+/* //100119 */
+
+/* sub - 내인생의 책 */
+.ly_tmp {width:100%; overflow:hidden;}
+.ly_tmp li {position:relative; min-height:130px; margin:0 0 56px 0; zoom:1;} 
+.ly_tmp li dl {margin:0 0 0 108px; zoom:1;}
+.ly_tmp li dl dt {margin:0 0 3px 1px; font-size:14px; letter-spacing:-1px; line-height:16px}
+.ly_tmp li dl dt strong a {color:#323943}
+/* 091124 */
+.ly_tmp li dl dt .btn_audio {display:inline-block; margin-left:10px;}
+.ly_tmp li dl dt img {vertical-align:middle; margin:-2px 0 0; *margin:0;}
+/* 091124 */
+.ly_tmp li dl dd.info {font-size:11px; color:#c9c9c9; letter-spacing:-1px; line-height:13px}
+.ly_tmp li dl dd.info .title,
+.ly_tmp li dl dd.info .author {margin:0 3px 0 1px; color:#888}
+.ly_tmp li dl dd.info .publisher {margin:0 0 0 3px}
+.ly_tmp li dl dd.summary {width:100%; padding:15px 0 0 1px; line-height:17px; text-align:justify;}
+.ly_tmp li dl dd.summary a {color:#000}
+.ly_tmp li dl dd.cover {position:absolute; top:0; left:0;}
+.ly_tmp li dl dd.cover a {display:block;position:relative;width:90px;height:130px;}
+.ly_tmp li dl dd.cover .border {display:block;position:absolute;top:0;left:0;width:88px;height:128px;*width:90px;*height:130px;-moz-opacity:0.1; opacity:0.1; filter:alpha(opacity=10); border:1px #000000 solid;}
+
+
+/* footer 090922 */
+.nlb {overflow:hidden; width:450px; margin:0 auto; padding-top:20px;}
+.nlb h5 {float:left}
+.nlb .tab_service {float:left; overflow:hidden; height:26px; margin:0 0 0 12px}
+.tab_service li {float:left; margin:-3px 0 1px -1px; *margin:0 0 0 -1px; padding:0 0 0 1px; background:url(http://bookimg.naver.com/bookshelf/img/sprites.gif) no-repeat -111px -296px; line-height:0;}
+.tab_service li a {display:inline-block; padding:0 7px 0 8px;}
+#footer address {clear:both; text-align:center;}
+#footer address a {font:bold 9px Tahoma,AppleGothic,sans-serif; color:#009bc8;}
+#footer address a:hover {color:#009bc8;}
+#footer address span {padding-left:2px; font:9px/14px Verdana;}
+#footer address em {padding-left:6px; font:9px verdana;}
+/* //090922 */
+
+/* 091116 popup */
+.wrap_pop {width:552px; background:url(http://bookimg.naver.com/bookshelf/img/pop_bg.jpg) no-repeat left 53px; text-align:left;}
+.wrap_pop .header {overflow:hidden; height:53px; margin:0 auto; background:url(http://bookimg.naver.com/bookshelf/img/bg_header.jpg) repeat-x;}
+.wrap_pop .header h1 {float:left; padding:8px 0 0 35px}
+.wrap_pop .header h2 {float:left; padding:18px 0 0 5px;}
+.wrap_pop .content {margin:24px 31px 0 34px; padding:38px 35px 26px 32px; background:url(http://bookimg.naver.com/bookshelf/img/pop_bg_content.jpg) repeat-y;}
+.wrap_pop .content h3 {margin-bottom:10px;}
+.wrap_pop .content h3.desc {text-align:center;}
+.wrap_pop .content h3.desc2 {margin:54px 0 20px; text-align:center;}
+.wrap_pop .content h3.desc3 {padding-bottom:20px; border-bottom:2px solid #352c26;}
+.wrap_pop .content p {margin-bottom:21px; padding-bottom:19px; border-bottom:2px solid #352c26;}
+.wrap_pop .content p.desc {margin:34px 0 12px; padding-bottom:0; border:0; text-align:center;}
+.wrap_pop .content p.desc a {font-weight:bold; font-size:13px; color:#6e6e6e; text-decoration:underline;}
+.wrap_pop .content .question_area .check {_width:12px; _height:12px; margin:-4px 0 4px; _margin:-2px 0 2px; vertical-align:middle;}
+.question_area h4 {margin-top:22px;}
+.question_area ul {width:420px; overflow:hidden; padding:9px 0 0;}
+.question_area ul li {padding:0 0 3px;}
+.question_area ul li label {margin-left:4px;}
+.question_area .casetxt {padding-top:5px;}
+.question_area .casetxt textarea.text {width:420px; height:47px; font-size:11px; color:#989898; border-color:#dfe0dd; background-color:#fbfbfb;}
+.question_area .casetxt2 {padding-top:13px;}
+.question_area .casetxt2 textarea.text {width:420px; height:79px; font-size:11px; color:#989898; border-color:#dfe0dd; background-color:#fbfbfb;}
+.question_area ul.ly_q1 li {float:left; width:170px;}
+.wrap_pop .content table {table-layout:fixed;}
+.wrap_pop .content table input.text { width:117px; margin:0; height:19px; line-height:14px; border-color:#dfe0dd; background-color:#fbfbfb;}
+.wrap_pop .content table th {width:82px; padding-bottom:7px; text-align:left;}
+.wrap_pop .content table td {padding:0 0 7px 17px;}
+.wrap_pop .content table td.case {padding:7px 0 0 0;}
+.wrap_pop .content table td.case textarea.text {width:420px; height:101px; margin:11px 0 0 0; font-size:11px; color:#989898; border-color:#dfe0dd; background-color:#fbfbfb;}
+.wrap_pop .footer {position:relative; width:552px; height:105px; padding:0 66px; background:url(http://bookimg.naver.com/bookshelf/img/pop_bg_footer.jpg) no-repeat left top;}
+.wrap_pop .footer .btn01 {width:420px; padding-top:20px; border-top:2px solid #e8e8e5; text-align:center;}
+.wrap_pop .footer .btn01 a img {vertical-align:top;}
+.wrap_pop .footer .btn_line {border-top-color:#352c26;}
+.wrap_pop .footer a.btn_close {display:inline-block; position:absolute; left:486px; top:72px;}
+/* //091116 popup */
+
+/* 2010.05.28 내 인생의 책 */
+.section h4 {margin:0 1px 22px;overflow:hidden;text-indent:-10000em;background-image:url(http://bookimg.naver.com/bookshelf/img/tit_mystorybook.gif);background-repeat:no-repeat;}
+.section .sub01 {background-position:0 0;}
+.mystorybook {padding-top:30px;border-top:2px #696969 solid}
+
+/* 네이버미 */
+.nvmebtn_area{display:inline;float:left;clear:both;margin:40px 0 38px 284px;}
+.nvme{float:left;position:relative;margin-right:1px;}
+.pme22{float:left;margin:1px 0 0 2px;}
+.nvme_layer{position:absolute;top:-80px;right:1px;z-index:1000;width:190px;height:81px;line-height:16px;letter-spacing:-1px;font-size:11px;color:#848484;}
+.nvme_layer .bg{display:block;position:absolute;left:0;top:0;width:190px;height:81px;background:url(http://static.naver.net/book/image/bg_nvme_layer.png) no-repeat;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://static.naver.net/book/image/bg_nvme_layer.png',sizingMethod='crop');z-index:-1}
+.nvme_layer .btn_naverme{color:#68bc3f;text-decoration:underline}
+.nvme_layer p{padding:10px 0 0 12px;font-family:Dotum;}
+.nvme_layer strong{font-size:12px;color:#333;line-height:20px;}
+.pme2_layer_r{display:block;position:absolute;top:1px;left:89px;height:34px;background:url(http://static.naver.com/book/image/bg_pme2layer_r.gif) no-repeat;font-family:verdana;font-weight:bold;font-size:11px;line-height:16px;}
+.pme2_layer_r span{float:left;height:34px;margin-left:7px;padding-right:3px;background:url(http://static.naver.com/book/image/bg_pme2layer_r2.gif) no-repeat 100% 0;}
+.pme2_layer_r a{display:block;padding:9px 5px 9px;*padding:8px 5px 10px;color:#6344a9;}
+
+
+#contents .spi_default .spi_default{padding-bottom:19px;margin:0 0 0 200px}
+.spi_default .spi_lst{display:inline;margin-left:-6px;text-align:left}
+#contents .spi_default .spi_ly_style .spi_ly_msg strong{text-align:left}
