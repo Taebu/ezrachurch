@@ -44,83 +44,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
             <div data-isotope-layout="masonry" data-isotope-group="gallery" data-lightbox="gallery" class="isotope offset-1 isotope-no-gutter" id="masonry-grid">
 <!-- masonry.ul -->
-<ul id="posts">
-        <?php for ($i=0; $i<count($list); $i++) {
-            if($i>0 && ($i % $bo_gallery_cols == 0))
-                $style = 'clear:both;';
-            else
-                $style = '';
-            if ($i == 0) $k = 0;
-            $k += 1;
-            if ($k % $bo_gallery_cols == 0) $style .= "margin:0 !important;";
-         ?>
-        <li class="gall_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>gall_now<?php } ?>" style="<?php echo $style ?>width:<?php echo $board['bo_gallery_width'] ?>px" class="posts">
-            <?php if ($is_checkbox) { ?>
-            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-            <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
-            <?php } ?>
-            <span class="sound_only">
-                <?php
-                if ($wr_id == $list[$i]['wr_id'])
-                    echo "<span class=\"bo_current\">열람중</span>";
-                else
-                    echo $list[$i]['num'];
-                 ?>
-            </span>
 
-
-			<div data-filter="type-1" class="thumbnail-variant-2 thumbnail-4_col10 width_20 text-center isotope-item">
-
-                    
-                    <?php
-                    if ($list[$i]['is_notice']) { // 공지사항  ?>
-                        <strong style="width:<?php echo $board['bo_gallery_width'] ?>px;height:<?php echo $board['bo_gallery_height'] ?>px">공지</strong>
-                    <?php } else {
-                        $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height']);
-						$is_youtube_uri=false;
-						$is_youtube_uri=preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $list[$i]['link'][1], $match);
-
-                        if($is_youtube_uri){
-                           /*
-						   $img_content = '<iframe frameborder=\"0\"   width=\"853\" height=\"480\"  ';
-                           $img_content.= ' src=\"https://www.youtube.com/embed/'.$match[1];
-                           $img_content.= 'autoplay=0&controls=1&loop=1&rel=1';
-                           $img_content.= '&showinfo=1&autohide=1&start=5\" allowfullscreen></iframe>';
-							*/
-
-                           //$img_content = '<iframe src="'.$list[$i]['link'][1].'" width="560" height="315" frameborder="0" allowfullscreen></iframe> ';
-
-							$img_content = '<img src="https://i.ytimg.com/vi/'.$match[1].'/maxresdefault.jpg" alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
-						}else if($thumb['src']) {
-                            $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
-                        } else {
-                            $img_content = '<span style="width:'.$board['bo_gallery_width'].'px;height:'.$board['bo_gallery_height'].'px">no image</span>';
-                        }
-
-                        echo $img_content;
-                    }
-                     ?>
-                    </a>
-					
-					<?php
-
-						if($is_youtube_uri){
-							//$golink = $list[$i]['link'][1]; 
-                            $golink = $list[$i]['href'];
-						}else if($list[$i]['link'][1]) {
-							$golink = $list[$i]['link'][1]; 
-						} else { 
-							$golink = $list[$i]['href'];
-						} 
-
-					?>
-
-				<a href="<?php echo $golink; ?>" <?php if($list[$i]['link'][1]) { ?>target="_blank"<? } ?>><div class="caption">
-                    <h4 class="text-white"><?php echo $list[$i]['subject'] ?><small><?php echo $list[$i]['datetime'] ?></small></h4>
-                  </div></a><?php if($is_admin) { ?><a href="<?php echo $list[$i]['href']; ?>" class="icon icon-sm text-white fa-chain"></a><? } ?>
-        <?php } ?>
-        <?php if (count($list) == 0) { echo "<li class=\"empty_list\">게시물이 없습니다.</li>"; } ?>
-		</ul><!--/ masonry.ul -->
+<ul id="posts"></ul><!--/ #posts masonry.ul -->
     </div>  </section>
 
     <?php if ($list_href || $is_checkbox || $write_href) { ?>
@@ -182,6 +107,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 </fieldset>
 <!-- } 게시물 검색 끝 -->
 </div><!-- .col-xs-12 -->
+
 <?php if ($is_checkbox) { ?>
 <script>
 function all_checked(sw) {
@@ -244,18 +170,58 @@ function select_copy(sw) {
     f.submit();
 }
 
-var board_skin_url="<?php echo $board_skin_url;?>";
-console.log(board_skin_url);
+
+
+$(function() {
+  var masonryInit = true;	// set Masonry init flag
+  $.fn.almComplete = function(alm){ // Ajax Load More callback function
+    if($('#masonry-grid').length){
+      var $container = $('#masonry-grid ul'); // our container
+      if(masonryInit){
+        // initialize Masonry only once
+        masonryInit = false;
+        $container.masonry({
+          itemSelector: '.full-image'
+        });		      
+      }else{
+          $container.masonry('reloadItems'); // Reload masonry items after callback
+		  alert('test');
+      }
+      $container.imagesLoaded( function() { // When images are loaded, fire masonry again.
+        $container.masonry();
+      });
+    }
+  };
+})(jQuery); 
+
+
+
+
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->
 
+<script>
+function get_masonry()
+{
+  $.ajax({
+    url:"/wp/theme/modificate/skin/board/gallery/get_list.php",
+    data:"bo_table=gallery_01",
+    dataType:"json",
+    type:"get",
+     success:function(data){
+      var object=[];
+      $.each(data.posts,function(key,val) {
+        console.log(val);
+        object.push('<li class="gall_li" class="posts">'+val.wr_subject);
+        object.push(val.img_cotent);
+        object.push('</li>');
+      });
+      $("#posts").append(object.join(""));
+    }
+  });
+}
 
+get_masonry();
+</script>
 </div></section></main>
-<?php 
-//echo G5_URL;
-//$data_url=sprintf("bo_table=%s&page=%s&sop=%s&stx=%s&sca=%s&sfl=%s",$bo_table,$page,$sop,$stx,$sca,$sfl);
-
-//echo $data_url;
-
-?>

@@ -1,6 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+$data_url=sprintf("bo_table=%s&page=%s&sop=%s&stx=%s&sca=%s&sfl=%s",$bo_table,$page,$sop,$stx,$sca,$sfl);
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
@@ -244,8 +245,45 @@ function select_copy(sw) {
     f.submit();
 }
 
+var data_url="<?php echo $data_url;?>";
 var board_skin_url="<?php echo $board_skin_url;?>";
-console.log(board_skin_url);
+
+$(document).ready(function(){
+	listAjax(1);
+});
+
+function listAjax(no)
+{
+	if(no)
+	{
+		$('#posts').html('<li><img src="'+board_skin_url+'/img/pageloading01.gif" width=60px /></tr>');
+		
+		$.ajax({
+			type: "POST",
+			url: board_skin_url+"/list.ajax.php",
+			data: data_url, 
+			cache: false,
+			success: function(html)
+			{
+				var listHtml = html.split('▤'); 
+			
+				if(html.indexOf("td_num") == -1)
+				{
+					$('#posts').html(listHtml[0]);
+					$('#listPaging').html(listHtml[1]);
+				}else{	
+					$('#posts').html(listHtml[0]);
+					$('#listPaging').html(listHtml[1]);
+				}
+			}
+		});
+	}
+	else{
+		alert('end');
+	}
+}	
+
+
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->

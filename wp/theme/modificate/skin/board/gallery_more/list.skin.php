@@ -1,6 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
+$data_url=sprintf("bo_table=%s&page=%s&sop=%s&stx=%s&sca=%s&sfl=%s",$bo_table,$page,$sop,$stx,$sca,$sfl);
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
@@ -8,7 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 
 <!-- 게시판 목록 시작 { -->
-<div id="bo_gall" style="width:<?php echo $width; ?>">
+<div id="bo_gall" style="width:<?php echo $width; ?>"   onscroll="javascript:scrolled(this)">
 
     <div class="bo_fx">
 <!--        <div id="bo_list_total">
@@ -44,83 +45,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
             <div data-isotope-layout="masonry" data-isotope-group="gallery" data-lightbox="gallery" class="isotope offset-1 isotope-no-gutter" id="masonry-grid">
 <!-- masonry.ul -->
-<ul id="posts">
-        <?php for ($i=0; $i<count($list); $i++) {
-            if($i>0 && ($i % $bo_gallery_cols == 0))
-                $style = 'clear:both;';
-            else
-                $style = '';
-            if ($i == 0) $k = 0;
-            $k += 1;
-            if ($k % $bo_gallery_cols == 0) $style .= "margin:0 !important;";
-         ?>
-        <li class="gall_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>gall_now<?php } ?>" style="<?php echo $style ?>width:<?php echo $board['bo_gallery_width'] ?>px" class="posts">
-            <?php if ($is_checkbox) { ?>
-            <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-            <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
-            <?php } ?>
-            <span class="sound_only">
-                <?php
-                if ($wr_id == $list[$i]['wr_id'])
-                    echo "<span class=\"bo_current\">열람중</span>";
-                else
-                    echo $list[$i]['num'];
-                 ?>
-            </span>
+<ul id="posts"></ul><!--/ masonry.ul -->
 
-
-			<div data-filter="type-1" class="thumbnail-variant-2 thumbnail-4_col10 width_20 text-center isotope-item">
-
-                    
-                    <?php
-                    if ($list[$i]['is_notice']) { // 공지사항  ?>
-                        <strong style="width:<?php echo $board['bo_gallery_width'] ?>px;height:<?php echo $board['bo_gallery_height'] ?>px">공지</strong>
-                    <?php } else {
-                        $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height']);
-						$is_youtube_uri=false;
-						$is_youtube_uri=preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $list[$i]['link'][1], $match);
-
-                        if($is_youtube_uri){
-                           /*
-						   $img_content = '<iframe frameborder=\"0\"   width=\"853\" height=\"480\"  ';
-                           $img_content.= ' src=\"https://www.youtube.com/embed/'.$match[1];
-                           $img_content.= 'autoplay=0&controls=1&loop=1&rel=1';
-                           $img_content.= '&showinfo=1&autohide=1&start=5\" allowfullscreen></iframe>';
-							*/
-
-                           //$img_content = '<iframe src="'.$list[$i]['link'][1].'" width="560" height="315" frameborder="0" allowfullscreen></iframe> ';
-
-							$img_content = '<img src="https://i.ytimg.com/vi/'.$match[1].'/maxresdefault.jpg" alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
-						}else if($thumb['src']) {
-                            $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$board['bo_gallery_width'].'" height="'.$board['bo_gallery_height'].'">';
-                        } else {
-                            $img_content = '<span style="width:'.$board['bo_gallery_width'].'px;height:'.$board['bo_gallery_height'].'px">no image</span>';
-                        }
-
-                        echo $img_content;
-                    }
-                     ?>
-                    </a>
-					
-					<?php
-
-						if($is_youtube_uri){
-							//$golink = $list[$i]['link'][1]; 
-                            $golink = $list[$i]['href'];
-						}else if($list[$i]['link'][1]) {
-							$golink = $list[$i]['link'][1]; 
-						} else { 
-							$golink = $list[$i]['href'];
-						} 
-
-					?>
-
-				<a href="<?php echo $golink; ?>" <?php if($list[$i]['link'][1]) { ?>target="_blank"<? } ?>><div class="caption">
-                    <h4 class="text-white"><?php echo $list[$i]['subject'] ?><small><?php echo $list[$i]['datetime'] ?></small></h4>
-                  </div></a><?php if($is_admin) { ?><a href="<?php echo $list[$i]['href']; ?>" class="icon icon-sm text-white fa-chain"></a><? } ?>
-        <?php } ?>
-        <?php if (count($list) == 0) { echo "<li class=\"empty_list\">게시물이 없습니다.</li>"; } ?>
-		</ul><!--/ masonry.ul -->
     </div>  </section>
 
     <?php if ($list_href || $is_checkbox || $write_href) { ?>
@@ -152,7 +78,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <!-- 페이지 -->
 <div class="col-xs-12">
-<?php echo $write_pages;  ?>
+<?php //echo $write_pages;  ?>
 
 </div><!-- .col-xs-12 -->
 
@@ -245,7 +171,116 @@ function select_copy(sw) {
 }
 
 var board_skin_url="<?php echo $board_skin_url;?>";
-console.log(board_skin_url);
+var page=0;
+var list_size=true;
+$(document).ready(function(){
+	listAjax();
+});
+
+function listAjax()
+{
+	page++;
+
+	$("[name=page]").val(page);
+	var no=$("[name=page]").val();
+
+	var data_url=$("[name=fboardlist]").serialize();
+	console.log(data_url);
+console.log(list_size);
+	if(list_size)
+	{
+		$('#posts').append('<li id="pageloading"><img src="'+board_skin_url+'/img/pageloading01.gif" width=60px /></tr>');
+
+		$.ajax({
+			type: "POST",
+			url: board_skin_url+"/list.ajax.php",
+			data: data_url, 
+			cache: false,
+			success: function(html)
+			{
+				var listHtml = html.split('▤'); 
+				list_size=listHtml[2]>0?true:false;
+				console.log(list_size);
+				if(list_size){
+					$('#posts').append(listHtml[0]);
+					get_isot();
+					$("#pageloading").remove();
+				}else{
+//					alert("더 없어");
+				}
+			}
+		});
+	}
+	else{
+//		alert('end');
+	}
+	
+}	
+
+
+function get_isot()
+{
+    var o = $(".isotope");
+    if (o.length) {
+
+        $(document).ready(function () {
+            o.each(function () {
+                var _this = this
+                    , iso = new Isotope(_this, {
+                        itemSelector: '[class*="col-"], .isotope-item',
+                        layoutMode: _this.getAttribute('data-layout') ? _this.getAttribute('data-layout') : 'masonry'
+                    });
+
+                $(window).on("resize", function () {
+                    iso.layout();
+                });
+
+                $(window).load(function () {
+                    iso.layout();
+                    setTimeout(function () {
+                        _this.className += " isotope--loaded";
+                        iso.layout();
+                    }, 600);
+                });
+            });
+
+            $(".isotope-filters-trigger").on("click", function () {
+                $(this).parents(".isotope-filters").toggleClass("active");
+            });
+
+            $('.isotope').magnificPopup({
+                delegate: ' > :visible .mfp-image',
+                type: "image",
+                gallery: {
+                    enabled: true
+                },
+            });
+
+            $("[data-isotope-filter]").on("click", function () {
+                $('[data-isotope-filter][data-isotope-group="' + this.getAttribute("data-isotope-group") + '"]').removeClass("active");
+                $(this).addClass("active");
+                $(this).parents(".isotope-filters").removeClass("active");
+                $('.isotope[data-isotope-group="' + this.getAttribute("data-isotope-group") + '"]')
+                    .isotope({filter: this.getAttribute("data-isotope-filter") == '*' ? '*' : '[data-filter="' + this.getAttribute("data-isotope-filter") + '"]'});
+            })
+        });
+    }
+
+
+}
+
+(function() {        
+    var timer;
+    $(window).bind('scroll',function () {
+        clearTimeout(timer);
+        timer = setTimeout( refresh , 150 );
+    });
+    var refresh = function () { 
+        // do stuff
+        console.log('Stopped Scrolling'); 
+				listAjax();
+    };
+})();
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->
