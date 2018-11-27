@@ -4,7 +4,9 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 $data_url=sprintf("bo_table=%s&page=%s&sop=%s&stx=%s&sca=%s&sfl=%s",$bo_table,$page,$sop,$stx,$sca,$sfl);
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
+add_stylesheet(sprintf('<link rel="stylesheet" href="%s/style.css">',$board_skin_url), 0);
+add_stylesheet(sprintf('<link rel="stylesheet" href="%s/css/sweetalert.css">',$board_skin_url), 0);
+add_stylesheet(sprintf('<script src="%s/js/sweetalert.js"></script>',$board_skin_url), 0);
 ?>
 
 
@@ -173,9 +175,12 @@ function select_copy(sw) {
 var board_skin_url="<?php echo $board_skin_url;?>";
 var page=0;
 var list_size=true;
+var is_nomore=false;
 $(document).ready(function(){
 	listAjax();
 });
+
+
 
 function listAjax()
 {
@@ -187,9 +192,10 @@ function listAjax()
 	var data_url=$("[name=fboardlist]").serialize();
 	console.log(data_url);
 console.log(list_size);
+get_isot();
 	if(list_size)
 	{
-		$('#posts').append('<li id="pageloading"><img src="'+board_skin_url+'/img/pageloading01.gif" width=60px /></tr>');
+		//$('#posts').append('<li id="pageloading"><img src="'+board_skin_url+'/img/pageloading01.gif" width=60px /></tr>');
 
 		$.ajax({
 			type: "POST",
@@ -203,11 +209,20 @@ console.log(list_size);
 				console.log(list_size);
 				if(list_size){
 					$('#posts').append(listHtml[0]);
+			//		$("#pageloading").remove();
 					get_isot();
-					$("#pageloading").remove();
 				}else{
 //					alert("더 없어");
+						is_nomore=true;
+
 				}
+				if(is_nomore)
+				{
+//					swal("내용이 더 이상 없습니다.","?","info");
+					is_nomore=false;
+				}
+			},complete:function(){
+
 			}
 		});
 	}
@@ -265,7 +280,7 @@ function get_isot()
             })
         });
     }
-
+		console.log("call : get_isot()");
 
 }
 
@@ -281,6 +296,7 @@ function get_isot()
 				listAjax();
     };
 })();
+
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->

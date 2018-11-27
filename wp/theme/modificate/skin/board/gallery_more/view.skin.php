@@ -54,7 +54,12 @@ height: 100%;
 </h1>
                   <div class="blog-info">
 				<div class="pull-md-left">
-                      <time datetime="<?php echo date("Y", strtotime($view['wr_datetime'])) ?>" class="meta fa-calendar"><?php echo date("y-m-d H:i", strtotime($view['wr_datetime'])) ?><span class="badge fa-user text-uppercase font-secondary"><?php echo $view['name'] ?> <?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?></span> <?php echo number_format($view['wr_hit']) ?>회</a></span>
+                      <time datetime="<?php echo date("Y", strtotime($view['wr_datetime'])) ?>" class="meta fa-calendar"><?php echo date("Y-m-d H:i", strtotime($view['wr_datetime'])) ?>
+											
+											<span class="badge text-uppercase font-secondary">
+											<?php echo number_format($view['wr_hit']) ?></span> 회
+											<?php echo $view['name'] ?> <?php if ($is_ip_view) { echo "&nbsp;($ip)"; } ?>
+											</a></span>
 					  
 					</div><!-- .pull-md-left -->
 
