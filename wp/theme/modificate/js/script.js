@@ -1075,7 +1075,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $(".isotope");
     if (o.length) {
-        include('js/isotope.pkgd.min.js');
+        include('/wp/theme/modificate/js/isotope.pkgd.min.js');
 
         $(document).ready(function () {
             o.each(function () {
