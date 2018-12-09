@@ -13,14 +13,19 @@ add_stylesheet(sprintf('<script src="%s/js/sweetalert.js"></script>',$board_skin
 </script>
 <style>
 #posts{margin-bottom:15px ;}
-.se-pre-con {position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: 9999;background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_3.gif) center no-repeat #fff;}
+.se-pre-con {position: fixed;left: 0;top: 0;width: 100%;height: 100%;z-index: 9999;background: url(https://smallenvelop.com/wp-content/uploads/2014/08/Preloader_3.gif) center no-repeat #fff;display:none}
 </style>
 <!-- 게시판 목록 시작 { -->
 <!-- 게시물 검색 시작 { -->
 <div class="col-xs-12">
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
-
+<?php if($is_mobile) {
+	echo "mobile";
+}else{
+	echo "pc";
+}
+?>
     <form name="fsearch" method="get">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
@@ -243,18 +248,22 @@ $(".se-pre-con").css("background-image",'url('+random_loading[random_index]+')')
 	}
 	
 	page++;
+console.log(page);
+	$("[name=page]").val(page);
+	var no=$("[name=page]").val();
 
 	if(is_search)
 	{
 		data_url=$("[name=fsearch]").serialize();
 		data_url=data_url+"&page="+page;
+	}else{
+		data_url=$("[name=fboardlist]").serialize();
 	}
-	$("[name=page]").val(page);
-	var no=$("[name=page]").val();
+
 
 
 	console.log(data_url);
-console.log(list_size);
+	console.log(list_size);
 
 	if(list_size)
 	{
@@ -348,13 +357,17 @@ function get_isot()
 }
 
 window.onload = function() {
-
-	if($("#stx").val()!="")
+	$(".se-pre-con").hide();
+	if($("#stx").val().length>2)
 	{
 		listAjax("search");
+		console.log("search");
 	}else{
-		listAjax();
-	}
+
+        listAjax();
+        console.log("board");
+    }
+
     var timer;
     $(window).bind('scroll',function () {
 				var is_near=$(window).scrollTop() + $(window).height() > $(document).height() - 100;
