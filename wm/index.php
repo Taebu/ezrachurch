@@ -376,20 +376,48 @@ if(!$is_bigverse){
 			//echo "<pre>";
 			//print_r($match_01);
 			//echo "</pre>";
-			 $version_name="[개역개정]";
+			$version_name="[개역개정]";
 			$sql="select * from kornkrv where ".$where;
+			//echo $sql;
+			/* 68 은 웨스터 민스터 신앙고백서 강해 */
+			if($book_key=="68")
+			{
+				$version_name="";
+				$sql="select wm_chapter as verse,wm_content as content,wm_relparse,wm_commentary from bible.westminster_confession ";
+				$keyword=sprintf("%s%s %s항",$chater_key,$concat_chapter,$first_verse_key);
+				$sql.=sprintf(" where wm_chapter='%s' and wm_clause='%s' ",$chater_key,$first_verse_key);
+
+			}
 			$query=$mysqli->query($sql);
-				echo $full_name[$book_key];
-				echo "&nbsp;";
-				echo $keyword;
-				echo $version_name;
-				echo "<br>";
+			echo $full_name[$book_key];
+			echo "&nbsp;";
+			echo $keyword;
+			echo $version_name;
+			echo "<br>";
+
 			while($list=$query->fetch_assoc()){
 
-				echo $list['verse'];
-				echo " ";
-				echo $list['content'];
-				echo "<br>";
+
+				if($book_key=="68")
+				{
+					echo $first_verse_key;
+					echo "항 ";
+					echo $list['content'];
+					echo "<br>";
+					echo nl2br($list['wm_relparse']);
+					echo "<br>";
+					echo "<br>";
+					if(isset($list['wm_commentary']))
+					{
+					echo nl2br($list['wm_commentary']);
+					}
+				}else{
+					echo $list['verse'];
+					echo " ";
+					echo $list['content'];
+					echo "<br>";
+
+				}
 			}
 
 			///////////////////////

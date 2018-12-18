@@ -115,7 +115,7 @@ var is_enable=false;
     }
     if(mp3_loc=="edu_01"){
 //       get_youtube("제11장");  
-       get_youtube("20장");  
+       get_youtube("21장");  
     }
     
     $('.list-group a').click(function(e) {
@@ -174,7 +174,7 @@ function get_youtube(q)
 	var is_damin=$("#mb_id").val()=="admin";
 	var k=0;
 	var bible=[];
-  var not_ready="제21장제22장제24장";
+  var not_ready="제22장제24장";
      not_ready+="제25장제26장제27장제28장제29장제30장";
      not_ready+="제23장제31장제32장제33장";
   
@@ -293,7 +293,7 @@ function get_youtube_page(q)
 	var k=0;
 	var bible=[];
   var max_cnt=list_page*list_size;
-  var not_ready="제20장제21장제22장제24장";
+  var not_ready="제22장제24장";
      not_ready+="제25장제26장제27장제28장제29장";
      not_ready+="제30장제23장제31장제32장제33장";
 
@@ -696,8 +696,8 @@ console.log(ez_youtube_wm);
   <a href="javascript:get_youtube('제17장');" class="list-group-item">제17장 : 성도의 견인</a>
   <a href="javascript:get_youtube('제18장');" class="list-group-item">제18장 : 은혜와 구원의 확신</a>
   <a href="javascript:get_youtube('제19장');" class="list-group-item">제19장 : 하나님의 율법</a>
-  <a href="javascript:get_youtube('제20장');" class="list-group-item active">제20장 : 그리스도 인의 자유와 양심의 자유</a>
-  <a href="javascript:get_youtube('제21장');" class="list-group-item disabled">제21장 : 예배와 안식일 </a>
+  <a href="javascript:get_youtube('제20장');" class="list-group-item">제20장 : 그리스도 인의 자유와 양심의 자유</a>
+  <a href="javascript:get_youtube('제21장');" class="list-group-item active">제21장 : 예배와 안식일 </a>
   <a href="javascript:get_youtube('제22장');" class="list-group-item disabled">제22장 : 합당한 맹세와 서원</a>
   <a href="javascript:get_youtube('제24장');" class="list-group-item disabled">제24장 : 결혼과 이혼</a>
   <a href="javascript:get_youtube('제25장');" class="list-group-item disabled">제25장 : 교회</a>
