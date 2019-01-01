@@ -3901,7 +3901,7 @@ table th[class*="col-"] {
     display: none;
   }
   .table-mobile td {
-    width: 49%;
+    width: 100%;
     display: inline-block;
     text-align: center;
   }
@@ -3914,6 +3914,7 @@ table th[class*="col-"] {
     visibility: hidden;
     display: none;
   }
+  /*
   .table-mobile tbody {
     counter-reset: num;
   }
@@ -3954,6 +3955,7 @@ table th[class*="col-"] {
   .table-mobile.mobile-primary tr:after {
     color: #fff;
   }
+  */
 }
 
 fieldset {

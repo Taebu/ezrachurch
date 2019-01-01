@@ -55,13 +55,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     <tr>
         <?php if ($is_admin) { ?>
         <th>
-
-<div class="checkbox hidden-xs" style="display: inline-block;">
-            <label for="all_chk" class="sound_only" style="display: inline-block;">
-            <input type="checkbox" id="all_chk" style="display: inline-block;">
-            <span class="checkbox-field"></span>
-<span class="sound_only">목록 전체            oihohhihoioijoijoijoij</span>
-        </label></div>
+<div class="checkbox hidden-xs">
+<label for="all_chk">
+<input type="checkbox" id="all_chk">
+            <span class="checkbox-field" style="background:#ff4090;margin-left:5px"></span>
+						                    <span class="sound_only"><?php echo $bo_subject ?></span>
+</label>
         </th>
         <?php } ?>
         <th scope="col">그룹</th>

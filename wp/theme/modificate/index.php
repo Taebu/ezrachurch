@@ -31,7 +31,7 @@ include_once(G5_THEME_PATH.'/head_index.php');
 <?php }else{ ?>
 		<div id="main">
 <?php } ?>
-			<h3 style=color:#ffffff; id="h3_words"></h3><!-- #words -->
+			<h3 style="color:#eeeeeeff;min-height:378px" id="h3_words"></h3><!-- #words -->
 
 
 
