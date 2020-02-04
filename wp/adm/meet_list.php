@@ -146,6 +146,7 @@ function get_lecture_stat($lec_no)
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col">강좌번호</th>
+        <th scope="col">강좌구분</th>
         <th scope="col">강의명</th>
         <th scope="col">신청기간</th>
         <th scope="col">강의날짜</th>
@@ -184,6 +185,7 @@ function get_lecture_stat($lec_no)
 	
 
 <!-- <td><?php echo $row['em_no'];?></td> -->
+<td><?php echo $row['em_lecture_type'];?></td>
 <td><?php echo $row['em_lecture_name'];?> (<?php echo $row['em_lecture_contents'];?>)</td>
 <td><?php echo $row['em_receipt_st'];?> ~ <?php echo $row['em_receipt_ed'];?></td>
 <td><?php echo $row['em_lecture_st'];?> ~ <?php echo $row['em_lecture_ed'];?></td>

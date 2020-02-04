@@ -15,9 +15,9 @@ $last4year=$thisyear-4;
 ?>
 <script type="text/javascript" src="/lib/js/nwagon.js"></script>
 <link rel="stylesheet" href="/lib/css/nwagon.css">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
  <script data-jsfiddle="common" src="/lib/js/handsontable.full.min.js"></script>
   <link data-jsfiddle="common" rel="stylesheet" media="screen" href="/lib/css/handsontable.full.min.css">
 

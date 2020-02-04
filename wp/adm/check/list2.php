@@ -14,20 +14,17 @@ $last2year=$thisyear-2;
 $last3year=$thisyear-3;
 $last4year=$thisyear-4;
 ?>
-<script type="text/javascript" src="/lib/js/nwagon.js"></script>
-<link rel="stylesheet" href="/lib/css/nwagon.css">
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
- <script data-jsfiddle="common" src="/lib/js/handsontable.full.min.js"></script>
-  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="/lib/css/handsontable.full.min.css">
-<link rel="stylesheet"
-  href="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+<link rel="stylesheet" href="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
 <script src="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="billboard.js"></script>
+<link rel="stylesheet" href="billboard.css">
 <style>
-#cont1{position: relative;width:100%;height:100%;background: #f21;float: left;}
-#cont2{position: relative;width:100%;height:100%;background: #f2f;float: left;}
 .node1{position: absolute;top:50%;left: 50%}
 #chart7,#chart8,#input_area{float:left;}
 #avg_area,#input_area{float:left;}
@@ -110,7 +107,18 @@ echo "아직 로그인을 하지 않았습니다.";
 }?>
 </form>
 <div id="display_width">0</div>
+<div id="areaChart"></div>
 <script type="text/javascript">
+window.onload = function () {
+var param=$("#ezracheck").serialize();
+$.ajax({
+  url:"/ajax/billboard/get_chart.php",
+  data:param,
+  dataType:"json",
+  success:function(data){
+	var chart = bb.generate(data);
+  }});
+};
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -245,7 +253,7 @@ $('#chk_we:checkbox').change(function(event) {
         weekHeader: 'Wk',
         dateFormat: 'yy-mm-dd',
         buttonImageOnly: true, //이미지표시
-    buttonImage: 'http://cashq.co.kr/img/0507/btn_calendar.gif', //이미지주소
+    buttonImage: '//cashq.co.kr/img/0507/btn_calendar.gif', //이미지주소
     showOn: "both", //엘리먼트와 이미지 동시 사용(both,button)
         firstDay: 0,
         isRTL: false,
@@ -384,256 +392,7 @@ $("#we").val($("#we_"+seq).html());
     $("#btn_modify").show();
 }
 function get_check(type){
-$("#chart7").html("");
-$("#chart8").html("");
 
-var ob=[];
-var ob2=[];
-var ob3=[];
-var param=$("#ezracheck").serialize();
-$.ajax({
-  url:"/ajax/get_check.php",
-  data:param,
-  dataType:"json",
-  success:function(data){
-    wagon_idx=[];
-    ob2.push("<table class='att'>");
-    ob2.push("<thead>");
-    
-    ob2.push("<tr>");
-    ob2.push("<th>날짜</th>");
-    ob2.push("<th>오전</th>");
-    ob2.push("<th>점심</th>");
-    ob2.push("<th>오후</th>");
-    ob2.push("<th>수요일</th>");
-    ob2.push("<th>수정</th>");
-    ob2.push("<th>삭제</th>");
-    ob2.push("</tr>");
-    ob2.push("</thead>");
-    $.each(data,function(key,val){//deletecheck
-      wagon_idx.push(val.seq);
-    ob2.push("<tr id='olist_"+val.seq+"'>");
-    ob2.push("<td><span id='ins_"+val.seq+"'>");
-    ob2.push(val.insdate+"</span>");
-    ob2.push("<td><span id='am_"+val.seq+"'>"+val.am+"</span>");
-    ob2.push("<td><span id='ru_"+val.seq+"'>"+val.ru+"</span>");
-    ob2.push("<td><span id='pm_"+val.seq+"'>"+val.pm+"</span>");
-    ob2.push("<td><span id='we_"+val.seq+"'>"+val.we+"</span>");
-    ob2.push("<td><input type='button' value='수정' onclick='modify("+val.seq+")'>");
-    ob2.push("<td><input type='button' value='삭제' onclick='deletecheck("+val.seq+")'>");
-    ob2.push("</tr>");
-    });
-    ob2.push("<table>");
-    $("#check").html(ob2.join(""));
-/*
-ob2.push("[");
-ob2.push("['', '오전', '점심', '오후', '수요일'],");
-$.each(data,function(key,val){
-    ob2.push("['"+val.insdate+"',"+val.am+","+val.ru+","+val.pm+","+val.we+"],");
-});
-ob2.push("]");
-var container = document.getElementById('example'),
-  hot;
-var exeldata=eval("("+ob2.join("")+")");
-hot = new Handsontable(container, {
-  data: exeldata,
-  minSpareRows: 1,
-  colHeaders: true,
-  contextMenu: true
-});
-*/
-
-if(type=="f"){
-var avg_am=[],avg_ru=[],avg_pm=[],avg_we=[];
-var sum_am=0,sum_ru=0,sum_pm=0,sum_we=0;
-    ob.push("{'legend':{names:[");
-    $.each(data,function(key,val){
-      if(parseInt(val.am)>0){
-    ob.push("'"+val.insdate.substring(5, 10)+"',");
-  }
-    });
-    ob.push("]},");
-    ob.push("'dataset':{");
-    ob.push("title:'서울 에스라 교회 출석인원', ");
-    ob.push("values: [");
-
-    $.each(data,function(key,val) {
-      if(parseInt(val.am)>0){
-        ob.push("["+na(val.am)+","+na(val.ru)+","+na(val.pm)+"],");
-      
-		if(parseInt(val.am)>0){
-
-        avg_am.push(val.am);
-        }
-        if(parseInt(val.ru)>0){
-
-        avg_ru.push(val.ru);
-        }
-        if(parseInt(val.pm)>0){
-        avg_pm.push(val.pm);
-        }
-	  }
-    });
-    var sum=0;
-    for (var i in avg_ru)
-    {
-          sum_am+=parseInt(avg_am[i],10);
-          sum_ru+=parseInt(avg_ru[i],10);
-          sum_pm+=parseInt(avg_pm[i],10);
-    }
- 
-    var ravg_am=sum_am/avg_am.length;
-    var ravg_ru=sum_ru/avg_ru.length;
-    var ravg_pm=sum_pm/avg_pm.length;
-    ob.push("],");
-    ob.push("colorset: ['#DC143C','#FF8C00', '#2EB400'],");
-    ob.push("fields:['오전 "+ravg_am.toFixed(2)+"' , '점심 "+ravg_ru.toFixed(2)+"', '오후 "+ravg_pm.toFixed(2)+"']");
-    ob.push("},");
-    ob.push("'chartDiv' : 'chart7',");
-    ob.push("'chartType' : 'line',");
-    
-    ob.push("'leftOffsetValue': 50,");
-    ob.push("'bottomOffsetValue': 60,");
-    ob.push("'chartSize':{width:1200, height:300},");
-    ob.push(" 'minValue':0,");
-    var amMax=Math.max.apply(20,avg_am)+1;
-    ob.push(" 'maxValue':"+amMax+",");
-//	ob.push(" 'maxValue':100,");
-    ob.push(" 'increment':10");
-//    ob.push(" 'isGuideLineNeeded' : true ");
-    ob.push("}");
-    
-
-    Nwagon.chart(eval("(" + ob.join("") + ")"));
-
-    ob3.push("{'legend':{names:[");
-    $.each(data,function(key,val){
-      if(parseInt(val.we)>0){
-       ob3.push("'"+val.insdate.substring(5, 10)+"',");
-      }
-    });
-    ob3.push("]},");
-    ob3.push("'dataset':{");
-    ob3.push("title:'서울 에스라 교회 출석인원', ");
-    ob3.push("values: [");
-
-    $.each(data,function(key,val) {
-        if(parseInt(val.we)>0){
-        ob3.push("["+na(val.we)+"],");
-
-        if(parseInt(val.we)>0){
-        avg_we.push(val.we);
-        }
-
-	}
-    });
-
-  for (var i in avg_we)
-{     sum_we+=parseInt(avg_we[i],10);
-}
-    var ravg_we=sum_we/avg_we.length;
-    $("#avg_we").html(ravg_we);
-
-    ob3.push("],");
-    ob3.push("colorset: ['#2278fb'],");
-    ob3.push("fields:['수요예배 "+ravg_we.toFixed(2)+"']");
-    ob3.push("},");
-    ob3.push("'chartDiv' : 'chart8',");
-    ob3.push("'chartType' : 'line',");
-    
-    ob3.push("'leftOffsetValue': 50,");
-    ob3.push("'bottomOffsetValue': 60,");
-    ob3.push("'chartSize':{width:1200, height:300},");
-    ob3.push(" 'minValue':0,");
-    //avg_we
-    var weMax=Math.max.apply(20,avg_we)+1;
-    ob3.push(" 'maxValue':"+weMax+",");
-//    ob3.push(" 'increment':"+parseInt(weMax/10)+"");    
-    ob3.push(" 'increment':"+Math.ceil(weMax/10)+"");
-//    ob3.push(" 'isGuideLineNeeded' : true ");
-    ob3.push("}");
-
-
-
-    Nwagon.chart(eval("(" + ob3.join("") + ")"));
-}else if(type=="t"){
-var avg_am=[],avg_ru=[],avg_pm=[],avg_we=[];
-var sum_am=0,sum_ru=0,sum_pm=0,sum_we=0;
-    ob.push("{'legend':{names:[");
-    $.each(data,function(key,val){
-    ob.push("'"+val.insdate.substring(5, 10)+"',");
-    });
-    ob.push("]},");
-    ob.push("'dataset':{");
-    ob.push("title:'서울 에스라 교회 출석인원', ");
-    ob.push("values: [");
-
-  
-    $.each(data,function(key,val) {
-        ob.push("["+na(val.am)+","+na(val.ru)+","+na(val.pm)+","+na(val.we)+"],");
-        console.log("we : "+na(val.we));
-        if(parseInt(val.am)>0){
-        avg_am.push(val.am);
-        }
-        if(parseInt(val.ru)>0){
-        avg_ru.push(val.ru);
-        }
-        if(parseInt(val.pm)>0){
-        avg_pm.push(val.pm);
-        }
-        if(parseInt(val.we)>0){
-        avg_we.push(val.we);        
-        }
-
-
-    });
-    var sum=0;
-    for (var i in avg_am)
-    {
-          sum_am+=parseInt(avg_am[i],10);
-    }
-    for (var i in avg_ru)
-    {
-          sum_ru+=parseInt(avg_ru[i],10);
-    }
-
-    for (var i in avg_pm)
-    {
-          sum_pm+=parseInt(avg_pm[i],10);
-    }
-          
-    for (var i in avg_we)
-    {
-          sum_we+=parseInt(avg_we[i],10);
-    }     
-
-
-    var ravg_am=sum_am/avg_am.length;
-    var ravg_ru=sum_ru/avg_ru.length;
-    var ravg_pm=sum_pm/avg_pm.length;
-    var ravg_we=sum_we/avg_we.length;
-
-    ob.push("],");
-    ob.push("colorset: ['#DC143C','#FF8C00', '#2EB400','#2278fb'],");
-    ob.push("fields:['오전 "+ravg_am.toFixed(2)+"', '점심 "+ravg_ru.toFixed(2)+"', '오후 "+ravg_pm.toFixed(2)+"','수요 "+ravg_we.toFixed(2)+"']");
-    ob.push("},");
-    ob.push("'chartDiv' : 'chart7',");
-    ob.push("'chartType' : 'line',");
-    
-    ob.push("'leftOffsetValue': 50,");
-    ob.push("'bottomOffsetValue': 60,");
-    ob.push("'chartSize':{width:1200, height:300},");
-    ob.push(" 'minValue':0,");
-    var amMax=Math.max.apply(20,avg_am)+1;
-    ob.push(" 'maxValue':"+amMax+",");
-    ob.push(" 'increment':10");
-//    ob.push(" 'isGuideLineNeeded' : true ");
-    ob.push("}");
-    
-    Nwagon.chart(eval("(" + ob.join("") + ")"));
-}
-  }
-});
 }
 
 function na(str){

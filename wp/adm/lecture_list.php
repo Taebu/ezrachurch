@@ -225,6 +225,7 @@ function get_status_name($key)
 		-->
        <th scope="col"><?php echo subject_sort_link('el_no') ?>번호</th>
        <th scope="col"><?php echo subject_sort_link('em_no') ?>강좌번호</th>
+       <th scope="col">강좌구분</th>
        <th scope="col"><?php echo subject_sort_link('mb_id') ?>아이디</th>
        <th scope="col"><?php echo subject_sort_link('el_name') ?>이름</th>
        <th scope="col">직분</th>
@@ -263,6 +264,7 @@ function get_status_name($key)
 
 <td><?php echo $row['el_no'];?></td>
 <td><?php printf("%s회 (%s)",$row['em_lecture_no'],$row['em_no']);?></td>
+<td><?php printf("%s",$row['em_lecture_type']);?></td>
 <td><?php echo $row['mb_id'];?></td>
 <!-- <td><?php echo $row['el_stdt'];?></td>
 <td><?php echo $row['el_eddt'];?></td> -->
@@ -308,7 +310,7 @@ function get_status_name($key)
     				
 	    			if($arr_keys[0]=="add_name")
 	    			{
-	    					printf("<td>%s",$arr_keys[1]);	
+							printf("<td>-</td><td>%s",$arr_keys[1]);	
 	    			}
     				if($arr_keys[0]=="add_birth")
 	    			{

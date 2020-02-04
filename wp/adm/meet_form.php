@@ -170,7 +170,9 @@ $mode=$mode==""?"write":$mode;
   <link rel="stylesheet" href="/wp/css/jquery.ui.min.css">
   <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
   <script src="/wp/js/jquery.ui.min.js"></script>
-
+<style>
+    label{cursor:pointer;}
+</style>
 <form name="meet_form" id="meet_form" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
 <input type="hidden" name="w" value="<?php echo $w ?>">
 <input type="hidden" name="mode" value="<?php echo $mode ?>">
@@ -179,7 +181,7 @@ $mode=$mode==""?"write":$mode;
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
 <input type="hidden" name="sod" value="<?php echo $sod ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="em_no" value="<?php echo $em_no ?>">
+<input type="hidden" name="em_no" id="em_no" value="<?php echo $em_no ?>">
 <input type="hidden" name="token" value="">
 
 <section id="anc_bo_basic">
@@ -205,6 +207,16 @@ $mode=$mode==""?"write":$mode;
                     <a href="<?php echo G5_BBS_URL ?>/board.php?em_lecture_no=<?php echo $meet['em_lecture_no'] ?>" class="btn_frmline">게시판 바로가기</a>
                     <a href="./board_list.php" class="btn_frmline">목록으로</a>
                 <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="em_lecture_no">강의구분<?php echo $sound_only ?></label></th>
+            <td colspan="2">
+                <?php //echo $meet['em_lecture_type'] ?>
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_1" value="SEBL" checked="checked"><label for="em_lecture_type_1">&nbsp;&nbsp;성경강좌</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_2" value="EBL_TEACHER"><label for="em_lecture_type_2">&nbsp;&nbsp;교사고시반</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_3" value="CHONGCHIN_EZRA_CIRCLES"><label for="em_lecture_type_3">&nbsp;&nbsp;총신에스라동아리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_4" value="YONSEI_UNIVERSITY_EZRA_CIRCLES"><label for="em_lecture_type_4">&nbsp;&nbsp;연세대학교에스라동아리</label>
             </td>
         </tr>
         <tr>
@@ -276,6 +288,30 @@ $mode=$mode==""?"write":$mode;
                     </p>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><label for="em_image_file">강의 제공된 이미지 파일</label></th>
+            <td colspan="2">
+                <?php echo help("강의 제공된 이미지 파일 등록합니다.");
+                print('<div id="image_file_area">');
+                if(strlen($meet['em_image_file'])==0)
+                {
+                    print('<input type="file" name="em_image_file" id="em_image_file" class="frm_input" value="">');
+                }else{
+                    printf('<img src="/wp/adm/uploads/%s" alt="" width="320px">',get_text($meet['em_image_file']));
+                    printf('<input type="button" value="삭제" onclick="javascript:set_image_delete(\''.$meet['em_image_file'].'\');">');
+                }
+
+                print('</div>');
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="em_contents">강의 설명 상세 내용</label></th>
+            <td colspan="2">
+                <?php echo help("강의 설명 상세 내용을 기입합니다.") ?>
+                <textarea name="em_contents" id="em_contents" cols="30" rows="10" class="frm_input"><?php echo get_text($meet['em_contents']) ?></textarea>
+            </td>
+        </tr>
         <?php if ($w == 'u') { ?>
         <tr>
             <th scope="row"><label for="proc_count">카운트 조정</label></th>
@@ -331,6 +367,9 @@ $(function(){
             }
         });
     });
+
+
+    $('input:radio[name=em_lecture_type]:input[value=<?php echo $meet['em_lecture_type'];?>]').attr("checked", true);
 });
 
 function board_copy(bo_table) {
@@ -381,6 +420,7 @@ function set_default()
 	$("#em_phone").val("010-3927-1754");
 	$("#em_author").val("남궁현우");
 	$("#em_lecture_contents").val("신구약 66권 전체");
+    $("#em_contents").val("※ 회비 예약 15만원(현장접수 18만원)입니다.\n(회비계좌: (우체국)014506-02-108953 남궁현우)\n\n※ 정보당일 오후2시에 시작이오니 미리 준비해 주시기 바랍니다.\n\n※ 필수 준비물 : 개인용 물컵(스테인레스), 개인 침구, 개역개정성경\n\n※ 주차는 타워주차로 국내 중소형 승용차만 가능\n(주차시 사이드해제, 기어 N중립, 위반시 배상)\n\n※ 기타 문의사항은 010-3927-1754");
 }
 
 /* 강좌 등록하기 */
@@ -463,31 +503,68 @@ function set_default()
 			return;
 		}
 		
-		if($.trim($("#em_phone").val())=="")
-		{
-			alert("문의전화를 작성해 주세요");
-			$("#em_phone").focus();
-			return;
-		}
+        if($.trim($("#em_phone").val())=="")
+        {
+            alert("문의전화를 작성해 주세요");
+            $("#em_phone").focus();
+            return;
+        }
+        
+        if($.trim($("#em_contents").val())=="")
+        {
+            alert("강의 등록 내용을 작성해 주세요");
+            $("#em_contents").focus();
+            return;
+        }
 		
-		var param=$("#meet_form").serialize();
 
+        var formData = new FormData($("#meet_form")[0]);
+        if(typeof($("#em_image_file")[0])!="undefined"){
+
+            formData.append("em_image_file",$("#em_image_file")[0].files[0]);
+        }
 		$.ajax({
 			url:"./ajax/set_meet.php",
-			data:param,
 			dataType:"json",
 			type:"POST",
-			success:function(data){
+            data:formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+			enctype: 'multipart/form-data',
+            success:function(data){
 				if(data.success){
 					alert("등록성공");
-                    location.href="/wp/adm/meet_list.php";
-				}else{
-					alert("등록실패");
                     location.href="/wp/adm/meet_list.php";
 				}
 			}
 		});
 	}
+
+function set_image_delete(v)
+{
+    //alert(v);
+    var param = {'em_image_file':v,'mode':"image_delete",'em_no':$("#em_no").val()};
+    $.ajax({
+        url:"./ajax/set_meet.php",
+        dataType:"json",
+        type:"POST",
+        data:param,
+        success:function(data){
+            if(data.success)
+            {
+                alert("삭제성공");
+
+
+                $("#image_file_area").html("");
+
+                $("#image_file_area").html('<input type="file" name="em_image_file" id="em_image_file" class="frm_input" value="">');
+            }
+        }
+    });    
+}
+
 /* datepicker */
 var dateoption={dateFormat: "yy-mm-dd",
 dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
