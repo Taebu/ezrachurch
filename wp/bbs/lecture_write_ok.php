@@ -50,6 +50,7 @@ if($mode=="write")
 	$sql[]="mb_addr1='{$mb_addr1}',";
 	$sql[]="mb_addr2='{$mb_addr2}',";
 	$sql[]="mb_addr3='{$mb_addr3}',";
+	$sql[]="em_lecture_type='{$em_lecture_type}',";
 	$sql[]="mb_addr_jibeon='{$mb_addr_jibeon}',";
 	$sql[]="el_tel='{$el_tel}',";
 	$sql[]="el_hp='{$el_hp}',";

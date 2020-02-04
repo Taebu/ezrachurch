@@ -56,10 +56,12 @@ if($row['em_status']!="receipt")
 				<input type="hidden" name="mode" value="write" />
 				<input type="hidden" name="mb_id" value="<?php echo $member['mb_id'];?>" />
 				<input type="hidden" name="em_lecture_no" value="<?php echo $row['em_lecture_no'];?>" />
+				<input type="hidden" name="em_lecture_type" value="<?php echo $row['em_lecture_type'];?>" />
 				<input type="hidden" name="em_no" value="<?php echo $em_no;?>" />
 				<input type="hidden" name="el_stdt" value="<?php echo $row['em_lecture_st'];?>" />
 				<input type="hidden" name="el_eddt" value="<?php echo $row['em_lecture_ed'];?>" />
 				 <div class="col-xs-12">
+          <img src="/wp/adm/uploads/<?php echo $row['em_image_file'];?>" alt="">
                     <div class="form-group">
                       <label for="reg_mb_id" class="text-uppercase font-secondary">신청기수<strong class="sound_only">필수</strong> * </label>
                       <p>제<?php echo $row['em_lecture_no'] ?>기</p>
@@ -90,14 +92,14 @@ if($row['em_status']!="receipt")
                       <label for="reg_mb_id" class="text-uppercase font-secondary">성별<strong class="sound_only">필수</strong> * </label>
 					  <p>
 					  <div class="radio inline-block">
-                      <label>
+                      <label><?php echo $member['mb_sex'];?>
                         <input type="radio" name="el_sex" id="el_sex_1" value="M" checked="<?php echo $member['mb_sex']=="M"?"checked":"";?>"><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">남자</span>
                       </label>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="radio inline-block">
                       <label>
-                        <input type="radio" name="el_sex" id="el_sex_2" value="F" checked="<?php echo $member['mb_sex']=="F"?"checked":"";?>"><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">여자</span>
+                        <input type="radio" name="el_sex" id="el_sex_2" value="F"><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">여자</span>
                       </label>
                     </div>
 					</p>
@@ -328,18 +330,8 @@ if($row['em_status']!="receipt")
 
 				<div class="col-xs-12">
 				<p class="bottom_notice2">
- <pre>
-※ 회비 예약 15만원(현장접수 18만원)입니다.
-(회비계좌: (우체국)014506-02-108953 남궁현우)
-
-※ 정보당일 오후2시에 시작이오니 미리 준비해 주시기 바랍니다.
-
-※ 필수 준비물 : 개인용 물컵(스테인레스), 개인 침구, 개역개정성경
-
-※ 주차는 타워주차로 국내 중소형 승용차만 가능
-(주차시 사이드해제, 기어 N중립, 위반시 배상)
-
-※ 기타 문의사항은 010-3927-1754
+ <pre style="white-space:pre-line">
+<?php echo $row['em_contents'];?>
              </pre>
                </p>
 				</div>
