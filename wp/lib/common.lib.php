@@ -135,7 +135,7 @@ function goto_url($url)
     //echo "<script> location.replace('$url'); </script>";
 
     if (!headers_sent())
-        header('Location: '.$url);
+        @header('Location: '.$url);
     else {
         echo '<script>';
         echo 'location.replace("'.$url.'");';
@@ -169,8 +169,10 @@ function get_session($session_name)
 function set_cookie($cookie_name, $value, $expire)
 {
     global $g5;
-
-    setcookie(md5($cookie_name), base64_encode($value), G5_SERVER_TIME + $expire, '/', G5_COOKIE_DOMAIN);
+    if (!headers_sent())
+	{
+		setcookie(md5($cookie_name), base64_encode($value), G5_SERVER_TIME + $expire, '/', G5_COOKIE_DOMAIN);
+	}
 }
 
 

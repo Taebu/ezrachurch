@@ -34,7 +34,7 @@ var activeImage = null,
     tmpLeft = 0,
     tmpTop = 0,
     uploadImagePath = '',
-    uploadMaxNumber = 12,
+    uploadMaxNumber = 50,
     uploadScript;
 //  deleteScript;
 

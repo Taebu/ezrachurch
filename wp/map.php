@@ -9,7 +9,7 @@
     .wrap_map {width:50%;height:500px;float:left;position:relative}
     .wrap_roadview {width:50%;height:500px;float:left;position:relative}
     .wrap_button {position:absolute;left:15px;top:12px;z-index:2}
-    .btn_comm {float:left;display:block;width:70px;height:27px;background:url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/sample_button_control.png) no-repeat}
+    .btn_comm {float:left;display:block;width:70px;height:27px;background:url(//t1.daumcdn.net/localimg/localimages/07/mapapidoc/sample_button_control.png) no-repeat}
     .btn_linkMap {background-position:0 0;}
     .btn_resetMap {background-position:-69px 0;}
     .btn_linkRoadview {background-position:0 0;}
@@ -33,104 +33,59 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=4e97ca12b5290f3ee211dd959e86988d"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f0be7c9de3845a5ed3e477d9f53da689"></script>
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapCenter = new daum.maps.LatLng(37.535043, 126.897380), // 지도의 중심 좌표
-    mapFakeCenter = new daum.maps.LatLng(37.535237, 126.898693), // 지도의 중심 좌표
-    mapOption = {
-        center: mapFakeCenter, // 지도의 중심 좌표
+    mapOption = { 
+        center: new kakao.maps.LatLng(37.535043, 126.897380), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
+var map = new kakao.maps.Map(mapContainer, mapOption);
 
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new daum.maps.Map(mapContainer, mapOption);
+// 마커가 표시될 위치입니다 
+var markerPosition  = new kakao.maps.LatLng(37.535043, 126.897380); 
 
-// 지도에 올릴 마커를 생성합니다.
-var mMarker = new daum.maps.Marker({
-    position: mapCenter, // 지도의 중심좌표에 올립니다.
-    map: map // 생성하면서 지도에 올립니다.
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+    position: markerPosition
 });
 
-// 지도에 올릴 장소명 인포윈도우 입니다.
-var mLabel = new daum.maps.InfoWindow({
-    position: mapCenter, // 지도의 중심좌표에 올립니다.
-    content: '서울시 영등포구 선유로 252 지하1층' // 인포윈도우 내부에 들어갈 컨텐츠 입니다.
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+var iwContent = '<div style="padding:5px;max-width:200px">서울에스라 교회<br> 서울시 영등포구 선유로 252 지하1층<br><a href="https://map.kakao.com/link/map/서울에스라 교회,37.535043, 126.897380" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/서울에스라 교회,37.535043, 126.897380" style="color:blue" target="_blank">길찾기</a></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = new kakao.maps.LatLng(37.535043, 126.897380); //인포윈도우 표시 위치입니다
+
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+    position : iwPosition, 
+    content : iwContent 
 });
-mLabel.open(map, mMarker); // 지도에 올리면서, 두번째 인자로 들어간 마커 위에 올라가도록 설정합니다.
+  
+// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+infowindow.open(map, marker); 
+/* */
+var roadviewContainer = document.getElementById('roadview'); //로드뷰를 표시할 div
+var roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
+var roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
 
+var position = new kakao.maps.LatLng(37.535043, 126.897380);
+var viewpoint = new kakao.maps.Viewpoint(20, 10, 0);
 
-var rvContainer = document.getElementById('roadview'); // 로드뷰를 표시할 div
-var rv = new daum.maps.Roadview(rvContainer); // 로드뷰 객체 생성
-var rc = new daum.maps.RoadviewClient(); // 좌표를 통한 로드뷰의 panoid를 추출하기 위한 로드뷰 help객체 생성
 var rvResetValue = {} //로드뷰의 초기화 값을 저장할 변수
-rc.getNearestPanoId(mapCenter, 50, function(panoId) {
-    rv.setPanoId(panoId, mapCenter);//좌표에 근접한 panoId를 통해 로드뷰를 실행합니다.
+
+// 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
+roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+    roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
     rvResetValue.panoId = panoId;
+   
+	//각 뷰포인트 값을 초기화를 위해 저장해 놓습니다.
+    rvResetValue.pan = 20;
 });
-
-// 로드뷰 초기화 이벤트
-daum.maps.event.addListener(rv, 'init', function() {
-
-    // 로드뷰에 올릴 마커를 생성합니다.
-    var rMarker = new daum.maps.Marker({
-        position: mapCenter,
-        map: rv //map 대신 rv(로드뷰 객체)로 설정하면 로드뷰에 올라갑니다.
+    roadview.setViewpoint({
+        pan: 120, tilt: 0, zoom:0
     });
 
-    // 로드뷰에 올릴 장소명 인포윈도우를 생성합니다.
-    var rLabel = new daum.maps.InfoWindow({
-        position: mapCenter,
-        content: '서울시 영등포구 선유로 252 지하1층'
-    });
-    rLabel.open(rv, rMarker);
-
-    // 로드뷰 마커가 중앙에 오도록 로드뷰의 viewpoint 조정 합니다.
-    var projection = rv.getProjection(); // viewpoint(화면좌표)값을 추출할 수 있는 projection 객체를 가져옵니다.
-    
-    // 마커의 position과 altitude값을 통해 viewpoint값(화면좌표)를 추출합니다.
-    var viewpoint = projection.viewpointFromCoords(rMarker.getPosition(), rMarker.getAltitude());
-    rv.setViewpoint(viewpoint); //로드뷰에 뷰포인트를 설정합니다.
-
-    //각 뷰포인트 값을 초기화를 위해 저장해 놓습니다.
-    rvResetValue.pan = viewpoint.pan;
-    rvResetValue.tilt = viewpoint.tilt;
-    rvResetValue.zoom = viewpoint.zoom;
-});
-
-//지도 이동 이벤트 핸들러
-function moveDaumMap(self){
-    
-    var center = map.getCenter(), 
-        lat = center.getLat(),
-        lng = center.getLng();
-
-    self.href = 'http://map.daum.net/link/map/' + encodeURIComponent('설록디아망타워') + ',' + lat + ',' + lng; //Daum 지도로 보내는 링크
-}
-
-//지도 초기화 이벤트 핸들러
-function resetDaumMap(){
-    map.setCenter(mapCenter); //지도를 초기화 했던 값으로 다시 셋팅합니다.
-    map.setLevel(mapOption.level);
-}
-
-//로드뷰 이동 이벤트 핸들러
-function moveDaumRoadview(self){
-    var panoId = rv.getPanoId(); //현 로드뷰의 panoId값을 가져옵니다.
-    var viewpoint = rv.getViewpoint(); //현 로드뷰의 viewpoint(pan,tilt,zoom)값을 가져옵니다.
-    self.href = 'http://map.daum.net/?panoid='+panoId+'&pan='+viewpoint.pan+'&tilt='+viewpoint.tilt+'&zoom='+viewpoint.zoom; //Daum 지도 로드뷰로 보내는 링크
-}
-
-//로드뷰 초기화 이벤트 핸들러
-function resetRoadview(){
-    //초기화를 위해 저장해둔 변수를 통해 로드뷰를 초기상태로 돌립니다.
-    rv.setViewpoint({
-        pan: rvResetValue.pan, tilt: rvResetValue.tilt, zoom: rvResetValue.zoom
-    });
-    rv.setPanoId(rvResetValue.panoId);
-}
 </script>
-</body>
-</html>
+

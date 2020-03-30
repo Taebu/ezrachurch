@@ -380,10 +380,10 @@ a, button, input {
 
 @font-face {
  font-family: 'NanumSquare';
- src: url(http://ezrachurch.kr/wp/fonts/NanumSquareR.eot);
- src: url(http://ezrachurch.kr/wp/fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'),
-      url(http://ezrachurch.kr/wp/fonts/NanumSquareR.woff) format('woff'),
-      url(http://ezrachurch.kr/wp/fonts/NanumSquareR.ttf) format('truetype');
+ src: url(/wp/fonts/NanumSquareR.eot);
+ src: url(/wp/fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'),
+      url(/wp/fonts/NanumSquareR.woff) format('woff'),
+      url(/wp/fonts/NanumSquareR.ttf) format('truetype');
 }
 
 
@@ -21059,17 +21059,17 @@ font-family:'NanumSquare',sans-serif;
 }
 
 .rd-navbar-static .rd-navbar-nav {
-  margin-left: -5.5%;
+  margin-left: -3.5%;
 }
 
 .rd-navbar-static .rd-navbar-nav > li {
   display: inline-block;
-  margin-left: 5.5%;
+  margin-left: 3.5%;
 }
 
 @media (max-width: 1199px) {
   .rd-navbar-static .rd-navbar-nav {
-    margin-left: -5%;
+    margin-left: -3.5%;
   }
   .rd-navbar-static .rd-navbar-nav > li {
     margin-left: 5%;

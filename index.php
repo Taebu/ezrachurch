@@ -1,2 +1,2 @@
 <meta charset="UTF-8" />
-<script>window.location.replace("http://ezrachurch.kr/wp/");</script>
+<script>window.location.replace("https://ezrachurch.kr/wp/");</script>

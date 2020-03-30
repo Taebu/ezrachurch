@@ -21,14 +21,14 @@ $last4year=$thisyear-4;
   <title>Document</title>
 <script type="text/javascript" src="./lib/js/nwagon.js"></script>
 <link rel="stylesheet" href="./lib/css/nwagon.css">
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
  <script data-jsfiddle="common" src="./lib/js/handsontable.full.min.js"></script>
   <link data-jsfiddle="common" rel="stylesheet" media="screen" href="./lib/css/handsontable.full.min.css">
 <link rel="stylesheet"
-  href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-<script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+  href="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+<script src="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 
 <style>
   #cont1{position: relative;width:50%;height:100%;background: #f21;float: left;}
@@ -247,7 +247,7 @@ $('#chk_we:checkbox').change(function(event) {
         weekHeader: 'Wk',
         dateFormat: 'yy-mm-dd',
         buttonImageOnly: true, //이미지표시
-    buttonImage: 'http://cashq.co.kr/img/0507/btn_calendar.gif', //이미지주소
+    buttonImage: '//cashq.co.kr/img/0507/btn_calendar.gif', //이미지주소
     showOn: "both", //엘리먼트와 이미지 동시 사용(both,button)
         firstDay: 0,
         isRTL: false,

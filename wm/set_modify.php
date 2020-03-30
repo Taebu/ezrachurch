@@ -12,7 +12,7 @@ foreach($TABLES as $key =>$value)
 	$value=addslashes($value);
 	$sqls[]=sprintf("`%s`='%s' ",$key,$value);
 }
-
+$sqls[]="`wm_modify_datetime`=now() ";
 $sql.=join(",",$sqls);
 $sql.=sprintf("where wm_no='%s';",$wm_no);
 //$query=mysql_query($sql);

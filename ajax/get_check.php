@@ -7,9 +7,17 @@ $connect = new mysqli($host_name, $user_name, $db_password, $db_name);
 //$row = $result->fetch_assoc();
 //echo htmlentities($row['_message']);
 
-$where.=isset($to_date)?" and insdate >= DATE('$fr_date') and insdate < (DATE('$to_date') + INTERVAL 1 DAY) ":"";
+if(isset($to_date))
+{
+$where.=sprintf(" and insdate >= DATE('%s') ",$fr_date);
+}
+
+if(isset($to_date))
+{
+$where.=sprintf(" and insdate < (DATE('%s') + INTERVAL 1 DAY) ",$to_date);
+}
 $where.=$iswed=="O"?" and we>0 and pm='' ":""; 
-$sql="select * from attendance where 1=1 $where order by insdate;";
+$sql=sprintf("select * from attendance where 1=1 %s order by insdate;",$where);
 $query=$connect->query($sql);
 $json=array();
 while($list=$query->fetch_assoc()){

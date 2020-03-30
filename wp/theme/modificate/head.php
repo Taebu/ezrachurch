@@ -32,7 +32,7 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
     <link rel="icon" href="<?php echo G5_THEME_URL;?>/images/favicon.ico" type="image/x-icon">
 
     <!--Bootstrap-->
-    <link rel="stylesheet" href="<?php echo G5_THEME_URL;?>/css/style.css">
+<!--     <link rel="stylesheet" href="<?php echo G5_THEME_URL;?>/css/style.css"> -->
 	<script type="text/javascript">
 	console.log("admin@ezrachurch.kr:/wp/theme/modificate/head.php");
 	</script>
@@ -132,7 +132,7 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $_SERVER['REQUEST_URI'];?>"><b>로그인 d</b></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/login.php?url=<?php echo $_SERVER['REQUEST_URI'];?>"><b>로그인</b></a></li>
             <?php } /* ?>
             <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">목사님께 질문</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></a></li>
@@ -154,7 +154,27 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 		<!-- 페이지마다 바뀌는 헤더 구성 -->
 
 		<?php 
-
+		
+		$h1 ="No Title";
+		$h2 = "...";
+		$h3 = "bg_03.jpg";
+		$nav = "";
+		$is_search=false;
+		$SCRIPT_NAME=$_SERVER['SCRIPT_NAME'];
+		if(strpos($SCRIPT_NAME,"search.php") !== false)
+		{
+			$k="";
+				if(isset($_GET['k'])&&strlen($_GET['k'])>0)
+				{
+					$k=$_GET['k'];
+				}
+				$h1 = "검색 결과 ".$k; 
+				$h2 = "에스라가 여호와의 율법을 연구하여 준행하며 율례와 규례를 이스라엘에게 가르치기로 결심하였었더라<br>에스라 7:10"; 
+				$h3 = "bg_02.jpg";
+				$nav = "말씀";		
+				$is_search=true;
+		}
+		
 		if($bo_table) {
 
 			$h1 = $board['bo_subject'];

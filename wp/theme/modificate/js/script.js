@@ -39,7 +39,7 @@ function isIE() {
 ;
 (function ($) {
     if (isIE() && isIE() < 11) {
-        include('js/pointer-events.min.js');
+        include('/wp/theme/modificate/youtube/js/pointer-events.min.js');
         $('html').addClass('lt-ie11');
         $(document).ready(function () {
             PointerEventsPolyfill.initialize({});
@@ -64,7 +64,7 @@ function isIE() {
 (function ($) {
     var o = $('html');
     if (o.hasClass('desktop') && o.hasClass("wow-animation") && $(".wow").length) {
-        include('js/wow.min.js');
+        include('/wp/theme/modificate/youtube/js/wow.min.js');
 
         $(document).ready(function () {
             new WOW().init();
@@ -80,7 +80,7 @@ function isIE() {
 ;
 (function ($) {
     if ($("html").hasClass("smoothscroll")) {
-        include('js/smoothscroll.min.js');
+        include('/wp/theme/modificate/youtube/js/smoothscroll.min.js');
     }
 })($);
 
@@ -91,7 +91,8 @@ function isIE() {
 ;
 (function ($) {
     if ($("html").hasClass("smoothscroll-all")) {
-        include('js/rd-smoothscroll.min.js');
+        include('/wp/theme/modificate/youtube/js/rd-smoothscroll.min.js');
+        
     }
 })($);
 
@@ -104,7 +105,7 @@ function isIE() {
 (function ($) {
     var o = $('html');
     if (o.hasClass('desktop')) {
-        include('js/jquery.ui.totop.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.ui.totop.min.js');
 
         $(document).ready(function () {
             $().UItoTop({
@@ -123,7 +124,7 @@ function isIE() {
 (function ($) {
     var o = $('.responsive-tabs');
     if (o.length > 0) {
-        include('js/jquery.easy-responsive-tabs.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.easy-responsive-tabs.min.js');
 
         $(document).ready(function () {
             o.each(function () {
@@ -146,7 +147,7 @@ function isIE() {
     var o = document.getElementById("google-map");
     if (o) {
         include('//maps.google.com/maps/api/js?sensor=false');
-        include('js/jquery.rd-google-map.js');
+        include('/wp/theme/modificate/youtube/js/jquery.rd-google-map.js');
 
         $(document).ready(function () {
             var o = $('#google-map');
@@ -187,7 +188,7 @@ function isIE() {
 (function ($) {
     var o = $('.rd-navbar');
     if (o.length > 0) {
-        include('js/jquery.rd-navbar.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.rd-navbar.min.js');
 
         $(document).ready(function () {
             var responsive = {};
@@ -250,7 +251,7 @@ function isIE() {
 
     var o = $(".swiper-slider");
     if (o.length) {
-        include('js/jquery.swiper.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.swiper.min.js');
 
 
 
@@ -434,7 +435,7 @@ function isIE() {
 (function ($) {
     var o = $(".progress-bar-custom");
     if (o.length) {
-        include('js/progressbar.min.js');
+        include('/wp/theme/modificate/youtube/js/progressbar.min.js');
 
         function isScrolledIntoView(elem) {
             var $window = $(window);
@@ -530,7 +531,7 @@ function isIE() {
 (function ($) {
     var o = $('.counter');
     if (o.length > 0) {
-        include('js/jquery.countTo.js');
+        include('/wp/theme/modificate/youtube/js/jquery.countTo.js');
         $(document).ready(function () {
             $(document)
                 //$(this).scroll(function () {
@@ -559,7 +560,7 @@ function isIE() {
 (function ($) {
     var o = $('.progress-bar');
     if (o.length > 0) {
-        include('js/jquery.counter.js');
+        include('/wp/theme/modificate/youtube/js/jquery.counter.js');
         $(document).ready(function () {
             $(document)
                 //$(this).scroll(function () {
@@ -612,7 +613,7 @@ function isIE() {
 (function ($) {
     var o = $('.rd-parallax');
     if (o.length) {
-        include('js/jquery.rd-parallax.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.rd-parallax.min.js');
         $(document).ready(function () {
             o.each(function () {
                 if (!$(this).parents(".swiper-slider").length) {
@@ -740,7 +741,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('.owl-carousel');
     if (o.length) {
-        include('js/jquery.owl-carousel.js');
+        include('/wp/theme/modificate/youtube/js/jquery.owl-carousel.js');
 
         var isTouch = "ontouchstart" in window;
 
@@ -926,7 +927,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('.questions');
     if (o.length) {
-        include('js/scrollTo.js');
+        include('/wp/theme/modificate/youtube/js/scrollTo.js');
         $(document).ready(function () {
             o.scrollTo({});
         });
@@ -942,7 +943,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('.rd-navbar-search');
     if (o.length) {
-        include('js/jquery.search.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.search.min.js');
         $(document).ready(function () {
             o.RDSearch({});
         });
@@ -958,7 +959,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('#DateCountdown');
     if (o.length) {
-        include('js/TimeCircles.js');
+        include('/wp/theme/modificate/youtube/js/TimeCircles.js');
         $(document).ready(function () {
             var time = {
                 "Days": {
@@ -1025,7 +1026,7 @@ $('#myTabs2 a').click(function (e) {
     var o = $('[data-lightbox]').not('[data-lightbox="gallery"] [data-lightbox]'),
         g = $('[data-lightbox^="gallery"]');
     if (o.length > 0 || g.length > 0) {
-        include('js/jquery.magnific-popup.min.js');
+        include('/wp/theme/modificate/youtube/js/jquery.magnific-popup.min.js');
 
         $(document).ready(function () {
             if (o.length) {
@@ -1156,7 +1157,7 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('.form-label');
     if (o.length) {
-        include('js/mailform/jquery.rd-input-label.js');
+        include('/wp/theme/modificate/youtube/js/mailform/jquery.rd-input-label.js');
 
         $(document).ready(function () {
             o.RDInputLabel();
@@ -1170,8 +1171,8 @@ $('#myTabs2 a').click(function (e) {
 (function ($) {
     var o = $('.rd-mailform');
     if (o.length > 0) {
-        include('js/mailform/jquery.form.min.js');
-        include('js/mailform/jquery.rd-mailform.min.js');
+        include('/wp/theme/modificate/youtube/js/mailform/jquery.form.min.js');
+        include('/wp/theme/modificate/youtube/js/mailform/jquery.rd-mailform.min.js');
 
         $(document).ready(function () {
             var o = $('.rd-mailform');

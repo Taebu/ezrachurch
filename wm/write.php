@@ -57,9 +57,22 @@ echo '<tr>';
 echo '<td>내용</td><td>';
 echo "<textarea name='wm_content'></textarea>";
 echo '</th></tr>';	
+
+
+
+echo '<tr>';
+echo '<td>내용 영문</td><td>';
+echo "<textarea name='wm_content_eng'></textarea>";
+echo '</th></tr>';	
+
 echo '<tr>';
 echo '<td>해설</td><td>';
 echo "<textarea name='wm_commentary'></textarea>";
+echo '</th></tr>';	
+
+echo '<tr>';
+echo '<td>해설 (영문)</td><td>';
+echo "<textarea name='wm_commentary_eng'></textarea>";
 echo '</th></tr>';	
 
 echo '<tr>';

@@ -11,6 +11,8 @@ foreach($TABLES as $key =>$value)
 	$sqls[]=sprintf("`%s`='%s' ",$key,$value);
 }
 
+$sqls[]="`wm_datetime`=now() ";
+
 $sql.=join(",",$sqls);
 $sql.=";";
 //$query=mysql_query($sql);

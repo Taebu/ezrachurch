@@ -96,8 +96,32 @@ var bible_title=["창세기","출애굽기","레위기","민수기","신명기",
 		}else{
 			$("#book_"+bible_title_index).addClass('active');
 		}
+
+	get_qna_count();
 });
- </script>
+
+function get_qna_count()
+{
+        $.ajax({
+            url:"/wp/theme/modificate/youtube/list/get_qna_count.php",
+            data:"",
+            dataType:"json",
+            type:"POST",
+            success:function(data){
+				for(var i in bible_title)
+				{
+					$("#book_"+i).append('<span class="badge">0</span>');
+				}
+				$.each(data.posts,function(key,val){
+					console.log(key+" = > "+ val.id+" = >"+val.cnt);
+					$("#book_"+val.id).html(val.ca_name+'<span class="badge">'+val.cnt+'</span>');
+				});
+				$("#book_all").append('<span class="badge">'+data.total_count+'</span>');
+			}
+		});
+
+}
+</script>
 
  <form action="" id="youtube_form">
  <input type="hidden" name="nextPageToken" id="nextPageToken" />
@@ -244,7 +268,7 @@ function myFunction() {
 <a id="book_63" href="javascript:get_qna('요한삼서');" class="list-group-item">요한삼서</a>
 <a id="book_64" href="javascript:get_qna('유다서');" class="list-group-item">유다서</a>
 <a id="book_65" href="javascript:get_qna('요한계시록');" class="list-group-item">요한계시록</a>
-<a id="book_65" href="javascript:get_qna('웨스트민스터');" class="list-group-item">웨스트민스터</a>
+<a id="book_66" href="javascript:get_qna('웨스트민스터');" class="list-group-item">웨스트민스터</a>
 
 </div>
 </div><!-- #left_layout .col-lg-2 text-center -->
@@ -330,7 +354,9 @@ if ($is_nogood) $colspan++;
 
 
 			    <?php
-				//print_r($list);
+//				echo "<pre>";
+//				print_r($list);
+//				echo "</pre>";
 				for ($i=0; $i<count($list); $i++) {
 				 ?>
 

@@ -60,7 +60,9 @@ include_once "./subject.php";
     -webkit-background-size: 40px 40px;
     background-size: 40px 40px;
 }
-
+.search_color{
+color: #c51111;
+}
 </style>
 <script>
 
@@ -125,20 +127,32 @@ function is_jong(str)
 include_once "./db_con.php";
 include_once "./subject.php";
 printf("<form action='%s' method='POST'>",$_SERVER['PHP_SELF']);
- $sql="select * from westminster_confession   order by wm_chapter,wm_clause";
+ $sql="select * from westminster_confession order by wm_order";
  $query=$mysqli->query($sql);
  $json=array();
  while($list=$query->fetch_assoc()){
  array_push($json,$list);
  }
  $count=mysqli_num_rows($query);
+
+
+
+$sql="select * from `bible`.`language_code`;";
+$query2=$mysqli->query($sql);
+echo "<select name='lanuage_code' >";
+while($list2=$query2->fetch_assoc())
+{
+	printf("<option value='%s'>%s</option>",$list2['lg_code'],$list2['lg_name']);
+}
+echo "</select>";
+ 
+
  echo "<input type='button' value='쓰기' onclick=\"location.href='./write.php'\">";
  echo "<table class='reference'>";
  
  $sql="select length(wm_content)!='' wm_is_data,count(*) cnt from westminster_confession group by wm_is_data;";
  $query2=$mysqli->query($sql);
- 
- 
+
  while($list2=$query2->fetch_assoc()){
  
  	if($list2['wm_is_data']==""||$list2['wm_is_data']=="0")
@@ -163,8 +177,10 @@ $where=empty($where)?"":$where;
 if(!empty($keyword))
 {
 	$where = sprintf(" where wm_content like '%%%s%%' ",$keyword);
+	$where = sprintf(" where wm_content like '%%%s%%' OR wm_relparse like '%%%s%%' ",$keyword,$keyword);
 }
-$sql="select * from westminster_confession ".$where." order by wm_chapter,wm_clause ";
+$sql="select * from westminster_confession ".$where." order by wm_order,wm_clause ";
+//echo $sql;
 $query=$mysqli->query($sql);
 if(!empty($keyword))
 {
@@ -175,14 +191,30 @@ printf("<tr><td colspan='5' class='tac'>\"%s\"로 검색된 결과 %d개 검색 
 print('<input type="text" name="keyword" id="" value="" placeholder="검색어를 입력 해 주세요.">');
 echo '<input type="submit" value="검색">';
 }
+echo "<tr>";
+echo "<th>a</th>";
+echo "<th>b</th>";
+echo "<th>c</th>";
+echo "<th>d</th>";
+echo "<th>e</th>";
+echo "<th>f</th>";
+echo "</tr>";
 while($list=$query->fetch_assoc()){
 
 	$is_contents=isset($list['wm_content'])&&strlen($list['wm_content'])>0;
+
+	$is_commentary=isset($list['wm_commentary'])&&strlen($list['wm_commentary'])>0;
+
 	if($is_contents)
 	echo "<tr>";
 	else
 	echo "<tr class='green'>";
 	echo "<td>";
+	/*
+	echo $list['wm_no'];
+	echo "</td>";
+	echo "<td>";
+*/
 	echo $list['wm_chapter']."장 ";
 
 	if($is_contents){
@@ -190,7 +222,7 @@ while($list=$query->fetch_assoc()){
 		if(!empty($keyword))
 		{
 			echo "<br>";
-			echo str_replace($keyword,"<b>".$keyword."</b>",$list['wm_content']);
+			echo str_replace($keyword,"<b class='search_color'>".$keyword."</b>",$list['wm_content']);
 		}
 	}else{
 		echo $SUBJECT['ko']["제".$list['wm_chapter']."장"]."이 등록되지 않았습니다. 해당항을 수정하여 등록해주세요.";
@@ -202,9 +234,13 @@ printf("<a href='./view.php?wm_no=%s'>보기</a>",$list['wm_no']);
 	echo "</td><td>";
 
 printf("<a href='./modify.php?wm_no=%s'>수정</a>",$list['wm_no']);
+	
 	echo "</td><td>";
 
 	echo $is_contents?"O":"X";
+echo "</td><td>";
+
+	echo $is_commentary?"O":"X";
 
 	echo "</td></tr>";
 

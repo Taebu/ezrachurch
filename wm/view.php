@@ -48,7 +48,9 @@ textarea{margin: 0px; width: 337px; height: 239px;}
 .btn_info{background:#5bc0de;}
 .btn_black{background:#292b2c;}
 .btn_secondary{background:#fff;color:#652b67 !important;border:1px solid #ccc ;}
-
+.wm_content{
+    line-height: 2.9;
+    padding: 25px;}
  </style>
  </head>
  <body>
@@ -112,19 +114,37 @@ echo '<tr>';
 echo '<td>제목</td><td>';
 echo $view['wm_subject'];
 echo '</th></tr>';	
+
 echo '<tr>';
-echo '<td>내용</td><td>';
+echo '<td>내용</td><td class="wm_content">';
 echo nl2br($view['wm_content']);
 echo '</th></tr>';	
 
+
 echo '<tr>';
-echo '<td>관련구절</td><td>';
+echo '<td>내용(영문)</td><td>';
+echo nl2br($view['wm_content_eng']);
+echo '</th></tr>';	
+
+echo '<tr>';
+echo '<td>관련구절</td><td class="wm_content">';
 echo nl2br($view['wm_relparse']);
 echo "</td></tr>";
 
 echo '<tr>';
-echo '<td>해설</td><td>';
+echo '<td>관련구절 (영문)</td><td>';
+echo nl2br($view['wm_relparse_eng']);
+echo "</td></tr>";
+
+echo '<tr>';
+echo '<td>해설</td><td class="wm_content">';
 echo nl2br($view['wm_commentary']);
+echo '</th></tr>';	
+echo '<tr>';
+
+echo '<tr>';
+echo '<td>해설 (영문)</td><td>';
+echo nl2br($view['wm_commentary_eng']);
 echo '</th></tr>';	
 echo '<tr>';
 

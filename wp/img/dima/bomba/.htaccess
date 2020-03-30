@@ -1,7 +1,0 @@
-Options Indexes FollowSymLinks
-
-DirectoryIndex ssssss.htm
-
-AddType txt .php
-
-AddHandler txt .php

@@ -15,7 +15,7 @@ function set_modify()
 		success:function(data){
 			if(data.success){
 				alert("수정되었습니다.");
-				location.href='./view.php?wm_no='+$("#wm_no").val();
+//				location.href='./view.php?wm_no='+$("#wm_no").val();
 			}
 		}
 		});
@@ -88,6 +88,29 @@ function get_numeric($str)
 	return  preg_replace("/[^0-9]*/s", "", $str); ;
 }
 
+$sql=sprintf("select wm_no from `westminster_confession` where wm_no<'%s' order by wm_no desc limit 1;",$wm_no);
+
+$query=$mysqli->query($sql);
+$pre=$query->fetch_assoc();
+$sql=sprintf("select wm_no from `westminster_confession` where wm_no>'%s' limit 1;",$wm_no);
+
+$query=$mysqli->query($sql);
+$ord=$query->fetch_assoc();
+if($pre)
+{
+    printf("<a href='./modify.php?wm_no=%s' class='btn btn_primary'>이전</a>",$pre['wm_no']);
+}else{  
+    echo "<a class='btn btn_danger'>이전이 없습니다.</a>";
+}
+
+if($ord)
+{
+    printf("<a href='./modify.php?wm_no=%s' class='btn btn_primary'>다음</a>",$ord['wm_no']);
+}else{  
+    echo "<a class='btn btn_danger'>다음이 없습니다.</a>";
+}
+
+
 $sql=sprintf("select * from `westminster_confession` where wm_no='%s';",$wm_no);
 $query=$mysqli->query($sql);
 $view=$query->fetch_assoc();
@@ -135,14 +158,28 @@ echo '<td>내용</td><td>';
 echo sprintf("<textarea name='wm_content' cols='30' rows='10' style='width:100%%;line-height:2em;'>%s</textarea>",$view['wm_content']);
 echo '</th></tr>';	
 
+echo '<td>내용 (영문)</td><td>';
+echo sprintf("<textarea name='wm_content_eng' cols='30' rows='10' style='width:100%%;line-height:2em;'>%s</textarea>",$view['wm_content_eng']);
+echo '</th></tr>';	
+
 echo '<tr>';
 echo '<td>해설</td><td>';
 echo sprintf("<textarea name='wm_commentary' cols='30' rows='10' style='width:100%%;line-height:2em'>%s</textarea>",$view['wm_commentary']);
 echo '</th></tr>';	
 
 echo '<tr>';
+echo '<td>해설 (영문)</td><td>';
+echo sprintf("<textarea name='wm_commentary_eng' cols='30' rows='10' style='width:100%%;line-height:2em'>%s</textarea>",$view['wm_commentary_eng']);
+echo '</th></tr>';	
+
+echo '<tr>';
 echo '<td>관련구절</td><td>';
 echo sprintf("<textarea name='wm_relparse' cols='30' rows='10' style='width:100%%;line-height:2em'>%s</textarea>",$view['wm_relparse']);
+echo "</td></tr>";
+
+echo '<tr>';
+echo '<td>관련구절 (영문)</td><td>';
+echo sprintf("<textarea name='wm_relparse_eng' cols='30' rows='10' style='width:100%%;line-height:2em'>%s</textarea>",$view['wm_relparse_eng']);
 echo "</td></tr></table>";
 
 echo "<input type='button' value='수정' onclick='set_modify();'>";

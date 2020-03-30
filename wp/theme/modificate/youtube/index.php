@@ -52,14 +52,53 @@ height: 100%;
 <script type="text/javascript" src="<?php echo $pr_list;?>.js"></script>
 <script type="text/javascript">
 var is_list="<?php echo $pr_list;?>"=="lecture_01"||"<?php echo $pr_list;?>"=="lecture_02";
+
 if(is_list)
 {
-pastor=eval(<?php echo $pr_list;?>);
+pastor=eval(ez_youtube_wm);
 }
  $(function(){
 	// alert('test');
-	get_youtube();
+	//get_youtube();
+
+	get_youtube_db();
 });
+
+
+
+/*js를 갱신 합니다.*/
+function set_make()
+{
+	$.ajax({
+		url:"./make_js.php?loc_id="+$("#pr_list").val(),
+		data:"",
+		dataType:"json",
+		type:"GET",
+		beforeSend:function(){
+			$("#btn_refresh").val("불러오는 중...");
+		},
+		success:function(data){
+			if(data.success){
+				$("#btn_refresh").val(data.message);
+			}else{
+				$("#btn_refresh").val(data.message);
+			}
+		}
+	});
+}
+function del_youtube_ajax(link)
+{
+
+	$.ajax({
+		url:"./del_youtube.php",
+		data:{"link":link},
+		dataType:"json",
+		type:"POST",
+		success:function(data){
+			set_make();
+		}
+	});
+}
 var nextPageToken="";
 var prevPageToken="";
 var mp3_loc="<?php echo $pr_list;?>";
@@ -83,18 +122,46 @@ function get_youtube(type)
 			$("#nextPageToken").val(data.nextPageToken);
 			var is_end=false;
 			var video_id="";
+			var is_private=is_deleted=false;
+
 			$.each(data.items,function(key,val){
 				
 
-				//echo '';
+				video_id=val.snippet.resourceId.videoId;
+
+				/* Private 비디오면 추가 시키지 않는다.
+				set_youtubelink(val.snippet.title,video_id);		 */
+				is_private=val.snippet.title.indexOf("Private")>-1;
+
+				/*2018-07-16 (월) 10:48:26 
+				"Deleted video"
+				면 추가 시키지 않는다. 남궁현우, 홍슬기 요청*/
+				is_deleted=val.snippet.title.indexOf("Deleted")>-1;
+
+				if(is_private){
+					console.log("is Private");
+					console.log(val.snippet.title+" : "+video_id);
+					del_youtube_ajax(video_id);
+					return;
+				}else if(is_deleted){
+					console.log("is Deleted");
+					console.log(val.snippet.title+" : "+video_id);
+					del_youtube_ajax(video_id);
+					return;
+				}else{
+				set_youtubelink(val.snippet.title,video_id);
+				}
+
 				object.push("<div class='col-lg-12 col-sm-12 col-xs-12 youtube-video'>");
 				object.push("<div class=\"video-container\">");
 				object.push("<iframe frameborder=\"0\"   width=\"853\" height=\"480\"  ");
 
 				object.push(" src=\"https://www.youtube.com/embed/");
-				
+				console.log(val.snippet.resourceId.videoId);
+				console.log(val.snippet.title);
+
+
 				if(type=="search"){
-				video_id=val.id.videoId;
 					object.push(val.id.videoId);
 					console.log(val.id.videoId);
 				
@@ -108,7 +175,7 @@ function get_youtube(type)
 				if(is_list){
 				var k=pastor.indexOf(val.snippet.title);
 				}
-				set_youtubelink(val.snippet.title,video_id);
+				
 				if(k>-1&&is_list)
 				{
 					console.log(pastor.indexOf(val.snippet.title));
@@ -136,6 +203,26 @@ function get_youtube(type)
 		}
 	});
 }
+
+function get_youtube_db()
+{
+	var object=[];
+	for(var i in ez_youtube_wm)	{		
+		object.push("<div class='col-lg-12 col-sm-12 col-xs-12 youtube-video'>");
+//		object.push(ez_youtube_wm[i].ey_title);
+		object.push("<div class=\"video-container\">");
+		object.push("<iframe frameborder=\"0\"   width=\"853\" height=\"480\"  ");
+		object.push(" title=\"test\" ");
+		object.push(" src=\"https://www.youtube.com/embed/");
+		object.push(ez_youtube_wm[i].ey_videoid);
+		object.push("?autoplay=0&controls=1&loop=1&rel=1");
+		object.push("&showinfo=1&autohide=1&start=5\" allowfullscreen></iframe></div><!-- .video-container -->");
+		object.push("</div>");	
+	} // for(var i in ez_youtube_wm){...}
+	$("#youtube_area").html(object.join(""));
+}
+
+
 
 function set_youtubelink(title,videoId) {
 	// body...
@@ -191,7 +278,8 @@ param+="&ey_group="+$("#pr_list").val();
             <div class="col-lg-12 text-center">
 			<!-- <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="목록갱신" id="btn_more" onclick="location.href:'/wp/theme/modificate/youtube/refresh.php';"/> -->
   <ul id="youtube_area"  class="list-unstyled video-list-thumbs row"></ul>
-      <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="더 불러오기" id="btn_more" onclick="javascript:get_youtube()" />
+  <!-- 
+      <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="더 불러오기" id="btn_more" onclick="javascript:get_youtube()" /> -->
   </div><!-- .col-lg-12 text-center -->
 
 
@@ -199,7 +287,7 @@ param+="&ey_group="+$("#pr_list").val();
 
 
 
-<div class="g-ytsubscribe" data-channelid="UC2r1rV2lL6zQVSnmkM8dwrg" data-layout="default" data-count="default" data-onytevent="onYtEvent" style="text-align:center;"></div>
+<div class="g-ytsubscribe" data-channelid="UC2r1rV2lL6zQVSnmkM8dwrg" data-layout="full" data-count="hidden" data-onytevent="onYtEvent" style="text-align:center;"></div>
 
 		  
 
