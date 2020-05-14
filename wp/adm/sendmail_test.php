@@ -8,7 +8,7 @@ if (!$config['cf_email_use'])
     alert('환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.');
 
 include_once(G5_LIB_PATH.'/mailer.lib.php');
-
+//echo G5_LIB_PATH;
 $g5['title'] = '메일 테스트';
 include_once('./admin.head.php');
 

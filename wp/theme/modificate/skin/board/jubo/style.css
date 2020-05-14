@@ -256,4 +256,4 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_vc_sns input {margin:0 0 0 5px}
 
 .jubo_layout{width: 100%;}
-.jubo_layout td{border:1px solid #ccc;}
+.jubo_layout td{border:1px solid #ccc;padding: 13px;line-height: 1.5;}

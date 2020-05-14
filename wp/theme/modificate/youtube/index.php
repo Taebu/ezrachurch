@@ -1,53 +1,22 @@
 <?php
 header('Access-Control-Allow-Origin: *');
-
 include_once('./_common.php');
-
 define('_INDEX_', true);
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-
 include_once('../head.php');
-
-
-//print_r($_SERVER);
-
 ?>
-
-
- <script src="js/jquery.js"></script>
-
- <!-- This is what you need -->
- <script src="js/sweetalert.js"></script>
- <link rel="stylesheet" href="css/sweetalert.css">
- <style type="text/css">
-
+<script src="js/jquery.js"></script>
+<!-- This is what you need -->
+<script src="js/sweetalert.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/sweetalert.css">
+<style type="text/css">
 /* Source: http://bootsnipp.com/snippets/featured/video-list-thumbnails */
-
 .video-list-thumbs{}
-.video-list-thumbs > li{
-    margin-bottom:112px
-}
-.video-container {
-position: relative;
-padding-bottom: 56.25%;
-height: 0; overflow: hidden;
-}
-
-
-.video-container {
-margin-bottom:10%;
-}
-
-.video-container iframe,
-.video-container object,
-.video-container embed {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-}
+.video-list-thumbs > li{margin-bottom:112px}
+.video-container {position: relative;padding-bottom: 56.25%;height: 0; overflow: hidden;}
+.video-container {margin-bottom:10%;}
+.video-container iframe,.video-container object,.video-container embed {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
 </style>
 <script type="text/javascript" src="<?php echo $pr_list;?>.js"></script>
 <script type="text/javascript">
@@ -63,8 +32,6 @@ pastor=eval(ez_youtube_wm);
 
 	get_youtube_db();
 });
-
-
 
 /*js를 갱신 합니다.*/
 function set_make()
@@ -261,42 +228,18 @@ param+="&ey_group="+$("#pr_list").val();
     }
   }
 </script>
-
-      <main class="page-content">
-
-        <section class="well text-center text-md-left">
-          <div class="container">
-
-
-<div class="g-ytsubscribe" data-channelid="UC2r1rV2lL6zQVSnmkM8dwrg" data-layout="default" data-count="default" data-onytevent="onYtEvent" style="text-align:center;"></div>
-
-
-
-
-    <script src="js/bootstrap.min.js"></script>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-			<!-- <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="목록갱신" id="btn_more" onclick="location.href:'/wp/theme/modificate/youtube/refresh.php';"/> -->
-  <ul id="youtube_area"  class="list-unstyled video-list-thumbs row"></ul>
-  <!-- 
-      <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="더 불러오기" id="btn_more" onclick="javascript:get_youtube()" /> -->
-  </div><!-- .col-lg-12 text-center -->
-
-
-  </div><!-- .row -->
-
-
-
+<main class="page-content">
+<section class="well text-center text-md-left">
+<div class="container"><div class="g-ytsubscribe" data-channelid="UC2r1rV2lL6zQVSnmkM8dwrg" data-layout="default" data-count="default" data-onytevent="onYtEvent" style="text-align:center;"></div>
+<div class="row"><div class="col-lg-12 text-center">
+<!-- <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="목록갱신" id="btn_more" onclick="location.href:'/wp/theme/modificate/youtube/refresh.php';"/> -->
+<ul id="youtube_area"  class="list-unstyled video-list-thumbs row"></ul>
+<!-- <input type="button" class="offset-5 btn btn-primary btn-xs round-small btn_submit" value="더 불러오기" id="btn_more" onclick="javascript:get_youtube()" /> -->
+</div><!-- .col-lg-12 text-center -->
+</div><!-- .row -->
 <div class="g-ytsubscribe" data-channelid="UC2r1rV2lL6zQVSnmkM8dwrg" data-layout="full" data-count="hidden" data-onytevent="onYtEvent" style="text-align:center;"></div>
-
-		  
-
-		</div>
-	</section>
+</div></section>
 </main>
-
-
-
 <?php
 include_once(G5_PATH.'/tail.php');
 ?>

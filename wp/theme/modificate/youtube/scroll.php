@@ -121,7 +121,7 @@ var is_enable=false;
     }
     if(mp3_loc=="edu_01"){
 //       get_youtube("제11장");  
-       get_youtube("25장");  
+       get_youtube("26장");  
     }
 
 	if(mp3_loc=="edu_03"){
@@ -191,7 +191,7 @@ function get_youtube(q)
 
 	var bible=[];
 	var not_ready="";
-	not_ready+="제25장제26장제27장제28장제29장제30장";
+	not_ready+="제26장제27장제28장제29장제30장";
 	not_ready+="제23장제31장제32장제33장";
 
 	if(not_ready.indexOf(q)>-1&&$("#pr_list").val()=="lecture_02")
@@ -414,7 +414,7 @@ function get_youtube_page(q)
   var max_cnt=list_page*list_size;
   var search_key=0;
   var not_ready="";
-     not_ready+="제25장제26장제27장제28장제29장";
+     not_ready+="제26장제27장제28장제29장";
      not_ready+="제30장제23장제31장제32장제33장";
 
 	if(not_ready.indexOf(q)>-1)
@@ -839,9 +839,9 @@ console.log(ez_youtube_wm);
   <a href="javascript:get_youtube('제21장');" class="list-group-item">제21장 : 예배와 안식일 </a>
   <a href="javascript:get_youtube('제22장');" class="list-group-item">제22장 : 합당한 맹세와 서원</a>
   <a href="javascript:get_youtube('제24장');" class="list-group-item">제24장 : 결혼과 이혼</a>
-  <a href="javascript:get_youtube('제25장');" class="list-group-item active">제25장 : 교회</a>
-  <a href="javascript:get_youtube('제26장');" class="list-group-item disabled">제26장 : 성도의 교통</a>
-  <a href="javascript:get_youtube('제27장');" class="list-group-item disabled">제27장 : 성례</a>
+  <a href="javascript:get_youtube('제25장');" class="list-group-item">제25장 : 교회</a>
+  <a href="javascript:get_youtube('제26장');" class="list-group-item">제26장 : 성도의 교통</a>
+  <a href="javascript:get_youtube('제27장');" class="list-group-item active">제27장 : 성례</a>
   <a href="javascript:get_youtube('제28장');" class="list-group-item disabled">제28장 : 세례</a>
   <a href="javascript:get_youtube('제29장');" class="list-group-item disabled">제29장 : 성찬</a>
   <a href="javascript:get_youtube('제30장');" class="list-group-item disabled">제30장 : 교회의 권징</a>
