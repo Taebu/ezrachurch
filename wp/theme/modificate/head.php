@@ -65,7 +65,39 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
                 <!--END RD Navbar Toggle-->
 
                 <!--RD Navbar Brand-->
-                <div class="rd-navbar-brand"><a href="<?php echo G5_URL ?>/index.php"><img src="<?php echo G5_THEME_URL;?>/images/logo_dark.png" style="width:180px">
+                <?php
+                $is_ezrabible = false;
+				$array_ezrabible = array(
+                	"/wp/bbs/content.php?co_id=ezrabible",
+					"/wp/bbs/lecture_mylist.php",
+					"/wp/bbs/board.php?bo_table=bible_01",
+					"/wp/bbs/board.php?bo_table=gallery_04",
+					"/wp/bbs/lecture_list.php"
+                );
+
+
+                $is_bsc_intro = false;
+                $array_bsc_intro = array(
+                	"/wp/bbs/content.php?co_id=bsc_intro",
+					"/wp/bbs/board.php?bo_table=bsc_notice",
+					"/wp/bbs/board.php?bo_table=bsc_edu",
+					"/wp/bbs/board.php?bo_table=bsc_gallery",
+					"/wp/bbs/board.php?bo_table=bsc_data"
+                );
+                
+                $is_ezrabible = in_array($_SERVER['REQUEST_URI'], $array_ezrabible);
+                $is_bsc_intro = in_array($_SERVER['REQUEST_URI'], $array_bsc_intro);
+                
+                if($is_ezrabible){
+
+                printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s%s" style="width:180px">',G5_URL,G5_THEME_URL,"/images/ezrabible.png");
+                }else if($is_bsc_intro){
+
+                printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s%s" style="width:180px">',G5_URL,G5_THEME_URL,"/images/bsc_intro.png");
+                }else{
+                printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s/images/logo_dark.png" style="width:180px">',G5_URL,G5_THEME_URL,G5_THEME_URL);
+                }
+                ?>
 				
 				</a></div>
                 <!--END RD Navbar Brand-->
