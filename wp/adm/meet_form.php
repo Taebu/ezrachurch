@@ -216,7 +216,8 @@ $mode=$mode==""?"write":$mode;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_1" value="SEBL" checked="checked"><label for="em_lecture_type_1">&nbsp;&nbsp;성경강좌</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_2" value="EBL_TEACHER"><label for="em_lecture_type_2">&nbsp;&nbsp;교사고시반</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_3" value="CHONGCHIN_EZRA_CIRCLES"><label for="em_lecture_type_3">&nbsp;&nbsp;총신에스라동아리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="em_lecture_type" id="em_lecture_type_4" value="YONSEI_UNIVERSITY_EZRA_CIRCLES"><label for="em_lecture_type_4">&nbsp;&nbsp;연세대학교에스라동아리</label>
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_4" value="YONSEI_UNIVERSITY_EZRA_CIRCLES"><label for="em_lecture_type_4">&nbsp;&nbsp;연세대학교에스라동아리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_5" value="CONFERENCE"><label for="em_lecture_type_5">&nbsp;&nbsp;학술대회</label>
             </td>
         </tr>
         <tr>
@@ -537,6 +538,8 @@ function set_default()
 				if(data.success){
 					alert("등록성공");
                     location.href="/wp/adm/meet_list.php";
+				}else{
+					alert(data.message);
 				}
 			}
 		});

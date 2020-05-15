@@ -77,7 +77,7 @@ function get_status_name($key)
     }
     return $result;
 }
-function get_lecture_stat($lec_no)
+function get_lecture_stat($em_no)
 {
     $result=array();
     $result['success']=0;
@@ -85,7 +85,7 @@ function get_lecture_stat($lec_no)
     $sql=array();
     $sql[]="select el_status,sum(el_total) el_total ";
     $sql[]="from ez_lecture ";
-    $sql[]="where em_lecture_no={$lec_no} ";
+    $sql[]="where em_no={$em_no} ";
     $sql[]="group by el_status;";
     $query=sql_query(join("",$sql));
     for ($i=0; $list=sql_fetch_array($query); $i++) 
@@ -164,7 +164,7 @@ function get_lecture_stat($lec_no)
         $one_update = '<a href="./board_form.php?w=u&amp;bo_table='.$row['bo_table'].'&amp;'.$qstr.'">수정</a>';
         $one_copy = '<a href="./board_copy.php?bo_table='.$row['bo_table'].'" class="board_copy" target="win_board_copy">복사</a>';
         $bg = 'bg'.($i%2);
-        $lec_stat=get_lecture_stat($row['em_lecture_no']);
+        $lec_stat=get_lecture_stat($row['em_no']);
 		$lec_sum = $lec_stat['waiting'] + $lec_stat['success']; // 신청한 사람과 입금사람의 최종 합계 수정 2017-03-27 홍슬기
 
     ?>
