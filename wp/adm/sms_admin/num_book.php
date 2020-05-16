@@ -13,6 +13,11 @@ $g5['title'] = "휴대폰번호 관리";
 
 if ($page < 1) $page = 1;
 
+$bg_no = isset($bg_no) ? (int) $bg_no : 0;
+$st = isset($st) ? preg_replace('/[^a-z0-9]/i', '', $st) : '';
+
+$sql_korean = $sql_group = $sql_search = $sql_no_hp = '';
+
 if (is_numeric($bg_no))
     $sql_group = " and bg_no='$bg_no' ";
 else
@@ -99,12 +104,12 @@ function no_hp_click(val)
 </script>
 
 <div class="local_ov01 local_ov">
-    <span class="ov_listall">회원정보 최근 업데이트 <?php echo $sms5['cf_datetime']?></span>
-    <span class="ov_listall">총 건수 <?php echo number_format($total_count)?>명</span>
-    <span class="ov_listall">회원 <?php echo number_format($member_count)?>명</span>
-    <span class="ov_listall">비회원 <?php echo number_format($no_member_count)?>명</span>
-    <span class="ov_listall">수신 <?php echo number_format($receipt_count)?>명</span>
-    <span class="ov_listall">거부 <?php echo number_format($reject_count)?>명</span>
+    <span class="btn_ov01"><span class="ov_txt">업데이트 </span><span class="ov_num"><?php echo $sms5['cf_datetime']?></span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 건수  </span><span class="ov_num"><?php echo number_format($total_count)?>명</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 회원  </span><span class="ov_num"> <?php echo number_format($member_count)?>명</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 비회원  </span><span class="ov_num"> <?php echo number_format($no_member_count)?>명</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 수신  </span><span class="ov_num"> <?php echo number_format($receipt_count)?>명</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 거부  </span><span class="ov_num"> <?php echo number_format($reject_count)?>명</span></span>
 </div>
 
 <form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch">
@@ -124,18 +129,16 @@ function no_hp_click(val)
 <label for="bg_no" class="sound_only">그룹명</label>
 <select name="bg_no" id="bg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?bg_no='+this.value;">
     <option value=""<?php echo get_selected('', $bg_no); ?>> 전체 </option>
-    <option value="<?php echo $no_group['bg_no']?>"<?php echo get_selected($bg_no, $no_group['bg_no']); ?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
+    <option value="<?php echo $no_group['bg_no']?>"<?php echo get_selected($no_group['bg_no'], $bg_no); ?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
     <?php for($i=0; $i<count($group); $i++) {?>
-    <option value="<?php echo $group[$i]['bg_no']?>"<?php echo get_selected($bg_no, $group[$i]['bg_no']);?>> <?php echo $group[$i]['bg_name']?> (<?php echo number_format($group[$i]['bg_count'])?> 명) </option>
+    <option value="<?php echo $group[$i]['bg_no']?>"<?php echo get_selected($group[$i]['bg_no'], $bg_no);?>> <?php echo $group[$i]['bg_name']?> (<?php echo number_format($group[$i]['bg_count'])?> 명) </option>
     <?php } ?>
 </select>
 <input type="checkbox" name="no_hp" id="no_hp" <?php echo $no_hp_checked?> onclick="no_hp_click(this.checked)">
 <label for="no_hp">휴대폰 소유자만 보기</label>
 </form>
 
-<div class="btn_add01 btn_add">
-    <a href="./num_book_write.php?page=<?php echo $page?>&amp;bg_no=<?php echo $bg_no?>">번호추가</a>
-</div>
+
 
 <form name="hp_manage_list" id="hp_manage_list" method="post" action="./num_book_multi_update.php" onsubmit="return hplist_submit(this);" >
 <input type="hidden" name="page" value="<?php echo $page; ?>">
@@ -191,23 +194,23 @@ function no_hp_click(val)
         <td class="td_boolean"><?php echo $res['bk_receipt'] ? '<font color=blue>수신</font>' : '<font color=red>거부</font>'?></td>
         <td class="td_mbid"><?php echo $res['mb_id'] ? $res['mb_id'] : '비회원'?></td>
         <td class="td_datetime"><?php echo $res['bk_datetime']?></td>
-        <td class="td_mng">
-            <a href="./num_book_write.php?w=u&amp;bk_no=<?php echo $res['bk_no']?>&amp;page=<?php echo $page?>&amp;bg_no=<?php echo $bg_no?>&amp;st=<?php echo $st?>&amp;sv=<?php echo $sv?>&amp;ap=<?php echo $ap?>">수정</a>
-            <a href="./sms_write.php?bk_no=<?php echo $res['bk_no']?>">보내기</a>
-            <a href="./history_num.php?st=hs_hp&amp;sv=<?php echo $res['bk_hp']?>">내역</a>
+        <td class="td_mng td_mng_l">
+            <a href="./num_book_write.php?w=u&amp;bk_no=<?php echo $res['bk_no']?>&amp;page=<?php echo $page?>&amp;bg_no=<?php echo $bg_no?>&amp;st=<?php echo $st?>&amp;sv=<?php echo $sv?>&amp;ap=<?php echo $ap?>" class="btn btn_03">수정</a>
+            <a href="./sms_write.php?bk_no=<?php echo $res['bk_no']?>" class="btn btn_02">보내기</a>
+            <a href="./history_num.php?st=hs_hp&amp;sv=<?php echo $res['bk_hp']?>" class="btn btn_02">내역</a>
         </td>
     </tr>
     <?php } ?>
     </tbody>
     </table>
 </div>
-
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-    <input type="submit" name="act_button" value="수신허용" onclick="document.pressed=this.value">
-    <input type="submit" name="act_button" value="수신거부" onclick="document.pressed=this.value">
-    <input type="submit" name="act_button" value="선택이동" onclick="document.pressed=this.value">
-    <input type="submit" name="act_button" value="선택복사" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+    <input type="submit" name="act_button" value="수신허용" onclick="document.pressed=this.value" class="btn btn_02">
+    <input type="submit" name="act_button" value="수신거부" onclick="document.pressed=this.value" class="btn btn_02">
+    <input type="submit" name="act_button" value="선택이동" onclick="document.pressed=this.value" class="btn btn_02">
+    <input type="submit" name="act_button" value="선택복사" onclick="document.pressed=this.value" class="btn btn_02">
+    <a href="./num_book_write.php?page=<?php echo $page?>&amp;bg_no=<?php echo $bg_no?>" class="btn btn_01">번호추가</a>
 </div>
 </form>
 <script>

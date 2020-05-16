@@ -15,7 +15,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
 
 <div class="local_sch local_sch01">
     <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
-    <?=$listall?>
+    <?php echo $listall?>
     <label for="sch_sort" class="sound_only">검색분류</label>
     <select name="sfl" id="sch_sort" class="search_sort">
         <option value="vi_ip"<?php echo get_selected($sfl, 'vi_ip'); ?>>IP</option>
@@ -44,7 +44,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
     <?php
     $sql_common = " from {$g5['visit_table']} ";
     if ($sfl) {
-        if($sst=='vi_ip' || $sst=='vi_date'){
+        if($sfl=='vi_ip' || $sfl=='vi_date'){
             $sql_search = " where $sfl like '$stx%' ";
         }else{
             $sql_search = " where $sfl like '%$stx%' ";
@@ -92,7 +92,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
             }
 
             $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), $referer);
-            $link = '<a href="'.$row['vi_referer'].'" target="_blank" title="'.$title.'">';
+            $link = '<a href="'.get_text($row['vi_referer']).'" target="_blank" title="'.$title.'">';
         }
 
         if ($is_admin == 'super')
@@ -104,7 +104,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_id"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
-        <td><?php echo $link.$title; ?></a></td>
+        <td class="td_left"><?php echo $link.$title; ?><?php echo $link ? '</a>' : ''; ?></td>
         <td class="td_idsmall td_category1"><?php echo $brow; ?></td>
         <td class="td_idsmall td_category3"><?php echo $os; ?></td>
         <td class="td_idsmall td_category2"><?php echo $device; ?></td>

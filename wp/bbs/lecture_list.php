@@ -58,7 +58,7 @@ include_once(G5_THEME_PATH.'/head.php');
 					
 <?php
 //print_r($member);
-$sql="select * from ez_meet where em_status='receipt';";
+$sql="select * from ez_meet where em_status='receipt' order by em_no desc;";
 $query=sql_query($sql);
 if(sql_num_rows($query)==0){
 echo '<tr><td colspan="9" style="text-align:center;font-weight:900">등록된 강좌가 없습니다.</td></tr>';

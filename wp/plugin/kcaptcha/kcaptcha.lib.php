@@ -235,7 +235,6 @@ class KCAPTCHA{
 
 
 // 캡챠 HTML 코드 출력
-/*
 function captcha_html($class="captcha")
 {
     if(is_mobile())
@@ -246,71 +245,18 @@ function captcha_html($class="captcha")
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
     $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
     $html .= "\n".'<legend><label for="captcha_key">자동등록방지</label></legend>';
-    if (is_mobile()) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
+    if (is_mobile()) $html .= '<audio id="captcha_audio" controls></audio>';
     //$html .= "\n".'<img src="#" alt="" id="captcha_img">';
-    $html .= "\n".'<img src="javascript:void(0);" alt="" id="captcha_img">';
+    $html .= "\n".'<img src="'.G5_CAPTCHA_URL.'/img/dot.gif" alt="" id="captcha_img">';
+    $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
     if (!is_mobile()) $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
-    $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
     $html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
     $html .= "\n".'</fieldset>';
     return $html;
 }
-*/
-function captcha_html($class="captcha")
-{
-    if(is_mobile())
-        $class .= ' m_captcha';
 
-    $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
-    //$html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
-    $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
-    $html .= "\n".'<div class="row">';
-	$html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
-	$html .= "\n".'<legend><label for="captcha_key">자동등록방지</label></legend>';
-	if (is_mobile()) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
-//    $html .= "\n".'<img src="#" alt="" id="captcha_img">';    
-	$html .= "\n".'  </div>';
-    $html .= "\n".'<div class="col-xs-12 col-sm-4 col-lg-2">';
-    $html .= "\n".'  <div class="form-group">';
-    $html .= "\n".'<img src="javascript:void(0);" alt="" id="captcha_img">';
-    $html .= "\n".'  </div>';
-    $html .= "\n".'</div>';
 
-	/*
-	<div class="form-group col-sm-6">
-			<label for="exampleInputPass1" class="text-uppercase font-secondary">비밀번호</label>
-			<input type="password" name="mb_password" placeholder="Your password" id="exampleInputPass1" class="form-control round-small">
-		  </div>
-  <div class="col-sm-6">
-			<button type="submit" class="btn btn-primary btn-xs round-small btn-block form-el-offset-1">로그인</button>
-		  </div> class="form-control round-small"
-	*/
-    if (!is_mobile()) $html .= "\n".'';
-    if (!is_mobile()) 
-	{
-		$html .= "\n".'<div class="col-xs-6 col-sm-4 col-lg-2">';
-		$html .= "\n".'  <div class="form-group">';
-		$html .= "\n".'<button type="button" id="captcha_mp3" class="btn btn-warning btn-xs round-small btn-block"><span></span>숫자듣기</button>';
-		$html .= "\n".'  </div>';
-		$html .= "\n".'</div>';
-	}
-    $html .= "\n".'<div class="col-xs-6 col-sm-4 col-lg-2">';
-    $html .= "\n".'  <div class="form-group">';
-	$html .= "\n".'<button type="button" id="captcha_reload" class="btn btn-primary btn-xs round-small btn-block"><span></span>새로고침</button>';
-    $html .= "\n".'  </div>';
-    $html .= "\n".'</div>';
-    $html .= "\n".'<div class="col-xs-12 col-sm-12 col-lg-6">';
-    $html .= "\n".'  <div class="form-group">';
-	$html .= '<input type="text" name="captcha_key" id="captcha_key" class="form-control round-small captcha_box" placeholder="자동등록방지 숫자를 순서대로 입력하세요.">';
-    $html .= "\n".'  </div>';
-    $html .= "\n".'</div>';
-    $html .= "\n".'</div>';
-	$html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
-    //$html .= "\n".'</fieldset>';
-
-    return $html;
-}
 // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함
 function chk_captcha_js()
 {

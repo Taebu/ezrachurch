@@ -6,26 +6,26 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'r');
 
-// http://www.jqplot.com/
-add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.css">', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.pointLabels.min.js"></script>', 0);
-add_javascript('<!--[if lt IE 9]><script src="'.G5_PLUGIN_URL.'/jqplot/excanvas.js"></script><![endif]-->', 0);
+$g5['title'] = '글,댓글 현황';
+include_once ('./admin.head.php');
 
-if (!($graph == 'line' || $graph == 'bar')) 
+// http://www.jqplot.com/
+add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.css">', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.pointLabels.min.js"></script>', 1);
+add_javascript('<!--[if lt IE 9]><script src="'.G5_PLUGIN_URL.'/jqplot/excanvas.js"></script><![endif]-->', 1);
+
+if (!($graph == 'line' || $graph == 'bar'))
     $graph = 'line';
 
 if ($graph == 'bar') {
     // 바 타입으로 사용하는 코드입니다.
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.barRenderer.min.js"></script>', 0);
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.categoryAxisRenderer.min.js"></script>', 0);
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.pointLabels.min.js"></script>', 0);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.barRenderer.min.js"></script>', 1);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.categoryAxisRenderer.min.js"></script>', 1);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.pointLabels.min.js"></script>', 1);
 }
-
-$g5['title'] = '글,댓글 현황';
-include_once ('./admin.head.php');
 
 $period_array = array(
     '오늘'=>array('시간', 0),
@@ -49,7 +49,7 @@ foreach($period_array as $key=>$value) {
         break;
     }
 }
-if (!$is_period) 
+if (!$is_period)
     $period = '오늘';
 
 $day = $period_array[$period][0];
@@ -64,15 +64,15 @@ if ($period == '오늘') {
     $from = $yesterday;
     $to = $from;
 } else if ($period == '내일') {
-    $from = date('Y-m-d', G5_SERVER_TIME + (86400 * 2)); 
+    $from = date('Y-m-d', G5_SERVER_TIME + (86400 * 2));
     $to = $from;
 } else {
-    $from = date('Y-m-d', G5_SERVER_TIME - (86400 * $period_array[$period][1])); 
+    $from = date('Y-m-d', G5_SERVER_TIME - (86400 * $period_array[$period][1]));
     $to = $yesterday;
 }
 
 $sql_bo_table = '';
-if ($bo_table) 
+if ($bo_table)
     $sql_bo_table = "and bo_table = '$bo_table'";
 
 switch ($day) {
@@ -129,8 +129,8 @@ switch ($day) {
 <div id="wr_cont">
     <form>
     <select name="bo_table">
-    <option value="">전체게시판</a>
-    <?php 
+    <option value="">전체게시판</option>
+    <?php
     $sql = " select bo_table, bo_subject from {$g5['board_table']} order by bo_count_write desc ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -173,13 +173,12 @@ if (empty($line1) || empty($line2)) {
 } else {
 ?>
 <div id="chart1" style="height:500px; width:100%;"></div>
-<div>
 <script>
 $(document).ready(function(){
     var line1 = [<?php echo implode($line1, ','); ?>];
     var line2 = [<?php echo implode($line2, ','); ?>];
     var plot1 = $.jqplot ('chart1', [line1, line2], {
-            seriesDefaults: { 
+            seriesDefaults: {
                 <?php if ($graph == 'bar') { ?>
                 renderer:$.jqplot.BarRenderer,
                 <?php } ?>
@@ -204,7 +203,7 @@ $(document).ready(function(){
 <?php
 }
 ?>
-
-<?
+</div>
+<?php
 include_once ('./admin.tail.php');
 ?>

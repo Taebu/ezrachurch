@@ -11,7 +11,7 @@ switch($type) {
                     order by gr_order, gr_id ";
         break;
     case 'board':
-        $sql = " select bo_table as id, bo_subject as subject
+        $sql = " select bo_table as id, bo_subject as subject, gr_id
                     from {$g5['board_table']}
                     order by bo_order, bo_table ";
         break;
@@ -32,13 +32,18 @@ if($sql) {
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0) {
+
+    $bbs_subject_title = ($type == 'board') ? '게시판제목' : '제목';
 ?>
 
 <div class="tbl_head01 tbl_wrap">
     <table>
     <thead>
     <tr>
-        <th scope="col">제목</th>
+        <th scope="col"><?php echo $bbs_subject_title; ?></th>
+        <?php if($type == 'board'){ ?>
+            <th scope="col">게시판 그룹</th>
+        <?php } ?>
         <th scope="col">선택</th>
     </tr>
     </thead>
@@ -50,10 +55,10 @@ if($sql) {
                 $link = G5_BBS_URL.'/group.php?gr_id='.$row['id'];
                 break;
             case 'board':
-                $link = G5_BBS_URL.'/board.php?bo_table='.$row['id'];
+                $link = get_pretty_url($row['id']);
                 break;
             case 'content':
-                $link = G5_BBS_URL.'/content.php?co_id='.$row['id'];
+                $link = get_pretty_url(G5_CONTENT_DIR, $row['id']);
                 break;
             default:
                 $link = '';
@@ -63,10 +68,16 @@ if($sql) {
 
     <tr>
         <td><?php echo $row['subject']; ?></td>
+        <?php
+        if($type == 'board'){
+        $group = get_call_func_cache('get_group', array($row['gr_id']));
+        ?>
+        <td><?php echo $group['gr_subject']; ?></td>
+        <?php } ?>
         <td class="td_mngsmall">
             <input type="hidden" name="subject[]" value="<?php echo preg_replace('/[\'\"]/', '', $row['subject']); ?>">
             <input type="hidden" name="link[]" value="<?php echo $link; ?>">
-            <button type="button" class="add_select"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택</button>
+            <button type="button" class="add_select btn btn_03"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택</button>
         </td>
     </tr>
 
@@ -76,8 +87,12 @@ if($sql) {
     </table>
 </div>
 
+<div class="local_desc01 menu_exists_tip" style="display:none">
+    <p>* <strong>빨간색</strong>의 제목은 이미 메뉴에 연결되어 경우 표시됩니다.</p>
+</div>
+
 <div class="btn_win02 btn_win">
-    <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
+    <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
 </div>
 
 <?php } else { ?>
@@ -105,7 +120,7 @@ if($sql) {
 </div>
 
 <div class="btn_win02 btn_win">
-    <button type="button" id="add_manual" class="btn_submit">추가</button>
-    <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
+    <button type="button" id="add_manual" class="btn_submit btn">추가</button>
+    <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
 </div>
 <?php } ?>

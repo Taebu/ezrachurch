@@ -5,10 +5,14 @@ include_once(G5_PATH.'/head.sub.php');
 
 if (!$is_member)
 {
-    $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+    $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
     echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.str_replace('&amp;', '&', $href).'\'; </script>';
     exit;
 }
+
+// 게시글 존재하는지
+if(!$write['wr_id'])
+    alert_close('스크랩하시려는 게시글이 존재하지 않습니다.');
 
 $sql = " select count(*) as cnt from {$g5['scrap_table']}
             where mb_id = '{$member['mb_id']}'
@@ -27,7 +31,7 @@ if ($row['cnt'])
     <noscript>
     <p>이미 스크랩하신 글 입니다.</p>
     <a href="./scrap.php">스크랩 확인하기</a>
-    <a href="./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'">돌아가기</a>
+    <a href="'.get_pretty_url($bo_table, $wr_id).'">돌아가기</a>
     </noscript>';
     exit;
 }
@@ -41,6 +45,14 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
     // 원글이 존재한다면
     if ($wr['wr_id'])
     {
+
+        // 세션의 시간 검사
+        // 4.00.15 - 댓글 수정시 연속 게시물 등록 메시지로 인한 오류 수정
+        if ($w == 'c' && $_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
+            alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+        
+        set_session('ss_datetime', G5_SERVER_TIME);
+
         $mb_id = $member['mb_id'];
         $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
         $wr_password = $member['mb_password'];
@@ -82,11 +94,14 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
         sql_query(" update {$g5['board_table']}  set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
 
         // 포인트 부여
-        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
+        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 댓글쓰기(스크랩)", $bo_table, $comment_id, '댓글');
     }
 }
 
 $sql = " insert into {$g5['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G5_TIME_YMDHIS."' ) ";
+sql_query($sql);
+
+$sql = " update `{$g5['member_table']}` set mb_scrap_cnt = '".get_scrap_totals($member['mb_id'])."' where mb_id = '{$member['mb_id']}' ";
 sql_query($sql);
 
 delete_cache_latest($bo_table);

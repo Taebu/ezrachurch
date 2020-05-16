@@ -133,7 +133,7 @@ if(!isset($qaconfig['qa_include_head'])) {
         <tr>
             <th scope="row"><label for="qa_title">타이틀<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="qa_title" value="<?php echo $qaconfig['qa_title'] ?>" id="qa_title" required class="required frm_input" size="40">
+                <input type="text" name="qa_title" value="<?php echo get_sanitize_input($qaconfig['qa_title']); ?>" id="qa_title" required class="required frm_input" size="40">
                 <a href="<?php echo G5_BBS_URL; ?>/qalist.php" class="btn_frmline">1:1문의 바로가기</a>
             </td>
         </tr>
@@ -141,7 +141,7 @@ if(!isset($qaconfig['qa_include_head'])) {
             <th scope="row"><label for="qa_category">분류<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])') ?>
-                <input type="text" name="qa_category" value="<?php echo $qaconfig['qa_category'] ?>" id="qa_category" required class="required frm_input" size="70">
+                <input type="text" name="qa_category" value="<?php echo get_sanitize_input($qaconfig['qa_category']); ?>" id="qa_category" required class="required frm_input" size="70">
             </td>
         </tr>
         <tr>
@@ -184,21 +184,21 @@ if(!isset($qaconfig['qa_include_head'])) {
             <th scope="row"><label for="qa_send_number">SMS 발신번호</label></th>
             <td>
                 <?php echo help('SMS 알림 전송시 발신번호로 사용됩니다.'); ?>
-                <input type="text" name="qa_send_number" value="<?php echo $qaconfig['qa_send_number'] ?>" id="qa_send_number" class="frm_input"  size="30">
+                <input type="text" name="qa_send_number" value="<?php echo get_sanitize_input($qaconfig['qa_send_number']); ?>" id="qa_send_number" class="frm_input"  size="30">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_admin_hp">관리자 휴대폰번호</label></th>
             <td>
                 <?php echo help('관리자 휴대폰번호를 입력하시면 문의글 등록시 등록하신 번호로 SMS 알림이 전송됩니다.<br>SMS 알림을 사용하지 않으시면 알림이 전송되지 않습니다.'); ?>
-                <input type="text" name="qa_admin_hp" value="<?php echo $qaconfig['qa_admin_hp'] ?>" id="qa_admin_hp" class="frm_input"  size="30">
+                <input type="text" name="qa_admin_hp" value="<?php echo get_sanitize_input($qaconfig['qa_admin_hp']); ?>" id="qa_admin_hp" class="frm_input"  size="30">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_admin_email">관리자 이메일</label></th>
             <td>
                 <?php echo help('관리자 이메일을 입력하시면 문의글 등록시 등록하신 이메일로 알림이 전송됩니다.'); ?>
-                <input type="text" name="qa_admin_email" value="<?php echo $qaconfig['qa_admin_email'] ?>" id="qa_admin_email" class="frm_input"  size="50">
+                <input type="text" name="qa_admin_email" value="<?php echo get_sanitize_input($qaconfig['qa_admin_email']); ?>" id="qa_admin_email" class="frm_input"  size="50">
             </td>
         </tr>
         <tr>
@@ -263,34 +263,50 @@ if(!isset($qaconfig['qa_include_head'])) {
                 <input type="text" name="qa_include_tail" value="<?php echo $qaconfig['qa_include_tail'] ?>" id="qa_include_tail" class="frm_input" size="50">
             </td>
         </tr>
+        <tr id="admin_captcha_box" style="display:none;">
+            <th scope="row">자동등록방지</th>
+            <td>
+                <?php
+                echo help("파일 경로를 입력 또는 수정시 캡챠를 반드시 입력해야 합니다.");
+
+                include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+                $captcha_html = captcha_html();
+                $captcha_js   = chk_captcha_js();
+                echo $captcha_html;
+                ?>
+                <script>
+                jQuery("#captcha_key").removeAttr("required").removeClass("required");
+                </script>
+            </td>
+        </tr>
         <tr>
             <th scope="row"><label for="qa_content_head">상단 내용</label></th>
             <td>
-                <?php echo editor_html("qa_content_head", get_text($qaconfig['qa_content_head'], 0)); ?>
+                <?php echo editor_html("qa_content_head", get_text(html_purifier($qaconfig['qa_content_head']), 0)); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_content_tail">하단 내용</label></th>
             <td>
-                <?php echo editor_html("qa_content_tail", get_text($qaconfig['qa_content_tail'], 0)); ?>
+                <?php echo editor_html("qa_content_tail", get_text(html_purifier($qaconfig['qa_content_tail']), 0)); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_mobile_content_head">모바일 상단 내용</label></th>
             <td>
-                <?php echo editor_html("qa_mobile_content_head", get_text($qaconfig['qa_mobile_content_head'], 0)); ?>
+                <?php echo editor_html("qa_mobile_content_head", get_text(html_purifier($qaconfig['qa_mobile_content_head']), 0)); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_mobile_content_tail">모바일 하단 내용</label></th>
             <td>
-                <?php echo editor_html("qa_mobile_content_tail", get_text($qaconfig['qa_mobile_content_tail'], 0)); ?>
+                <?php echo editor_html("qa_mobile_content_tail", get_text(html_purifier($qaconfig['qa_mobile_content_tail']), 0)); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="qa_insert_content">글쓰기 기본 내용</label></th>
             <td>
-                <textarea id="qa_insert_content" name="qa_insert_content" rows="5"><?php echo $qaconfig['qa_insert_content'] ?></textarea>
+                <textarea id="qa_insert_content" name="qa_insert_content" rows="5"><?php echo html_purifier($qaconfig['qa_insert_content']); ?></textarea>
             </td>
         </tr>
         <?php for ($i=1; $i<=5; $i++) { ?>
@@ -309,19 +325,70 @@ if(!isset($qaconfig['qa_include_head'])) {
     </div>
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+<div class="btn_fixed_top">
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
 </div>
 
 </form>
 
 <script>
+
+var captcha_chk = false;
+
+function use_captcha_check(){
+    $.ajax({
+        type: "POST",
+        url: g5_admin_url+"/ajax.use_captcha.php",
+        data: { admin_use_captcha: "1" },
+        cache: false,
+        async: false,
+        dataType: "json",
+        success: function(data) {
+        }
+    });
+}
+
+function frm_check_file(){
+    var qa_include_head = "<?php echo $qaconfig['qa_include_head']; ?>";
+    var qa_include_tail = "<?php echo $qaconfig['qa_include_tail']; ?>";
+    var head = jQuery.trim(jQuery("#qa_include_head").val());
+    var tail = jQuery.trim(jQuery("#qa_include_tail").val());
+
+    if(qa_include_head !== head || qa_include_tail !== tail){
+        // 캡챠를 사용합니다.
+        jQuery("#admin_captcha_box").show();
+        captcha_chk = true;
+
+        use_captcha_check();
+
+        return false;
+    } else {
+        jQuery("#admin_captcha_box").hide();
+    }
+
+    return true;
+}
+
+jQuery(function($){
+    if( window.self !== window.top ){   // frame 또는 iframe을 사용할 경우 체크
+        $("#qa_include_head, #qa_include_tail").on("change paste keyup", function(e) {
+            frm_check_file();
+        });
+
+        use_captcha_check();
+    }
+});
+
 function fqaconfigform_submit(f)
 {
     <?php echo get_editor_js("qa_content_head"); ?>
     <?php echo get_editor_js("qa_content_tail"); ?>
     <?php echo get_editor_js("qa_mobile_content_head"); ?>
     <?php echo get_editor_js("qa_mobile_content_tail"); ?>
+
+    if( captcha_chk ) {
+        <?php echo isset($captcha_js) ? $captcha_js : ''; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
+    }
 
     f.action = "./qa_config_update.php";
     return true;

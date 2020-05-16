@@ -73,6 +73,7 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 					"/wp/bbs/board.php?bo_table=bible_01",
 					"/wp/bbs/board.php?bo_table=gallery_04",
 					"/wp/bbs/lecture_list.php"
+					
                 );
 
 
@@ -84,8 +85,9 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 					"/wp/bbs/board.php?bo_table=bsc_gallery",
 					"/wp/bbs/board.php?bo_table=bsc_data"
                 );
-                
                 $is_ezrabible = in_array($_SERVER['REQUEST_URI'], $array_ezrabible);
+				$is_ezrabible = $is_ezrabible||$_SERVER['SCRIPT_NAME']=="/wp/bbs/lecture_write.php";
+
                 $is_bsc_intro = in_array($_SERVER['REQUEST_URI'], $array_bsc_intro);
                 
                 if($is_ezrabible){

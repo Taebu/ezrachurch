@@ -9,11 +9,6 @@ if ($is_guest && $board['bo_comment_level'] < 2) {
 
 @include_once($board_skin_path.'/view_comment.head.skin.php');
 
-// 코멘트를 새창으로 여는 경우 세션값이 없으므로 생성한다.
-if ($is_admin && !$token) {
-    set_session("ss_delete_token", $token = uniqid(time()));
-}
-
 $list = array();
 
 $is_comment_write = false;
@@ -44,8 +39,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
     if (!strstr($row['wr_option'], 'secret') ||
         $is_admin ||
-        ($write['mb_id']==$member['mb_id'] && $member['mb_id']) ||
-        ($row['mb_id']==$member['mb_id'] && $member['mb_id'])) {
+        ($write['mb_id']===$member['mb_id'] && $member['mb_id']) ||
+        ($row['mb_id']===$member['mb_id'] && $member['mb_id'])) {
         $list[$i]['content1'] = $row['wr_content'];
         $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
         $list[$i]['content'] = search_font($stx, $list[$i]['content']);
@@ -53,7 +48,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$list[$i]['wr_id'];
 
         if(!get_session($ss_name))
-            $list[$i]['content'] = '<a href="./password.php?w=sc&amp;bo_table='.$bo_table.'&amp;wr_id='.$list[$i]['wr_id'].$qstr.'" class="s_cmt">댓글내용 확인</a>';
+            $list[$i]['content'] = '<a href="'.G5_BBS_URL.'/password.php?w=sc&amp;bo_table='.$bo_table.'&amp;wr_id='.$list[$i]['wr_id'].$qstr.'" class="s_cmt">댓글내용 확인</a>';
         else {
             $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
             $list[$i]['content'] = search_font($stx, $list[$i]['content']);
@@ -72,11 +67,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['is_del']  = false;
     if ($is_comment_write || $is_admin)
     {
+        $token = '';
+
         if ($member['mb_id'])
         {
-            if ($row['mb_id'] == $member['mb_id'] || $is_admin)
+            if ($row['mb_id'] === $member['mb_id'] || $is_admin)
             {
-                $list[$i]['del_link']  = './delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
+                set_session('ss_delete_comment_'.$row['wr_id'].'_token', $token = uniqid(time()));
+                $list[$i]['del_link']  = G5_BBS_URL.'/delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;
                 $list[$i]['is_edit']   = true;
                 $list[$i]['is_del']    = true;
             }
@@ -84,7 +82,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else
         {
             if (!$row['mb_id']) {
-                $list[$i]['del_link'] = './password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;page='.$page.$qstr;
+                $list[$i]['del_link'] = G5_BBS_URL.'/password.php?w=x&amp;bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;page='.$page.$qstr;
                 $list[$i]['is_del']   = true;
             }
         }
@@ -119,6 +117,9 @@ else
     $comment_min = (int)$board['bo_comment_min'];
     $comment_max = (int)$board['bo_comment_max'];
 }
+
+$comment_action_url = https_url(G5_BBS_DIR)."/write_comment_update.php";
+$comment_common_url = short_url_clean(G5_BBS_URL.'/board.php?'.clean_query_string($_SERVER['QUERY_STRING']));
 
 include_once($board_skin_path.'/view_comment.skin.php');
 

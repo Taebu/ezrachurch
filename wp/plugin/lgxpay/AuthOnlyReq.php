@@ -19,10 +19,10 @@ $CST_MID                    = 'si_'.$config['cf_lg_mid'];       // 상점아이�
                                                                 //테스트 아이디는 't'를 반드시 제외하고 입력하세요.
 $LGD_MID                    = (('test' == $CST_PLATFORM) ? 't':'').$CST_MID;  //상점아이디(자동생성)
 $LGD_BUYER                  = '홍길동';                         // 성명 (보안을 위해 DB난 세션에서 가져오세요)
-$LGD_BUYERSSN               = '0000000000000';                  // 주민등록번호 (보안을 위해 DB나 세션에서 가져오세요)
+$LGD_BUYERSSN               = '000000';                  // 주민등록번호 (보안을 위해 DB나 세션에서 가져오세요)
                                                                 // 휴대폰 본인인증을 사용할 경우 주민번호는 '0' 13자리를 넘기세요. 예)0000000000000
                                                                 // 기타 인증도 사용할 경우 실 주민등록번호 (보안을 위해 DB나 세션에 저장처리 권장)
-$LGD_MOBILE_SUBAUTH_SITECD  = '';                               // 신용평가사에서 부여받은 회원사 고유 코드
+$LGD_MOBILE_SUBAUTH_SITECD  = '123456789abc';                               // 신용평가사에서 부여받은 회원사 고유 코드
                                                                 //  (CI값만 필요한 경우 옵션, DI값도 필요한 경우 필수)
 $LGD_TIMESTAMP              = date('YmdHis');                   // 타임스탬프 (YYYYMMDDhhmmss)
 $LGD_CUSTOM_SKIN            = 'red';                            // 상점정의 인증창 스킨 (red, blue, cyan, green, yellow)
@@ -46,6 +46,45 @@ $LGD_CUSTOM_SKIN            = 'red';                            // 상점정의 
 
 $LGD_MERTKEY    = $config['cf_lg_mert_key'];
 $LGD_HASHDATA   = md5($LGD_MID.$LGD_BUYERSSN.$LGD_TIMESTAMP.$LGD_MERTKEY);
+$LGD_RETURNURL  = G5_PLUGIN_URL.'/lgxpay/returnurl.php';
+if( G5_IS_MOBILE ){
+    $LGD_WINDOW_TYPE = 'submit';
+} else {
+    $LGD_WINDOW_TYPE = 'iframe';
+}
+
+$LGD_NAMECHECKYN = 'N';
+$LGD_HOLDCHECKYN = 'Y';
+$LGD_CUSTOM_USABLEPAY = 'ASC007';
+
+$payReqMap = array();
+
+$payReqMap['CST_PLATFORM']              = $CST_PLATFORM;           				// 테스트, 서비스 구분
+$payReqMap['CST_MID']                   = $CST_MID;                				// 상점아이디
+$payReqMap['LGD_MID']                   = $LGD_MID;                				// 상점아이디
+$payReqMap['LGD_HASHDATA'] 				= $LGD_HASHDATA;      	           		// MD5 해쉬암호값
+$payReqMap['LGD_BUYER']              	= $LGD_BUYER;							// 요청자 성명
+$payReqMap['LGD_BUYERSSN']              = $LGD_BUYERSSN;           				// 요청자 생년월일 / 사업자번호
+
+$payReqMap['LGD_NAMECHECKYN']           = $LGD_NAMECHECKYN;           			// 계좌실명확인여부
+$payReqMap['LGD_HOLDCHECKYN']           = $LGD_HOLDCHECKYN;           			// 휴대폰본인확인 SMS발송 여부
+$payReqMap['LGD_MOBILE_SUBAUTH_SITECD'] = $LGD_MOBILE_SUBAUTH_SITECD;           // 신용평가사에서 부여받은 회원사 고유 코드
+
+$payReqMap['LGD_CUSTOM_SKIN'] 			= $LGD_CUSTOM_SKIN;                		// 본인확인창 SKIN
+$payReqMap['LGD_TIMESTAMP'] 			= $LGD_TIMESTAMP;                  		// 타임스탬프
+$payReqMap['LGD_CUSTOM_USABLEPAY']      = $LGD_CUSTOM_USABLEPAY;        		// [반드시 설정]상점정의 이용가능 인증수단으로 한 개의 값만 설정 (예:"ASC007")
+$payReqMap['LGD_WINDOW_TYPE']           = $LGD_WINDOW_TYPE;        				// 호출방식 (수정불가)
+$payReqMap['LGD_RETURNURL'] 			= $LGD_RETURNURL;      			   		// 응답수신페이지
+$payReqMap['LGD_VERSION'] 				= "PHP_Non-ActiveX_AuthOnly";			// 사용타입 정보(수정 및 삭제 금지): 이 정보를 근거로 어떤 서비스를 사용하는지 판단할 수 있습니다.
+ 
+
+/*Return URL에서 인증 결과 수신 시 셋팅될 파라미터 입니다.*/
+$payReqMap['LGD_RESPCODE'] 				= "";
+$payReqMap['LGD_RESPMSG'] 				= "";
+$payReqMap['LGD_AUTHONLYKEY'] 			= "";
+$payReqMap['LGD_PAYTYPE'] 				= "";
+
+$_SESSION['lgd_certify'] = $payReqMap;
 
 /*
  *************************************************
@@ -61,25 +100,54 @@ $LGD_HASHDATA   = md5($LGD_MID.$LGD_BUYERSSN.$LGD_TIMESTAMP.$LGD_MERTKEY);
 <title>LG유플러스 전자결제 본인확인서비스</title>
 <!-- 고객사 사이트가 https인 경우는 아래 http://을 https:// 으로 변경하시면 됩니다. -->
 <link rel="stylesheet" href="<?php echo G5_CSS_URL;?>/default.css">
-<script language="javascript" src="//xpay.uplus.co.kr/xpay/js/xpay_authonly.js" type="text/javascript" charset="EUC-KR"></script>
-<script>
-function do_Authonly() {
-    ret = xpay_authonly_check(document.getElementById("LGD_PAYINFO"), document.getElementById("CST_PLATFORM").value);
-    if (ret == "00"){     //ActiveX 로딩 성공
-        if(dpop.getData("LGD_RESPCODE") == "0000"){
-            document.getElementById("LGD_AUTHONLYKEY").value = dpop.getData("LGD_AUTHONLYKEY");
-            document.getElementById("LGD_PAYTYPE").value = dpop.getData("LGD_PAYTYPE");
-            //alert("인증요청을 합니다.");
-            document.getElementById("LGD_PAYINFO").submit();
-        } else {
-            alert(dpop.getData("LGD_RESPMSG"));
-        }
-    } else {
-        alert("LG유플러스 본인확인서비스를 위한 ActiveX 설치 실패\nInternet Explorer 외의 브라우저에서는 사용할 수 없습니다.");
-        //window.close();
-    }
-}
+<script language="javascript" src="<?php echo (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https' : 'http'; ?>://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+	/*
+	* 수정불가.
+	*/
+	var LGD_window_type = "<?php echo $LGD_WINDOW_TYPE;?>";
+	var lgd_form = "LGD_PAYINFO";
+	/*
+	* 수정불가.
+	*/
+	function launchCrossPlatform(){
+		
+        <?php if( G5_IS_MOBILE ){   //모바일이면 ?>
+            lgdwin = open_paymentwindow(document.getElementById(lgd_form), '<?php echo $CST_PLATFORM ?>', LGD_window_type);
+        <?php } else {  //PC 이면 ?>
+		    lgdwin = openAuthonly( document.getElementById(lgd_form), "<?php echo $CST_PLATFORM; ?>", LGD_window_type, null );
+        <?php } ?>
+
+	}
+	
+	/*
+	* FORM 명만  수정 가능
+	*/
+	function getFormObject() {
+	        return document.getElementById(lgd_form);
+	}
+	
+	function  payment_return() {
+		
+		var fDoc = lgdwin.contentWindow || lgdwin.contentDocument;
+	
+		if (fDoc.document.getElementById('LGD_RESPCODE').value == "0000") {
+			document.getElementById("LGD_AUTHONLYKEY").value = fDoc.document.getElementById('LGD_AUTHONLYKEY').value;
+			document.getElementById("LGD_PAYTYPE").value = fDoc.document.getElementById('LGD_PAYTYPE').value;
+			
+			document.getElementById(lgd_form).target = "_self";
+            document.getElementById("LGD_PAYINFO").action = "AuthOnlyRes.php";
+			document.getElementById(lgd_form).submit();
+		} else {
+			alert("LGD_RESPCODE (결과코드2) : " + fDoc.document.getElementById('LGD_RESPCODE').value + "\n" + "LGD_RESPMSG (결과메시지): " + fDoc.document.getElementById('LGD_RESPMSG').value);
+			closeIframe();
+            window.close();
+		}//end if
+	}//end payment_return
 </script>
+
 <style>
 #uplus_win {}
 .up_cmt {text-align:center; font-size:14px;}
@@ -92,22 +160,17 @@ function do_Authonly() {
 </style>
 </head>
 <body>
-<form method="post" id="LGD_PAYINFO" action="<?php echo G5_LGXPAY_URL; ?>/AuthOnlyRes.php">
-<input type="hidden" name="CST_MID" id="CST_MID" value="<?php echo $CST_MID; ?>" />
-<input type="hidden" name="LGD_MID" id="LGD_MID" value="<?php echo $LGD_MID; ?>"/>
-<input type="hidden" name="CST_PLATFORM" id="CST_PLATFORM" value="<?php echo $CST_PLATFORM; ?>"/>
-<input type="hidden" name="LGD_BUYERSSN" value="<?php echo $LGD_BUYERSSN; ?>"/>
-<input type="hidden" name="LGD_BUYER" value="<?php echo $LGD_BUYER; ?>"/>
-<input type="hidden" name="LGD_MOBILE_SUBAUTH_SITECD" value="<?php echo  $LGD_MOBILE_SUBAUTH_SITECD; ?>"/>
-<input type="hidden" name="LGD_TIMESTAMP" value="<?php echo $LGD_TIMESTAMP; ?>"/>
-<input type="hidden" name="LGD_HASHDATA" value="<?php echo $LGD_HASHDATA; ?>"/>
-<input type="hidden" name="LGD_NAMECHECKYN" value="N">
-<input type="hidden" name="LGD_HOLDCHECKYN" value="Y">
-<input type="hidden" name="LGD_CUSTOM_SKIN" value="red">
-<input type="hidden" name="LGD_CUSTOM_FIRSTPAY" value="ASC007">
-<input type="hidden" name="LGD_CUSTOM_USABLEPAY" value="ASC007">
-<input type="hidden" name="LGD_PAYTYPE" id="LGD_PAYTYPE"/>
-<input type="hidden" name="LGD_AUTHONLYKEY" id="LGD_AUTHONLYKEY"/>
+
+<form method="post" name ="LGD_PAYINFO" id="LGD_PAYINFO" action="<?php echo G5_LGXPAY_URL; ?>/AuthOnlyRes.php">
+<input type="hidden" name="LGD_ENCODING" value="UTF-8"/>
+<?php
+foreach ($payReqMap as $key => $value) {
+    $key = htmlspecialchars(strip_tags($key), ENT_QUOTES);
+    $value = htmlspecialchars(strip_tags($value), ENT_QUOTES);
+    echo "<input type='hidden' name='$key' id='$key' value='$value'/>".PHP_EOL;
+}
+?>
+
 </form>
 
 <div id="uplus_win" class="new_win mbskin">
@@ -123,7 +186,7 @@ function do_Authonly() {
     </div>
 </div>
 <script>
-setTimeout("do_Authonly();",300);
+setTimeout("launchCrossPlatform();", 1);
 </script>
 </body>
 </html>

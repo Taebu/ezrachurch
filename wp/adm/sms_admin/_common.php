@@ -12,5 +12,12 @@ if (!strstr($_SERVER['SCRIPT_NAME'], 'install.php')) {
     //$sms5 = sql_fetch("select * from ".$g5['sms5_config_table'] );
 }
 
+$sv = isset($_REQUEST['sv']) ? get_search_string($_REQUEST['sv']) : '';
+$st = (isset($_REQUEST['st']) && $st) ? substr(get_search_string($_REQUEST['st']), 0, 12) : '';
+
+if( isset($token) ){
+    $token = @htmlspecialchars(strip_tags($token), ENT_QUOTES);
+}
+
 add_stylesheet('<link rel="stylesheet" href="'.G5_SMS5_ADMIN_URL.'/css/sms5.css">', 0);
 ?>
