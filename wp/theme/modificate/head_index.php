@@ -157,7 +157,7 @@ var is_snow=false;
             <!-- <li style="z-index:<?php echo $gnb_zindex--; ?>"> -->
             <li>
                 <!-- <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a> -->
-                <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" ><?php echo $row['me_name'] ?></a>
+                <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" ><p style=font-size:13.5px;letter-spacing:-1px><?php echo $row['me_name'] ?></p></a>
                 <!--RD Navbar Dropdown-->    
                 <?php
                 $sql2 = " select *
@@ -187,7 +187,7 @@ var is_snow=false;
             </li>
             <?php if($menu_size==$i){?>
              <?php if ($is_member) {  ?>
-			<li><a href="#">마이페이지</a>
+			<li><a href="#">My</a>
 			 <?php }else {  ?>
 			<li><a href="#">로그인</a>
        		  <?php }  ?>

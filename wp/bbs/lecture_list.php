@@ -1,17 +1,10 @@
 <?php
 include_once('../common.php');
 include_once(G5_THEME_PATH.'/head.php');
-
 ?>
-
-
       <main class="page-content">
-
         <section class="well well-inset-2">
           <div class="container">
-
-
-								
 				<!-- 연중집회일정 계획표  -->
 				<div class="trainee_list">
 <?php			if($member['mb_id']=="admin")
@@ -58,8 +51,15 @@ include_once(G5_THEME_PATH.'/head.php');
 					
 <?php
 //print_r($member);
-$sql="select * from ez_meet where em_status='receipt';";
-$query=sql_query($sql);
+//em_lecture_type=CONFERENCE
+$sql="select * from ez_meet  ";
+$where = "where em_status='receipt' ";
+$order = " order by em_no desc;";
+if(isset($em_lecture_type)&&strlen($em_lecture_type)>0)
+{
+	$where.=sprintf(" and em_lecture_type='%s' ",$em_lecture_type);
+}
+$query=sql_query($sql.$where.$order);
 if(sql_num_rows($query)==0){
 echo '<tr><td colspan="9" style="text-align:center;font-weight:900">등록된 강좌가 없습니다.</td></tr>';
 }

@@ -1,4 +1,22 @@
 <?php
+$is_block=is_blockip($_SERVER['REMOTE_ADDR']);
+
+function is_blockip($ip)
+{
+	$block_ip = array();
+	$block_ip[] = "211.36.158.171";
+//	$block_ip[] = "123.142.52.92";
+	return in_array($ip,$block_ip);
+}
+
+
+
+if($is_block)
+{
+	echo "this ip is block";
+	exit();
+}
+
 /*******************************************************************************
 ** 공통 변수, 상수, 코드
 *******************************************************************************/
@@ -628,4 +646,5 @@ $gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
 // header('Pragma: no-cache'); // HTTP/1.0
 
 $html_process = new html_process();
+
 ?>

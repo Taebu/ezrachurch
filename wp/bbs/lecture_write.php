@@ -43,7 +43,7 @@ if($row['em_status']!="receipt")
           <div class="container">
 
 
-				<h5 style=text-align:center>제<?php echo $row['em_lecture_no'] ?>기 에스라성경강좌 강좌 참가 신청서</h5>
+				<h5 style=text-align:center><?php echo $row['em_lecture_name'] ?> 참가 신청서</h5>
 
 				<p></p>				<p></p>
 

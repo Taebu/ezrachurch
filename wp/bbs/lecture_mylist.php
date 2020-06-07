@@ -55,15 +55,24 @@ function get_status_name($key)
 					<tbody>
 					<!-- 데이터 유무에 따라서 빈박스 처리  -->
 <?php
-if($member['mb_id']=="admin")
+$where = " ";
+$order = " order by el_no desc;";
+
+if(isset($em_lecture_type)&&strlen($em_lecture_type)>0)
 {
-	$sql="select * from ez_lecture order by el_no desc;";
-}else if($member['mb_id']!="admin"){
-	$sql="select * from ez_lecture where mb_id='{$member[mb_id]}' order by el_no desc;";
-	//echo $sql;
+	$where.=sprintf(" and em_lecture_type='%s' ",$em_lecture_type);
 }
 
-$query=sql_query($sql);
+
+if($member['mb_id']=="admin")
+{
+	$sql="select * from ez_lecture ";
+}else if($member['mb_id']!="admin"){
+
+	$sql="select * from ez_lecture where mb_id='{$member[mb_id]}' ";
+	//echo $sql;
+}
+$query=sql_query($sql.$where.$order);
 
 if(sql_num_rows($query)==0){
 echo '<tr><td colspan="6" style="text-align:center;font-weight:900">접수한 강좌가 없습니다. <br> 올해는 성경강좌를 들어보시는게 어떨까요?</td></tr>';

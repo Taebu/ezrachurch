@@ -73,8 +73,8 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 					"/wp/bbs/board.php?bo_table=bible_01",
 					"/wp/bbs/board.php?bo_table=gallery_04",
 					"/wp/bbs/lecture_list.php"
+					
                 );
-
 
                 $is_bsc_intro = false;
                 $array_bsc_intro = array(
@@ -84,9 +84,20 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 					"/wp/bbs/board.php?bo_table=bsc_gallery",
 					"/wp/bbs/board.php?bo_table=bsc_data"
                 );
-                
+
+				// EzraBibleTheologyInt 
+                $is_ebt_intro = false;
+                $array_ebt_intro = array(
+                	"/wp/bbs/content.php?co_id=EzraBibleTheologyInt"
+                );
+
                 $is_ezrabible = in_array($_SERVER['REQUEST_URI'], $array_ezrabible);
+
+				$is_ezrabible = $is_ezrabible||$_SERVER['SCRIPT_NAME']=="/wp/bbs/lecture_write.php";
+
                 $is_bsc_intro = in_array($_SERVER['REQUEST_URI'], $array_bsc_intro);
+
+                $is_ebt_intro = in_array($_SERVER['REQUEST_URI'], $array_ebt_intro);
                 
                 if($is_ezrabible){
 
@@ -94,9 +105,13 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
                 }else if($is_bsc_intro){
 
                 printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s%s" style="width:180px">',G5_URL,G5_THEME_URL,"/images/bsc_intro.png");
+                }else if($is_ebt_intro){
+
+                printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s/images/logo_dark.png" style="width:180px">',G5_URL,G5_THEME_URL,G5_THEME_URL);
                 }else{
                 printf('<div class="rd-navbar-brand"><a href="%s/index.php"><img src="%s/images/logo_dark.png" style="width:180px">',G5_URL,G5_THEME_URL,G5_THEME_URL);
                 }
+                
                 ?>
 				
 				</a></div>
@@ -122,8 +137,8 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
             for ($i=0; $row=sql_fetch_array($result); $i++) {
             ?>
             <li>
-                <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" ><?php echo $row['me_name'] ?></a>
-                <!--RD Navbar Dropdown-->    
+                <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" ><p style=font-size:13.5px;letter-spacing:-1px><?php echo $row['me_name'] ?></p></a>
+                <!--RD Navbar Dropdown-->   
                 <?php
                 $sql2 = " select *
                             from {$g5['menu_table']}
@@ -151,7 +166,7 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
             </li>
             <?php if($menu_size==$i){?>
              <?php if ($is_member) {  ?>
-			<li><a href="#">마이페이지</a>
+			<li><a href="#">My</a>
 			 <?php }else {  ?>
 			<li><a href="#">로그인</a>
        		  <?php }  ?>
@@ -277,6 +292,16 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 				$nav = "에스라바이블스쿨";
 
 			}
+
+			if($co_id == "EzraBibleTheologyInt") { 
+				$h1 ="에스라성서신학회 소개";
+				$h2 = "에스라성서신학회는 ‘Sola Scriptura-오직성경'와 ’Tota Scriptura-성경전체'를 기초로 종교개혁의 정신을 이어가는 개혁주의 신학회입니다. ‘에스라’는 ‘도우시는 하나님’이라는 뜻으로 하나님의 도우심으로 성서를 배우고 연구하는 신학회를 의미합니다. TULIP과 5Sola를 믿는 학자는 누구나 환영합니다.";
+				$h3 = "bg_02.jpg";
+				$nav = "에스라성서신학회 소개";
+
+			}
+
+
 			
 
 			$now_page_name = basename($_SERVER['PHP_SELF'],".php");
