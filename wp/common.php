@@ -23,11 +23,14 @@ if($is_block)
 error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WARNING | E_PARSE | E_USER_ERROR | E_USER_WARNING );
 
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
-// header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
+header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
 
 if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
+if( version_compare( PHP_VERSION, '5.2.17' , '<' ) ){
+    die(sprintf('PHP 5.2.17 or higher required. Your PHP version is %s', PHP_VERSION));
+}
 
 //==========================================================================================================================
 // extract($_GET); 명령으로 인해 page.php?_POST[var1]=data1&_POST[var2]=data2 와 같은 코드가 _POST 변수로 사용되는 것을 막음
@@ -47,17 +50,22 @@ for ($i=0; $i<$ext_cnt; $i++) {
 
 function g5_path()
 {
-    $result['path'] = str_replace('\\', '/', dirname(__FILE__));
-    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
-    $document_root = str_replace($tilde_remove, '', $_SERVER['SCRIPT_FILENAME']);
-    $root = str_replace($document_root, '', $result['path']);
-    $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
-    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
-    $user = str_replace(str_replace($document_root, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
-    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
-        $host = preg_replace('/:[0-9]+$/', '', $host);
-    $result['url'] = $http.$host.$port.$user.$root;
+    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__))); 
+    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__)); 
+    $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME'])); 
+    $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'])); 
+    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name); 
+    $document_root = str_replace($tilde_remove, '', $server_script_filename); 
+    $pattern = '/.*?' . preg_quote($document_root, '/') . '/i';
+    $root = preg_replace($pattern, '', $result['path']); 
+    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT']; 
+    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://'; 
+    $user = str_replace(preg_replace($pattern, '', $server_script_filename), '', $server_script_name); 
+    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
+    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host)) 
+        $host = preg_replace('/:[0-9]+$/', '', $host); 
+    $host = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", '', $host); 
+    $result['url'] = $http.$host.$port.$user.$root; 
     return $result;
 }
 
@@ -137,7 +145,15 @@ $member = array();
 $board  = array();
 $group  = array();
 $g5     = array();
+$qaconfig = array();
+$g5_debug = array('php'=>array(),'sql'=>array());
 
+include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
+include_once(G5_LIB_PATH.'/cache.lib.php');     // cache 함수 및 object cache class 모음
+include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
+
+$g5_object = new G5_object_cache();
 
 //==============================================================================
 // 공통
@@ -153,9 +169,9 @@ if (file_exists($dbconfig_file)) {
     // mysql connect resource $g5 배열에 저장 - 명랑폐인님 제안
     $g5['connect_db'] = $connect_db;
 
-    sql_set_charset('utf8', $connect_db);
+    sql_set_charset(G5_DB_CHARSET, $connect_db);
     if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) sql_query("SET SESSION sql_mode = ''");
-    if (defined(G5_TIMEZONE)) sql_query(" set time_zone = '".G5_TIMEZONE."'");
+    if (defined('G5_TIMEZONE')) sql_query(" set time_zone = '".G5_TIMEZONE."'");
 } else {
 ?>
 
@@ -218,16 +234,47 @@ ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probabil
 session_set_cookie_params(0, '/');
 ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
-@session_start();
-//==============================================================================
-
-
 //==============================================================================
 // 공용 변수
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from {$g5['config_table']} ");
+$config = get_config();
+
+// 본인인증 또는 쇼핑몰 사용시에만 secure; SameSite=None 로 설정합니다.
+if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) ) {
+	// Chrome 80 버전부터 아래 이슈 대응
+	// https://developers-kr.googleblog.com/2020/01/developers-get-ready-for-new.html?fbclid=IwAR0wnJFGd6Fg9_WIbQPK3_FxSSpFLqDCr9bjicXdzy--CCLJhJgC9pJe5ss
+	if(!function_exists('session_start_samesite')) {
+		function session_start_samesite($options = array())
+		{
+            global $g5;
+    
+			$res = @session_start($options);
+			
+            // IE 브라우저 또는 엣지브라우저 일때는 secure; SameSite=None, http 환경에서는 설정하지 않습니다.
+            if( preg_match('/Edge/i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(; Touch)?; rv:11.0~',$_SERVER['HTTP_USER_AGENT']) || ! (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ){
+                return $res;
+            }
+
+			$headers = headers_list();
+			krsort($headers);
+			foreach ($headers as $header) {
+				if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
+				$header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
+				header($header, false);
+                $g5['session_cookie_samesite'] = 'none';
+				break;
+			}
+			return $res;
+		}
+	}
+
+	session_start_samesite();
+} else {
+	@session_start();
+}
+//==============================================================================
 
 define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
 define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
@@ -235,6 +282,10 @@ if ($config['cf_editor'])
     define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
 else
     define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
+
+define('G5_CAPTCHA_DIR',    !empty($config['cf_captcha']) ? $config['cf_captcha'] : 'kcaptcha');
+define('G5_CAPTCHA_URL',    G5_PLUGIN_URL.'/'.G5_CAPTCHA_DIR);
+define('G5_CAPTCHA_PATH',   G5_PLUGIN_PATH.'/'.G5_CAPTCHA_DIR);
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
@@ -246,7 +297,7 @@ $qstr = '';
 if (isset($_REQUEST['sca']))  {
     $sca = clean_xss_tags(trim($_REQUEST['sca']));
     if ($sca) {
-        $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)]/", "", $sca);
+        $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $sca);
         $qstr .= '&amp;sca=' . urlencode($sca);
     }
 } else {
@@ -255,7 +306,7 @@ if (isset($_REQUEST['sca']))  {
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = trim($_REQUEST['sfl']);
-    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sfl);
+    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
@@ -265,7 +316,7 @@ if (isset($_REQUEST['sfl']))  {
 
 if (isset($_REQUEST['stx']))  { // search text (검색어)
     $stx = get_search_string(trim($_REQUEST['stx']));
-    if ($stx)
+    if ($stx || $stx === '0')
         $qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
 } else {
     $stx = '';
@@ -273,7 +324,7 @@ if (isset($_REQUEST['stx']))  { // search text (검색어)
 
 if (isset($_REQUEST['sst']))  {
     $sst = trim($_REQUEST['sst']);
-    $sst = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sst);
+    $sst = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sst);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
@@ -384,20 +435,22 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
         if (strtolower($tmp_mb_id) != strtolower($config['cf_admin'])) {
             $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
-            $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
-            // 쿠키에 저장된 키와 같다면
-            $tmp_key = get_cookie('ck_auto');
-            if ($tmp_key == $key && $tmp_key) {
-                // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
-                if ($row['mb_intercept_date'] == '' &&
-                    $row['mb_leave_date'] == '' &&
-                    (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
-                    // 세션에 회원아이디를 저장하여 로그인으로 간주
-                    set_session('ss_mb_id', $tmp_mb_id);
+            if($row['mb_password']){
+                $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['SERVER_SOFTWARE'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
+                // 쿠키에 저장된 키와 같다면
+                $tmp_key = get_cookie('ck_auto');
+                if ($tmp_key === $key && $tmp_key) {
+                    // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
+                    if ($row['mb_intercept_date'] == '' &&
+                        $row['mb_leave_date'] == '' &&
+                        (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
+                        // 세션에 회원아이디를 저장하여 로그인으로 간주
+                        set_session('ss_mb_id', $tmp_mb_id);
 
-                    // 페이지를 재실행
-                    echo "<script type='text/javascript'> window.location.reload(); </script>";
-                    exit;
+                        // 페이지를 재실행
+                        echo "<script type='text/javascript'> window.location.reload(); </script>";
+                        exit;
+                    }
                 }
             }
             // $row 배열변수 해제
@@ -411,19 +464,25 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 $write = array();
 $write_table = "";
 if ($bo_table) {
-    $board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+    $board = get_board_db($bo_table);
     if ($board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
-        //$comment_table = $g5['write_prefix'] . $bo_table . $g5['comment_suffix']; // 코멘트 테이블 전체이름
-        if (isset($wr_id) && $wr_id)
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+
+        if (isset($wr_id) && $wr_id) {
+            $write = get_write($write_table, $wr_id);
+        } else if (isset($wr_seo_title) && $wr_seo_title) {
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
+            if( isset($write['wr_id']) ){
+                $wr_id = $write['wr_id'];
+            }
+        }
     }
 }
 
 if ($gr_id) {
-    $group = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
+    $group = get_group($gr_id);
 }
 
 
@@ -460,7 +519,7 @@ if ($is_admin != 'super') {
                 break;
         }
         if (!$is_possible_ip)
-            die ("접근이 가능하지 않습니다.");
+            die ("<meta charset=utf-8>접근이 가능하지 않습니다.");
     }
 
     // 접근차단 IP
@@ -476,7 +535,7 @@ if ($is_admin != 'super') {
         $pat = "/^{$pattern[$i]}$/";
         $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
         if ($is_intercept_ip)
-            die ("접근 불가합니다.");
+            die ("<meta charset=utf-8>접근 불가합니다.");
     }
 }
 
@@ -501,7 +560,7 @@ if(isset($config['cf_theme']) && trim($config['cf_theme'])) {
 
 
 // 테마 설정 로드
-if(is_file(G5_THEME_PATH.'/theme.config.php'))
+if(defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.'/theme.config.php'))
     include_once(G5_THEME_PATH.'/theme.config.php');
 
 //=====================================================================================
@@ -630,6 +689,7 @@ if(!empty($extend_file) && is_array($extend_file)) {
     foreach($extend_file as $file) {
         include_once(G5_EXTEND_PATH.'/'.$file);
     }
+    unset($file);
 }
 unset($extend_file);
 
@@ -637,13 +697,15 @@ ob_start();
 
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
 // 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
-// header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=utf-8');
 $gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
-// header('Expires: 0'); // rfc2616 - Section 14.21
-// header('Last-Modified: ' . $gmnow);
-// header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
-// header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
-// header('Pragma: no-cache'); // HTTP/1.0
+header('Expires: 0'); // rfc2616 - Section 14.21
+header('Last-Modified: ' . $gmnow);
+header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
+header('Pragma: no-cache'); // HTTP/1.0
+
+run_event('common_header');
 
 $html_process = new html_process();
 

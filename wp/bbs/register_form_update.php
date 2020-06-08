@@ -3,6 +3,7 @@ include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // 리퍼러 체크
 referer_check();
@@ -72,11 +73,9 @@ $mb_addr1       = clean_xss_tags($mb_addr1);
 $mb_addr2       = clean_xss_tags($mb_addr2);
 $mb_addr3       = clean_xss_tags($mb_addr3);
 $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
-$is_robot_join=strpos($mb_addr1,"CA") !== false;;
-if($is_robot_join)
-{
-		alert('너 로봇.');
-}
+
+run_event('register_form_update_before', $mb_id, $w);
+
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
@@ -118,6 +117,13 @@ if ($w == '' || $w == 'u') {
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
 
+        if (get_session('ss_check_mb_id') != $mb_id || get_session('ss_check_mb_nick') != $mb_nick || get_session('ss_check_mb_email') != $mb_email) {
+            set_session('ss_check_mb_id', '');
+            set_session('ss_check_mb_nick', '');
+            set_session('ss_check_mb_email', '');
+
+            alert('올바른 방법으로 이용해 주십시오.');
+        }
 
         // 본인확인 체크
         if($config['cf_cert_use'] && $config['cf_cert_req']) {
@@ -141,6 +147,8 @@ if ($w == '' || $w == 'u') {
         // 회원정보의 메일을 이전 메일로 옮기고 아래에서 비교함
         $old_email = $member['mb_email'];
     }
+
+    run_event('register_form_update_valid', $w, $mb_id, $mb_nick, $mb_email);
 
     if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
@@ -180,16 +188,16 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         $sql_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '' ";
         $sql_certify .= " , mb_adult = 0 ";
-//        $sql_certify .= " , mb_birth = '' ";
-//        $sql_certify .= " , mb_sex = '' ";
+        $sql_certify .= " , mb_birth = '' ";
+        $sql_certify .= " , mb_sex = '' ";
     }
 } else {
     if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
         $sql_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify = '' ";
         $sql_certify .= " , mb_adult = 0 ";
-  //      $sql_certify .= " , mb_birth = '' ";
-  //      $sql_certify .= " , mb_sex = '' ";
+        $sql_certify .= " , mb_birth = '' ";
+        $sql_certify .= " , mb_sex = '' ";
     }
 }
 //===============================================================
@@ -210,9 +218,7 @@ if ($w == '') {
                      mb_addr2 = '{$mb_addr2}',
                      mb_addr3 = '{$mb_addr3}',
                      mb_addr_jibeon = '{$mb_addr_jibeon}',
-					 mb_sex = '{$mb_sex}',
-					 mb_birth = '{$mb_birth}',
-					 mb_signature = '{$mb_signature}',
+                     mb_signature = '{$mb_signature}',
                      mb_profile = '{$mb_profile}',
                      mb_today_login = '".G5_TIME_YMDHIS."',
                      mb_datetime = '".G5_TIME_YMDHIS."',
@@ -252,15 +258,23 @@ if ($w == '') {
     if ($config['cf_email_mb_member']) {
         $subject = '['.$config['cf_title'].'] 회원가입을 축하드립니다.';
 
-        $mb_md5 = md5($mb_id.$mb_email.G5_TIME_YMDHIS);
-        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+        if ($config['cf_use_email_certify']) {
+            $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+            sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
+            $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        }
 
         ob_start();
         include_once ('./register_form_update_mail1.php');
         $content = ob_get_contents();
         ob_end_clean();
+        
+        $content = run_replace('register_form_update_mail_mb_content', $content, $mb_id);
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+
+        run_event('register_form_update_send_mb_mail', $config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content);
 
         // 메일인증을 사용하는 경우 가입메일에 인증 url이 있으므로 인증메일을 다시 발송되지 않도록 함
         if($config['cf_use_email_certify'])
@@ -269,14 +283,18 @@ if ($w == '') {
 
     // 최고관리자님께 메일 발송
     if ($config['cf_email_mb_super_admin']) {
-        $subject = '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.';
+        $subject = run_replace('register_form_update_mail_admin_subject', '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.', $mb_id, $mb_nick);
 
         ob_start();
         include_once ('./register_form_update_mail2.php');
         $content = ob_get_contents();
         ob_end_clean();
+        
+        $content = run_replace('register_form_update_mail_admin_content', $content, $mb_id);
 
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
+
+        run_event('register_form_update_send_admin_mail', $mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content);
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
@@ -350,20 +368,23 @@ $mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
 
 // 아이콘 삭제
 if (isset($_POST['del_mb_icon'])) {
-    @unlink($mb_dir.'/'.$mb_id.'.gif');
+    @unlink($mb_dir.'/'.get_mb_icon_name($mb_id).'.gif');
 }
 
 $msg = "";
 
 // 아이콘 업로드
 $mb_icon = '';
+$image_regex = "/(\.(gif|jpe?g|png))$/i";
+$mb_icon_img = get_mb_icon_name($mb_id).'.gif';
+
 if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
-    if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
+    if (preg_match($image_regex, $_FILES['mb_icon']['name'])) {
         // 아이콘 용량이 설정값보다 이하만 업로드 가능
         if ($_FILES['mb_icon']['size'] <= $config['cf_member_icon_size']) {
             @mkdir($mb_dir, G5_DIR_PERMISSION);
             @chmod($mb_dir, G5_DIR_PERMISSION);
-            $dest_path = $mb_dir.'/'.$mb_id.'.gif';
+            $dest_path = $mb_dir.'/'.$mb_icon_img;
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
             chmod($dest_path, G5_FILE_PERMISSION);
             if (file_exists($dest_path)) {
@@ -372,13 +393,24 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
                 // gif 파일에 악성코드를 심어 업로드 하는 경우를 방지
                 // 에러메세지는 출력하지 않는다.
                 //-----------------------------------------------------------------
-                $size = getimagesize($dest_path);
-                if ($size[2] != 1) // gif 파일이 아니면 올라간 이미지를 삭제한다.
+                $size = @getimagesize($dest_path);
+                if (!($size[2] === 1 || $size[2] === 2 || $size[2] === 3)) { // jpg, gif, png 파일이 아니면 올라간 이미지를 삭제한다.
                     @unlink($dest_path);
-                else
-                // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
-                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height'])
-                    @unlink($dest_path);
+                } else if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height']) {
+                    $thumb = null;
+                    if($size[2] === 2 || $size[2] === 3) {
+                        //jpg 또는 png 파일 적용
+                        $thumb = thumbnail($mb_icon_img, $mb_dir, $mb_dir, $config['cf_member_icon_width'], $config['cf_member_icon_height'], true, true);
+                        if($thumb) {
+                            @unlink($dest_path);
+                            rename($mb_dir.'/'.$thumb, $dest_path);
+                        }
+                    }
+                    if( !$thumb ){
+                        // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+                        @unlink($dest_path);
+                    }
+                }
                 //=================================================================\
             }
         } else {
@@ -386,25 +418,90 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
         }
 
     } else {
-        $msg .= $_FILES['mb_icon']['name'].'은(는) gif 파일이 아닙니다.';
+        $msg .= $_FILES['mb_icon']['name'].'은(는) 이미지 파일이 아닙니다.';
     }
 }
 
+// 회원 프로필 이미지
+if( $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height'] ){
+    $mb_tmp_dir = G5_DATA_PATH.'/member_image/';
+    $mb_dir = $mb_tmp_dir.substr($mb_id,0,2);
+    if( !is_dir($mb_tmp_dir) ){
+        @mkdir($mb_tmp_dir, G5_DIR_PERMISSION);
+        @chmod($mb_tmp_dir, G5_DIR_PERMISSION);
+    }
+
+    // 아이콘 삭제
+    if (isset($_POST['del_mb_img'])) {
+        @unlink($mb_dir.'/'.$mb_icon_img);
+    }
+
+    // 회원 프로필 이미지 업로드
+    $mb_img = '';
+    if (isset($_FILES['mb_img']) && is_uploaded_file($_FILES['mb_img']['tmp_name'])) {
+
+        $msg = $msg ? $msg."\\r\\n" : '';
+
+        if (preg_match($image_regex, $_FILES['mb_img']['name'])) {
+            // 아이콘 용량이 설정값보다 이하만 업로드 가능
+            if ($_FILES['mb_img']['size'] <= $config['cf_member_img_size']) {
+                @mkdir($mb_dir, G5_DIR_PERMISSION);
+                @chmod($mb_dir, G5_DIR_PERMISSION);
+                $dest_path = $mb_dir.'/'.$mb_icon_img;
+                move_uploaded_file($_FILES['mb_img']['tmp_name'], $dest_path);
+                chmod($dest_path, G5_FILE_PERMISSION);
+                if (file_exists($dest_path)) {
+                    $size = @getimagesize($dest_path);
+                    if (!($size[2] === 1 || $size[2] === 2 || $size[2] === 3)) { // gif jpg png 파일이 아니면 올라간 이미지를 삭제한다.
+                        @unlink($dest_path);
+                    } else if ($size[0] > $config['cf_member_img_width'] || $size[1] > $config['cf_member_img_height']) {
+                        $thumb = null;
+                        if($size[2] === 2 || $size[2] === 3) {
+                            //jpg 또는 png 파일 적용
+                            $thumb = thumbnail($mb_icon_img, $mb_dir, $mb_dir, $config['cf_member_img_width'], $config['cf_member_img_height'], true, true);
+                            if($thumb) {
+                                @unlink($dest_path);
+                                rename($mb_dir.'/'.$thumb, $dest_path);
+                            }
+                        }
+                        if( !$thumb ){
+                            // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+                            @unlink($dest_path);
+                        }
+                    }
+                    //=================================================================\
+                }
+            } else {
+                $msg .= '회원이미지을 '.number_format($config['cf_member_img_size']).'바이트 이하로 업로드 해주십시오.';
+            }
+
+        } else {
+            $msg .= $_FILES['mb_img']['name'].'은(는) gif/jpg 파일이 아닙니다.';
+        }
+    }
+}
 
 // 인증메일 발송
 if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-    $mb_datetime = $member['mb_datetime'] ? $member['mb_datetime'] : G5_TIME_YMDHIS;
-    $mb_md5 = md5($mb_id.$mb_email.$mb_datetime);
+    // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+    $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+
+    sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
+
     $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
     ob_start();
     include_once ('./register_form_update_mail3.php');
     $content = ob_get_contents();
     ob_end_clean();
+    
+    $content = run_replace('register_form_update_mail_certify_content', $content, $mb_id);
 
-    mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+    mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+
+    run_event('register_form_update_send_certify_mail', $config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content);
 }
 
 
@@ -419,6 +516,8 @@ unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
+
+run_event('register_form_update_after', $mb_id, $w);
 
 if ($w == '') {
     goto_url(G5_HTTP_BBS_URL.'/register_result.php');

@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
+$po_id = isset($po_id) ? (int) $po_id : 0;
+
 $html_title = '투표';
 if ($w == '')
     $html_title .= ' 생성';
@@ -35,7 +37,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="po_subject">투표 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="po_subject" value="<?php echo $po['po_subject'] ?>" id="po_subject" required class="required frm_input" size="80" maxlength="125"></td>
+        <td><input type="text" name="po_subject" value="<?php echo get_sanitize_input($po['po_subject']); ?>" id="po_subject" required class="required frm_input" size="80" maxlength="125"></td>
     </tr>
 
     <?php
@@ -101,9 +103,9 @@ include_once('./admin.head.php');
 
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./poll_list.php?<?php echo $qstr ?>">목록</a>
+<div class="btn_fixed_top ">
+    <a href="./poll_list.php?<?php echo $qstr ?>" class="btn_02 btn">목록</a>
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
 </div>
 
 </form>

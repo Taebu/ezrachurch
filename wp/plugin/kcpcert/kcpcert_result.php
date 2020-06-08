@@ -143,7 +143,7 @@ if( $cert_enc_use == "Y" )
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
         $row = sql_fetch($sql);
         if ($row['mb_id']) {
-            alert_close("입력하신 본인학인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+            alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
         }
 
         // hash 데이터
@@ -173,16 +173,40 @@ if( $cert_enc_use == "Y" )
 else if( $cert_enc_use != "Y" )
 {
     // 암호화 인증 안함
-    alert_close("휴대폰 본인확인을 취소 하셨습니다.");
+    if( G5_IS_MOBILE ){
+        echo '<script>'.PHP_EOL;
+        echo 'window.parent.$("#cert_info").css("display", "");'.PHP_EOL;
+        echo 'window.parent.$("#kcp_cert" ).css("display", "none");'.PHP_EOL;
+        echo '</script>'.PHP_EOL;
+    } else {
+        alert_close("휴대폰 본인확인을 취소 하셨습니다.");
+    }
     exit;
 }
 
 $ct_cert->mf_clear();
 ?>
 
+<form name="form_auth" method="post">
+    <?php echo $sbParam; ?>
+</form>
+
 <script>
 $(function() {
-    var $opener = window.opener;
+    var $opener;
+    var is_mobile = false;
+
+    if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) ) { // 스마트폰인 경우
+        $opener = window.parent;
+        is_mobile = true;
+    } else {
+        $opener = window.opener;
+    }
+
+    // up_hash 검증
+    if( document.form_auth.up_hash.value != $opener.$("input[name=veri_up_hash]").val() ) {
+        alert("up_hash 변조 위험있음");
+    }
 
     // 인증정보
     $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
@@ -190,7 +214,13 @@ $(function() {
     $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
     $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
 
+    if(is_mobile) {
+        $opener.$("#cert_info").css("display", "");
+        $opener.$("#kcp_cert" ).css("display", "none");
+    }
+
     alert("본인의 휴대폰번호로 확인 되었습니다.");
+
     window.close();
 });
 </script>

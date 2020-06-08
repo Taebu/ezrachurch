@@ -95,6 +95,8 @@ if(is_file($skin_file)) {
             $list[$i]['icon_file'] = '<img src="'.$qa_skin_url.'/img/icon_file.gif">';
 
         $list[$i]['name'] = get_text($row['qa_name']);
+        // 사이드뷰 적용시
+        //$list[$i]['name'] = get_sideview($row['mb_id'], $row['qa_name']);
         $list[$i]['date'] = substr($row['qa_datetime'], 2, 8);
 
         $list[$i]['num'] = $num - $i;
@@ -110,7 +112,7 @@ if(is_file($skin_file)) {
     $list_href = G5_BBS_URL.'/qalist.php';
     $write_href = G5_BBS_URL.'/qawrite.php';
 
-    $list_pages = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging(G5_IS_MOBILE ? $qaconfig['qa_mobile_page_rows'] : $qaconfig['qa_page_rows'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
+    $list_pages = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
 
     $stx = get_text(stripslashes($stx));
     include_once($skin_file);

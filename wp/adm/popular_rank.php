@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (empty($fr_date)) $fr_date = G5_TIME_YMD;
-if (empty($to_date)) $to_date = G5_TIME_YMD;
+if (empty($fr_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = G5_TIME_YMD;
+if (empty($to_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = G5_TIME_YMD;
 
-$qstr = "fr_date={$fr_date}{&amp;to_date}={$to_date}";
+$qstr = "fr_date={$fr_date}&amp;to_date={$to_date}";
 
 $sql_common = " from {$g5['popular_table']} a ";
 $sql_search = " where trim(pp_word) <> '' and pp_date between '{$fr_date}' and '{$to_date}' ";
@@ -43,7 +43,7 @@ $(function(){
 
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
-    건수 <?php echo number_format($total_count) ?>개
+    <span class="btn_ov01"><span class="ov_txt">건수</span><span class="ov_num">  <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch02 local_sch" method="get">
@@ -54,7 +54,7 @@ $(function(){
     ~
     <input type="text" name="to_date" value="<?php echo $to_date ?>" id="to_date" class="frm_input" size="11" maxlength="10">
     <label for="to_date" class="sound_only">종료일</label>
-    <input type="submit" class="btn_submit" value="검색">
+    <input type="submit" class="btn_sch2" value="검색">
 </div>
 </form>
 
@@ -87,8 +87,8 @@ $(function(){
 
     <tr>
         <td class="td_num"><?php echo $rank ?></td>
-        <td><?php echo $word ?></td>
-        <td class="td_numbig"><?php echo $row['cnt'] ?></td>
+        <td class="td_left"><?php echo $word ?></td>
+        <td class="td_num"><?php echo $row['cnt'] ?></td>
     </tr>
 
     <?php

@@ -51,6 +51,7 @@ include_once(G5_THEME_PATH.'/head.php');
 					
 <?php
 //print_r($member);
+
 //em_lecture_type=CONFERENCE
 $sql="select * from ez_meet  ";
 $where = "where em_status='receipt' ";
@@ -60,6 +61,7 @@ if(isset($em_lecture_type)&&strlen($em_lecture_type)>0)
 	$where.=sprintf(" and em_lecture_type='%s' ",$em_lecture_type);
 }
 $query=sql_query($sql.$where.$order);
+
 if(sql_num_rows($query)==0){
 echo '<tr><td colspan="9" style="text-align:center;font-weight:900">등록된 강좌가 없습니다.</td></tr>';
 }

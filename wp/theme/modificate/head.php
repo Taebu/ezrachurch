@@ -85,6 +85,7 @@ $rd_navbar_layout=$is_mobile?"rd-navbar-fixed":"rd-navbar-static";
 					"/wp/bbs/board.php?bo_table=bsc_data"
                 );
 
+
 				// EzraBibleTheologyInt 
                 $is_ebt_intro = false;
                 $array_ebt_intro = array(

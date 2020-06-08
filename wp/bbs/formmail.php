@@ -8,6 +8,8 @@ if (!$config['cf_email_use'])
 if (!$is_member && $config['cf_formmail_is_member'])
     alert_close('회원만 이용하실 수 있습니다.');
 
+$mb_id = isset($mb_id) ? get_search_string($mb_id) : '';
+
 if ($is_member && !$member['mb_open'] && $is_admin != "super" && $member['mb_id'] != $mb_id)
     alert_close('자신의 정보를 공개하지 않으면 다른분에게 메일을 보낼 수 없습니다.\\n\\n정보공개 설정은 회원정보수정에서 하실 수 있습니다.');
 
@@ -28,14 +30,17 @@ if ($sendmail_count > 3)
 $g5['title'] = '메일 쓰기';
 include_once(G5_PATH.'/head.sub.php');
 
-$email = get_email_address(base64_decode($email));
+$email_enc = new str_encrypt();
+$email_dec = $email_enc->decrypt($email);
+
+$email = get_email_address($email_dec);
 if(!$email)
     alert_close('이메일이 올바르지 않습니다.');
 
-$email = base64_encode($email);
+$email = $email_enc->encrypt($email);
 
 if (!$name)
-    $name = base64_decode($email);
+    $name = $email;
 else
     $name = get_text(stripslashes($name), true);
 

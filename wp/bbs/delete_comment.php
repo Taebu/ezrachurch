@@ -2,11 +2,13 @@
 // 코멘트 삭제
 include_once('./_common.php');
 
-if ($is_admin)
-{
-    if (!($token && get_session("ss_delete_token") == $token))
-        alert('토큰 에러로 삭제 불가합니다.');
-}
+$comment_id = (int) $comment_id;
+
+$delete_comment_token = get_session('ss_delete_comment_'.$comment_id.'_token');
+set_session('ss_delete_comment_'.$comment_id.'_token', '');
+
+if (!($token && $delete_comment_token == $token))
+    alert('토큰 에러로 삭제 불가합니다.');
 
 // 4.1
 @include_once($board_skin_path.'/delete_comment.head.skin.php');
@@ -20,16 +22,16 @@ if ($is_admin == 'super') // 최고관리자 통과
     ;
 else if ($is_admin == 'group') { // 그룹관리자
     $mb = get_member($write['mb_id']);
-    if ($member['mb_id'] == $group['gr_admin']) { // 자신이 관리하는 그룹인가?
+    if ($member['mb_id'] === $group['gr_admin']) { // 자신이 관리하는 그룹인가?
         if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
             ;
         else
             alert('그룹관리자의 권한보다 높은 회원의 코멘트이므로 삭제할 수 없습니다.');
     } else
         alert('자신이 관리하는 그룹의 게시판이 아니므로 코멘트를 삭제할 수 없습니다.');
-} else if ($is_admin == 'board') { // 게시판관리자이면
+} else if ($is_admin === 'board') { // 게시판관리자이면
     $mb = get_member($write['mb_id']);
-    if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
+    if ($member['mb_id'] === $board['bo_admin']) { // 자신이 관리하는 게시판인가?
         if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
             ;
         else
@@ -37,7 +39,7 @@ else if ($is_admin == 'group') { // 그룹관리자
     } else
         alert('자신이 관리하는 게시판이 아니므로 코멘트를 삭제할 수 없습니다.');
 } else if ($member['mb_id']) {
-    if ($member['mb_id'] != $write['mb_id'])
+    if ($member['mb_id'] !== $write['mb_id'])
         alert('자신의 글이 아니므로 삭제할 수 없습니다.');
 } else {
     if (!check_password($wr_password, $write['wr_password']))
@@ -51,8 +53,8 @@ $comment_reply = substr($write['wr_comment_reply'], 0, $len);
 $sql = " select count(*) as cnt from {$write_table}
             where wr_comment_reply like '{$comment_reply}%'
             and wr_id <> '{$comment_id}'
-            and wr_parent = '{$write[wr_parent]}'
-            and wr_comment = '{$write[wr_comment]}'
+            and wr_parent = '{$write['wr_parent']}'
+            and wr_comment = '{$write['wr_comment']}'
             and wr_is_comment = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt'] && !$is_admin)
@@ -84,5 +86,7 @@ sql_query(" delete from {$g5['board_new_table']} where bo_table = '{$bo_table}' 
 
 delete_cache_latest($bo_table);
 
-goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr);
+run_event('bbs_delete_comment', $comment_id, $board);
+
+goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
 ?>

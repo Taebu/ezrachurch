@@ -8,6 +8,12 @@ if (!count($_POST['chk'])) {
     alert($_POST['act_button']." 하실 항목을 하나 이상 체크하세요.");
 }
 
+check_admin_token();
+
+$act_button = isset($_POST['act_button']) ? strip_tags($_POST['act_button']) : '';
+$chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
+$board_table = (isset($_POST['board_table']) && is_array($_POST['board_table'])) ? $_POST['board_table'] : array();
+
 if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'w');
@@ -19,7 +25,7 @@ if ($_POST['act_button'] == "선택수정") {
 
         if ($is_admin != 'super') {
             $sql = " select count(*) as cnt from {$g5['board_table']} a, {$g5['group_table']} b
-                      where a.gr_id = '{$_POST['gr_id'][$k]}'
+                      where a.gr_id = '".sql_real_escape_string($_POST['gr_id'][$k])."'
                         and a.gr_id = b.gr_id
                         and b.gr_admin = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
@@ -27,20 +33,23 @@ if ($_POST['act_button'] == "선택수정") {
                 alert('최고관리자가 아닌 경우 다른 관리자의 게시판('.$board_table[$k].')은 수정이 불가합니다.');
         }
 
+        $p_bo_subject = is_array($_POST['bo_subject']) ? strip_tags(clean_xss_attributes($_POST['bo_subject'][$k])) : '';
+
         $sql = " update {$g5['board_table']}
-                    set gr_id               = '{$_POST['gr_id'][$k]}',
-                        bo_subject          = '{$_POST['bo_subject'][$k]}',
-                        bo_device           = '{$_POST['bo_device'][$k]}',
-                        bo_skin             = '{$_POST['bo_skin'][$k]}',
-                        bo_mobile_skin      = '{$_POST['bo_mobile_skin'][$k]}',
-                        bo_read_point       = '{$_POST['bo_read_point'][$k]}',
-                        bo_write_point      = '{$_POST['bo_write_point'][$k]}',
-                        bo_comment_point    = '{$_POST['bo_comment_point'][$k]}',
-                        bo_download_point   = '{$_POST['bo_download_point'][$k]}',
-                        bo_use_search       = '{$_POST['bo_use_search'][$k]}',
-                        bo_use_sns          = '{$_POST['bo_use_sns'][$k]}',
-                        bo_order            = '{$_POST['bo_order'][$k]}'
-                  where bo_table            = '{$_POST['board_table'][$k]}' ";
+                    set gr_id               = '".sql_real_escape_string(strip_tags($_POST['gr_id'][$k]))."',
+                        bo_subject          = '".$p_bo_subject."',
+                        bo_device           = '".sql_real_escape_string(strip_tags($_POST['bo_device'][$k]))."',
+                        bo_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_skin'][$k]))."',
+                        bo_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['bo_mobile_skin'][$k]))."',
+                        bo_read_point       = '".sql_real_escape_string(strip_tags($_POST['bo_read_point'][$k]))."',
+                        bo_write_point      = '".sql_real_escape_string(strip_tags($_POST['bo_write_point'][$k]))."',
+                        bo_comment_point    = '".sql_real_escape_string(strip_tags($_POST['bo_comment_point'][$k]))."',
+                        bo_download_point   = '".sql_real_escape_string(strip_tags($_POST['bo_download_point'][$k]))."',
+                        bo_use_search       = '".sql_real_escape_string(strip_tags($_POST['bo_use_search'][$k]))."',
+                        bo_use_sns          = '".sql_real_escape_string(strip_tags($_POST['bo_use_sns'][$k]))."',
+                        bo_order            = '".sql_real_escape_string(strip_tags($_POST['bo_order'][$k]))."'
+                  where bo_table            = '".sql_real_escape_string($_POST['board_table'][$k])."' ";
+
         sql_query($sql);
     }
 
@@ -51,8 +60,6 @@ if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'd');
 
-    check_admin_token();
-
     // _BOARD_DELETE_ 상수를 선언해야 board_delete.inc.php 가 정상 작동함
     define('_BOARD_DELETE_', true);
 
@@ -62,11 +69,16 @@ if ($_POST['act_button'] == "선택수정") {
 
         // include 전에 $bo_table 값을 반드시 넘겨야 함
         $tmp_bo_table = trim($_POST['board_table'][$k]);
-        include ('./board_delete.inc.php');
+
+        if( preg_match("/^[A-Za-z0-9_]+$/", $tmp_bo_table) ){
+            include ('./board_delete.inc.php');
+        }
     }
 
 
 }
+
+run_event('admin_board_list_update', $act_button, $chk, $board_table, $qstr);
 
 goto_url('./board_list.php?'.$qstr);
 ?>

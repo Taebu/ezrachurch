@@ -8,6 +8,8 @@ if ($is_admin != 'super')
 $g5['title'] = '메뉴 추가';
 include_once(G5_PATH.'/head.sub.php');
 
+$code = isset($code) ? preg_replace('/[^0-9a-zA-Z]/', '', strip_tags($code)) : '';
+
 // 코드
 if($new == 'new' || !$code) {
     $code = base_convert(substr($code,0, 2), 36, 10);
@@ -19,7 +21,7 @@ if($new == 'new' || !$code) {
 <div id="menu_frm" class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <form name="fmenuform" id="fmenuform">
+    <form name="fmenuform" id="fmenuform" class="new_win_con">
 
     <div class="new_win_desc">
         <label for="me_type">대상선택</label>
@@ -43,13 +45,57 @@ $(function() {
         "./menu_form_search.php"
     );
 
-    $("#me_type").on("change", function() {
-        var type = $(this).val();
+    function link_checks_all_chage(){
+
+        var $links = $(opener.document).find("#menulist input[name='me_link[]']"),
+            $o_link = $(".td_mngsmall input[name='link[]']"),
+            hrefs = [],
+            menu_exist = false;
+           
+        if( $links.length ){
+            $links.each(function( index ) {
+                hrefs.push( $(this).val() );
+            });
+
+            $o_link.each(function( index ) {
+                if( $.inArray( $(this).val(), hrefs ) != -1 ){
+                    $(this).closest("tr").find("td:eq( 0 )").addClass("exist_menu_link");
+                    menu_exist = true;
+                }
+            });
+        }
+
+        if( menu_exist ){
+            $(".menu_exists_tip").show();
+        } else {
+            $(".menu_exists_tip").hide();
+        }
+    }
+
+    function menu_result_change( type ){
+        
+        var dfd = new $.Deferred();
 
         $("#menu_result").empty().load(
             "./menu_form_search.php",
-            { type : type }
+            { type : type },
+            function(){
+                dfd.resolve('Finished');
+            }
         );
+
+        return dfd.promise();
+    }
+
+    $("#me_type").on("change", function() {
+        var type = $(this).val();
+
+        var promise = menu_result_change( type );
+
+        promise.done(function(message) {
+            link_checks_all_chage(type);
+        });
+
     });
 
     $(document).on("click", "#add_manual", function() {
@@ -115,9 +161,9 @@ function add_menu_list(name, link, code)
     list += "</td>";
     list += "<td class=\"td_mngsmall\">";
     <?php if($new == 'new') { ?>
-    list += "<button type=\"button\" class=\"btn_add_submenu\">추가</button>";
+    list += "<button type=\"button\" class=\"btn_add_submenu btn\">추가</button>";
     <?php } ?>
-    list += "<button type=\"button\" class=\"btn_del_menu\">삭제</button>";
+    list += "<button type=\"button\" class=\"btn_del_menu btn\">삭제</button>";
     list += "</td>";
     list += "</tr>";
 
