@@ -1,0 +1,28 @@
+{
+  "name": "dilab/dropzone.php",
+  "description": "PHP package for Dropzone.js",
+  "authors": [
+    {
+      "name": "xu ding",
+      "email": "thedilab@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "league/flysystem": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~7.0"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Dilab\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Dilab\\Test\\": "test/src/"
+    }
+  }
+}

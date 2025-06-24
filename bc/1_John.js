@@ -1,0 +1,32 @@
+var bible_chapter = [];
+bible_chapter.push("1 하나님과 함께 계시다가 나타나신 J.X.");
+bible_chapter.push("2 대언자 이신 예수 ");
+bible_chapter.push("3 오직 행함과 진실함으로 하자");
+bible_chapter.push("4 예수께서 육체로 오심을 부인하면 적그리스도");
+bible_chapter.push("5 하나님을 사랑하는 것은 그의 계명을 지키는 것");
+
+var comment = [];
+comment.push('1. 사도 요한의 첫번째 편지 (AD 90년)');
+comment.push('2. 믿음은 명사가 아니라 동사로 선포 (요한복음 믿음\'은 동사로 100회 사용, 요한1서 9번 동사로 사용 1회 명사)');
+comment.push('3. 폴리갑, 파이아스(AD100년경) 속사도는 요한일 서를 전제하거나 직접 인용한다.');
+comment.push('4. 참된 기독교 교리로 돌아올 것을 촉구');
+comment.push('5. 영지주의 대항');
+comment.push('6. 하나님의 아들은 적그리스도보다 크심');
+comment.push('7. \'다 이루어졌다\'는 복음 선포');
+comment.push('8. 말과 혀가 아닌 행함과 진실로 사랑 권고');
+comment.push('9. 하나님의 아들의 성육신, 그분이 영생');
+comment.push('10. 모든 인간은 죄인이면 성도는 회개와 그리스도의 복음을 통해 삼위일체 하나님과 교제');
+comment.push('11. 그리스도는 성부 앞에의 우리의 대언자(보혜사)');
+comment.push('12. 그리스도를 아는 자는 죄를 버리고 하나님의 사랑의 계명을 지킨다.');
+comment.push('13. 예수 그리스도의 육체로 오심을 부인하는 것은 하나님을 부인 하는 것');
+comment.push('14. 그리스도를 믿으면 하나님을 아는 것');
+comment.push('성도의 교제 = 관계의 회복');
+comment.push('');
+comment.push('● 빛의 열매로서의 사랑');
+comment.push('● 진리 안에서 사랑');
+comment.push('● 하나님 사랑과 형제 사랑');
+comment.push('● 부끄러움과 두려움이 없는 사랑');
+comment.push('● 행함과 진실로 열매 맺는 사랑');
+comment.push('● 심판에도 담대하게 하는 사랑');
+comment.push('● 계명을 지키는 사랑');
+

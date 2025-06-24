@@ -1,0 +1,294 @@
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<link rel="stylesheet" type="text/css" href="/lib/css/eduframe.css" media="all">
+<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="/lib/js/jquery.validate.min.js"></script>
+  <meta property="og:title" content="2024년도 서울에스라 강사고시 결과">
+  <!--meta property="og:image" content="/wp/images/og_image.png"-->
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta property="og:description" content="2024년도 12월 16일 서울에스라 강사고시 결과">
+  <meta property="al:ios:app_name" content="ezra_exam_result">
+
+<script type="text/javascript">
+
+(function($){
+
+    $(document).ready(function() {
+
+    $('#examResult').validate({
+            rules: {
+                name: { required: true, minlength: 2 },
+                birth: { required: true, minlength: 6  }
+            },
+            messages: {
+                name: {
+                    required: "이름을 입력하시오.",
+                    minlength: jQuery.format("이름은 {0}자 이상")
+                },
+                birth: { 
+                	required: "생일을 입력하시오.",
+                	minlength: jQuery.format("생일은 {0}자 이상")
+                }
+            },
+            submitHandler: function (frm) {
+                //fmr.submit();
+                exam_result();
+            },
+            success: function (e) { 
+            //
+            }
+        });
+    });
+})(jQuery);
+
+
+function exam_result() 
+{
+	if(($("#name").val()).length < 2){
+	alert("이름은 2자리 이상");
+	$("#name").focus();
+	return;
+	}else if($("#birth").val() == ""){
+	console.log(($("#birth").val()).length);
+	alert("생일이 짧거나 올바르지 않습니다.");
+	$("#birth").focus();
+	return;
+	}
+
+	var param=$("#examResult").serializeArray();
+	
+    var xhttp=$.post("examResult.php",param,
+		function(data){
+			$("#result").html(data);
+		}
+	);
+	
+}
+</script>
+<style>
+#result{
+	margin-bottom: 40px;
+}
+body{
+}
+#wrap{
+	max-width: 550px;
+	margin:0 auto;
+	margin-top: 50px;
+ }
+
+</style>
+<body>
+<div id="wrap">
+<?php
+header('Content-Type: text/html; charset=UTF-8');
+
+//examResult.php
+//include_once("./_common.php");
+include_once("./db_con.php");
+extract($_POST);
+$toyear=date("Y");
+$type="interview";
+$type="written";
+
+if(isset($name)&&isset($birth)){
+	$sql = "SELECT *  FROM `ezraExamResult` WHERE";
+	$sql .= sprintf(" name like '%%%s%%' ",$name);
+	$sql .= sprintf(" and birth='%s'  ",$birth);
+	$sql .= sprintf(" and e_type='%s'  ","9th");
+	if($type=="interview")
+	{
+	$sql .= sprintf(" and type='%s'  ","interview");
+	}
+	if($type=="written")
+	{
+	$sql .= sprintf(" and type='%s'  ","written");
+	}
+	$sql .= " order by wday desc limit 1";
+
+	$query=$connect->query($sql);
+$row_cnt = $query->num_rows;
+if($row_cnt)
+{
+	$list = $query->fetch_assoc();
+
+	/* 필기 시험 */
+	if($list['type']=="written")
+	{
+//		echo '<div class="h1">2021년 11월 29일 월요일 서울에스라 성경고시 조회결과</div>';
+//		echo '<div class="h1">2021년 12월 20일 월요일 에스라아카데미 강사고시 실기결과조회</div>';
+//		echo '<div class="h1">2022년 12월 12일 월요일 에스라아카데미 강사고시 필기결과조회</div>';
+//		echo '<div class="h1">2023년 12월 18일 월요일 에스라아카데미 강사고시 필기결과조회</div>';
+		echo '<div class="h1">2024년 12월 16일 월요일 에스라아카데미 강사고시 필기결과조회</div>';
+		echo '<table class="skytstyle tac" summary="the list">';
+		echo '<caption></caption>';
+		echo '<colgroup>';
+		echo '<col width="10%" class="gray">';
+		echo '<col width="16%">';
+		echo '<col width="16%">';
+		echo '<col width="16%">';
+		echo '<col width="16%">';
+		echo '<col width="16%">';
+		echo '</colgroup>';
+		echo '<thead>';
+		echo '<tr>';
+		echo '<th>이름</th>';
+		echo '<th>구약</th>';
+		echo '<th>신약</th>';
+		echo '<th>역사·교리</th>';
+		echo '<th>총합</th>';
+		echo '<th>평균</th>';
+		echo '</tr>';
+		echo '</thead>';
+		echo '<tbody>';
+		echo '<tr>';
+		echo '<td>'.$list['name'].'</td>';
+		echo '<td>'.strip_tags($list['oldT']).'</td>';
+		echo '<td>'.strip_tags($list['newT']).'</td>';
+		echo '<td>'.strip_tags($list['history']).'</td>';
+		$total=$list['history']+$list['newT']+$list['oldT'];
+		echo '<td>'.strip_tags($total).'</td>';
+		$aver = round($total/3,2);
+		echo '<td>'.strip_tags($aver).'</td>';
+	
+		switch(floor($aver/10)*10)
+		{
+			case 90 : // $aver값에 따라 case문을 실행함
+			$grade = 'A';//case값이 90이므로 조건이 맞기때문에 아래 2개의 명령문을 실행함.
+			$result = "축하합니다.";
+
+			if($name=="박태균")
+			{
+				$result.="<br>수석 입니다.<br>";
+			}
+
+			
+			if($name=="백경원")
+			{
+				$result.="<br>차석 입니다.<br>";
+			}
+
+			$result.= '서울 에스라아카데미 <b>"청·장년교사"</b> 자격을 취득하였습니다.<br>2차 실기/면접을 통한 강사고시를 지원 하실 수 있습니다.';
+			break;//break를 만나면 이름처럼 더이상 조건을 따지지 않고 조건문을 빠져나옴
+			case 80 : 
+			$grade = 'B';
+			$result = '축하합니다.<br>서울 에스라아카데미 <b>"중·고등부교사"</b> 자격을 취득하였습니다.';
+			break;
+			case 70 : 
+			$grade = 'C';
+			$result = '축하합니다.<br>서울 에스라아카데미 <b>"초등부교사"</b> 자격을 취득하였습니다.';
+			break;
+			case 60 : 
+			$grade = 'D';
+			$result = '축하합니다.<br>서울 에스라아카데미 <b>"영유아부교사"</b> 자격을 취득하였습니다.';
+			break;
+			default: // 위 조건중 일치하는 조건이 없으면 아래의 문자열을 출력함
+			$grade = 'F';
+			$toyear++;
+			$result = '수고하셨습니다.<br>'.$toyear.'년 시험에 다시 응시해 보세요.^^';
+		}
+
+		//점수 출력
+		echo '</tr></tbody><tfoot><tr><td>최종결과</td><td colspan="5">'.$result.'</td></tr></tfoot></table>';
+	}
+
+	/* 실기 시험 */
+	if($list['type']=="interview")
+	{
+		$aver = round($list['total_2nd'],2);
+		$final_score=floor($aver/10)*10;
+
+		echo '<div class="h1">2023년 에스라아카데미 2차 실기 시험 결과</div>';
+		echo '<table class="skytstyle tac" summary="the list" width="620px">';
+		echo '<caption></caption>';
+		echo '<colgroup>';
+		echo '<col width="12%" class="gray">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+//		echo '<col width="10%">';
+		echo '<col width="68%">';
+		echo '<col width="20%">';
+		echo '</colgroup>';
+		echo '<thead>';
+		echo '<tr>';
+		echo '<th>이름</th>';
+//		echo '<th>구약1</th>';
+//		echo '<th>구약2</th>';
+//		echo '<th>구약3</th>';
+//		echo '<th>신약1</th>';
+//		echo '<th>신약2</th>';
+//		echo '<th>신약3</th>';
+//		echo '<th>면접</th>';
+		echo '<th>평균</th>';
+		echo '<th>결과</th>';
+		echo '</tr>';
+		echo '</thead>';
+		echo '<tbody>';
+		echo '<tr>';
+		echo '<td>'.$list['name'].'</td>';
+//		echo '<td>'.strip_tags($list['gu1']).'</td>';
+//		echo '<td>'.strip_tags($list['gu2']).'</td>';
+//		echo '<td>'.strip_tags($list['gu3']).'</td>';
+//		echo '<td>'.strip_tags($list['sin1']).'</td>';
+//		echo '<td>'.strip_tags($list['sin2']).'</td>';
+//		echo '<td>'.strip_tags($list['sin3']).'</td>';
+//		echo '<td>'.strip_tags($list['interviewer']).'</td>';
+		echo '<td>'.strip_tags($list['total_2nd']).'</td>';
+		
+		if($final_score=="90")
+		{
+			echo '<td>합격</td>';
+		}else{
+			echo '<td>불합격</td>';
+		}
+		echo '</tr></tbody>';
+
+
+	
+		switch($final_score)
+		{
+			case 90 : // $aver값에 따라 case문을 실행함
+			$grade = 'A';//case값이 90이므로 조건이 맞기때문에 아래 2개의 명령문을 실행함.
+			$result = '정말 많이 수고하셨습니다!<br>에스라아카데미 강사합격을 축하드립니다!';
+			break;//break를 만나면 이름처럼 더이상 조건을 따지지 않고 조건문을 빠져나옴
+			default: // 위 조건중 일치하는 조건이 없으면 아래의 문자열을 출력함
+			$toyear++;
+			$result = '정말 많이 수고하셨습니다!<br>에스라아카데미 강사고시 내년에도 도전해보세요!';
+		}
+		//점수 출력
+		echo '<tfoot>';
+		echo '<tr><td>최종결과</td>';
+		echo '<td colspan="8">'.$result.'</td></tr>';
+		echo '</tfoot></table>';
+	}
+}else{
+		echo "응시하신 결과가 없습니다.";
+}
+}else{ //이름과 생년 월일이 둘다 없으면 하나만 입력해도 이곳을 타게 됩니다.
+//	echo '<div class="h1">'.$toyear.'년 12월 20일 서울에스라 성경고시 조회</div>';
+//	echo '<div class="h1">'.$toyear.'년 12월 12일 에스라아카데미 필기결과조회</div>';
+//	echo '<div class="h1">2021년 12월 20일 에스라아카데미 강사고시 실기결과조회</div>';
+//	echo '<div class="h1">2023 에스라아카데미 2차 실기 시험 결과 조회</div>';
+	echo '<div class="h1">2024년 12월 16일 에스라아카데미 강사고시 필기결과조회</div>';
+	echo '이름과 생년 월일을 입력해주세요.<br>';
+	echo '예) 이름 : 홍길동, 생년월일 : 800101<br>';
+	echo '<form name="examResult" id="examResult" method="post" action="return false" >';
+	echo '이름 : <input type="text" name="name" id="name">';
+	echo '생년월일 : <input type="text" name="birth" id="birth">';
+	echo '</form>';
+	echo '<button onclick="exam_result()">조회</button>';
+}
+?>
+
+<div id="result"></div><!-- #result -->
+</div><!-- #wrap -->
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<?php
+include_once "./db_con.php";
+include_once "./subject.php";
+include_once($_SERVER['DOCUMENT_ROOT'].'/wp/common.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/ac/commons.php');
+$ab_date=date("Y-m-d");
+?>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/wm/lib/css/main.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/wm/lib/css/stdtheme.css" media="all" />
+<script src="/wp/js/jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" href="/wp/css/jquery.ui.min.css">  
+<script src="/wp/js/jquery.ui.min.js"></script>
+<script>	
+function set_write()
+{
+	     var formData = new FormData($("#westminster")[0]);
+        if(typeof($("#ab_image_file")[0])!="undefined"){
+
+            formData.append("ab_image_file",$("#ab_image_file")[0].files[0]);
+        }
+		$.ajax({
+			url:"./set_write.php",
+			dataType:"json",
+			type:"POST",
+            data:formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+			enctype: 'multipart/form-data',
+            success:function(data){
+
+			if(data.success){
+				alert("입력되었습니다.");
+				location.href='./list.php';
+			}else{
+					alert(data.message);
+				}
+			}
+		});
+}
+
+
+/* datepicker */
+var dateoption={dateFormat: "yy-mm-dd",
+dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
+dayNames: [ "일", "월", "화", "수", "목", "금", "토" ],
+monthNames: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+showOn:"both", buttonImage: "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif"
+};
+
+  $( function() {
+    $("#ab_date").datepicker(dateoption);
+  });
+</script>
+<style>
+textarea{margin: 0px; width: 337px; height: 239px;}
+input{padding:10px;font-size:19px;margin-right:10px;width: 90%;}
+
+</style>
+<?php
+function get_numeric($str)
+{
+	return  preg_replace("/[^0-9]*/s", "", $str); ;
+}
+echo "<form id='westminster'>";
+echo "<input type='hidden' name='table' value='account_book'>";
+echo '<table class="ibk_info">';
+echo '<tr>';
+echo '<td>장</td><td>';
+
+if($is_admin)
+{
+echo "<select name='ab_class'>";
+foreach($SUBJECT['ko'] as $key =>$value)
+{
+	if($key==$_GET['ab_class'])
+		printf("<option value='%s' selected>%s</option>",$key,$value);
+	else
+		printf("<option value='%s'>%s</option>",$key,$value);
+}
+echo "</select>";
+}
+
+printf("<input type='hidden' name='ab_class' id='ab_class' value='%s'>",$executive['ab_class']);
+echo $SUBJECT['ko'][$executive['ab_class']];
+echo '장</th></tr>';	
+
+echo '<tr>';
+echo '<td>날짜 yyyy-mm-dd</td><td>';
+printf("<input type='text' name='ab_date' id='ab_date' value='%s'>",$ab_date);
+echo '</th></tr>';	
+echo '<tr>';
+echo '<td>ab_type</td><td>';
+
+echo "<select name='ab_type'>";
+echo "<option value='In'>입금</option>";
+echo "<option value='Out'>출금</option>";
+echo "<option value='Budget'>예산신청액</option>";
+echo "<option value='Expenditure'>지출결의</option>";
+echo "</select>";
+echo '</th></tr>';	
+echo '<tr>';
+echo '<td>입출금</td><td>';
+echo "<input type='text' name='ab_amount' value=''>";
+echo '</th></tr>';
+echo '<tr>';
+echo '<td>link1</td><td>';
+echo "<input type='text' name='ab_link1' value=''>";
+echo '</th></tr>';	
+echo '<tr>';
+echo '<tr>';
+echo '<td>link2</td><td>';
+echo "<input type='text' name='ab_link2' value=''>";
+echo '</th></tr>';	
+echo '<tr>';
+echo '<td>내용</td><td>';
+echo "<textarea name='ab_contents'></textarea>";
+echo '</td></tr>';	
+echo '<tr>';
+echo '<td>이미지</td><td>';
+echo '<input type="file" name="ab_image_file" id="ab_image_file" class="frm_input" value="">';	
+echo '</td></tr>';	
+echo "</table>";
+
+echo "<input type='button' value='쓰기' onclick='set_write();'>";

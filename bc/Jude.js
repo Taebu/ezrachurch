@@ -1,0 +1,17 @@
+var bible_chapter = [];
+bible_chapter.push("1 소돔과 고모라 ");
+var comment = [];
+comment.push('1. 가만히 들어 온 이단을 경계하라 ');
+comment.push('2. 경건치 않은자들 ');
+comment.push('3. 은혜를 색욕거리로 만드는 자들 ');
+comment.push('4. 예수 그리스도를 부인하는 자들 ');
+comment.push('5. 꿈을 깨지 못한 사람들 ');
+comment.push('6. 영광을 훼방하는 사람들 ');
+comment.push('7. 가인의 후예들 ');
+comment.push('8. 발람의 후예들 ');
+comment.push('9. 고라와 다단과 아비람의 길을 가는 사람들 ');
+comment.push('10. 애찬의 암초와 같은 존재들 ');
+comment.push('11. 자기 몸만 기르는 목자들 ');
+comment.push('12. 물 없는 구름 ');
+comment.push('13. 열매 없는 가을 나무 ');
+comment.push('14. 흑암에 들어갈 유리하는 별들  ');

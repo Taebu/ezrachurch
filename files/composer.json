@@ -1,0 +1,5 @@
+{
+    "require": {
+        "dilab/dropzone.php": "^1.0"
+    }
+}

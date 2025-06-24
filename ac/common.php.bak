@@ -1,0 +1,15 @@
+<?php
+global $is_executive = false;
+global $executive = array();
+function get_executive($ss_mb_id)
+{
+   global $executive;
+   $is_executive = false;
+   $sql = sprintf("select * from account_user where au_id = '%s' ",$ss_mb_id);
+   $executive = sql_fetch($sql);
+   if($executive['au_id']==$ss_mb_id)
+   {
+	   $is_executive = true;
+   }
+   return $is_executive;
+}

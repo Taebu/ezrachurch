@@ -1,0 +1,22 @@
+var bible_chapter = [];
+bible_chapter.push('1 선지자들로 말미암아성경에 미리약속된복음');
+bible_chapter.push('2 율법과 심판의 원리');
+bible_chapter.push('3 죄에빠진 모든사람들을 예수께서구속');
+bible_chapter.push('4 아브라함의 믿음');
+bible_chapter.push('5 아담의 죄 (죽음으로부터 자유)');
+bible_chapter.push('6 죄의 삯 (죄로부터의 자유)');
+bible_chapter.push('7 바울의 고뇌와 탄식 (율법으로부터의자유)');
+bible_chapter.push('8 현재의 고난은 장차 영광과 비교 할 수 없음(성령안에서 자유)');
+bible_chapter.push('9 토기장이의 주권');
+bible_chapter.push('10 사람이 입으로 시인하여 구원');
+bible_chapter.push('11 바알에게 무릎굻지않은 7,000명');
+bible_chapter.push('12 산 제사를 드리라 ');
+bible_chapter.push('13 위에 있는 권세들에게 굴복하라');
+bible_chapter.push('14 믿음의 분량');
+bible_chapter.push('15 남의 터 위에 건축하지 아니하려함');
+bible_chapter.push('16 로마서대필자 더디오');
+
+var comment = [];
+comment.push('1~11장 복음과 구원 교리 문제');
+comment.push('12~16장 복음과 행위 생활 문제');
+comment.push('이렇게 될 줄은 꿈에도 몰랐을 것 입니다. 눈이 밝아져서 하나님처럼 될 줄만 알고 선악과를 먹었는데 그 결과 절반은 선하고 절반은 악한 사람이 되고 말았습니다. 어떤 때는 선하고 어떤 때는 악한 사람이 된 것입니다. 다시 말하자면 이중 인격자가 된 것입니다. 아담의 자손들 모두가 어떤 때는 지킬 박사」가 되고 어떤 때는 하이드 씨가 되는 것입니다. 그리고 점점 더 악한 사람이 되어 가는 것이 문제입니다. 이러한 사람은 반드시 지옥을 가게 됩니다.');

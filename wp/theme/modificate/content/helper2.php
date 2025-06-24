@@ -1,0 +1,128 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+include_once('./_common.php');
+define('_INDEX_', true);
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once('../head.php');
+
+
+
+/* 0. category 배열 초기화 */
+$category=array();
+
+/* 0. ez_helper 배열 초기화 */
+$ez_helper=array();
+
+/* 0. ez_helpers 배열 초기화  */
+$ez_helpers=array();
+
+/* 1. newezra.ez_helper 정보를 조회하는 쿼리 명령어를 선언한다. */
+$sql= "SELECT * FROM newezra.ez_helper ";
+
+/* 2. sql_query 처리한 정보를 result에 담는다. */
+$result = sql_query($sql);
+
+/* 3. newezra.ez_helper 정보만큼 반복한다. */
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+	/* 3-1. newezra.ez_helper 정보를 ez_helper 배열에 담는다. */
+	array_push($ez_helper,$row);
+	/* 3-2. 카테고리(ez_helper)에 담긴 모든 정보(ez_date)를 년도만 추출하여 카테고리 배열(category)에 입력 한다. */
+	$category[]=$row['ez_category'];
+}
+/* 4. 카테고리 정보를 유일(array_unique)한 변수로 처리하고, 재정렬(array_values) 하여 category 배열 변수에 담는다. */
+$category = array_values(array_unique($category));
+
+/* 5. category 배열 크기 만큼 반복한다. */
+for($i=0;$i<count($category);$i++)
+{
+	/* 5-1. 카테고리을 연도별 $ez_helpers['1']의 형태의 배열로 초기화 */
+	$ez_helpers[$category[$i]]=array();
+}
+
+/* 6. ez_helper 배열 크기만큼 반복한다. */
+for ($i=0; $i<count($ez_helper);$i++)
+{
+	/* 6-1.  categoy 변수 에 ez_category 추출하여 입력한다. */
+	$categoy=$ez_helper[$i]['ez_category'];
+	/* 6-2. $ez_helpers의 연도 별로 배열을 담기  */
+	array_push($ez_helpers[$categoy],$ez_helper[$i]);
+}
+
+?>
+<script src="/wp/theme/modificate/youtube/js/jquery.js"></script>
+<!-- This is what you need -->
+<script src="/wp/theme/modificate/youtube/js/sweetalert.js"></script>
+<script src="/wp/theme/modificate/youtube/js/bootstrap.min.js"></script>
+<main class="page-content">
+<section class="well text-center text-md-left">
+<div class="row">
+<div class="container">
+   <div class="row">
+      <div class="col-sm-3">
+
+<?php
+/* 8. category 별로 배열 출력 */
+for($i=0;$i<count($category);$i++)
+{
+	/* 8-1. 연도별 배열($ez_helpers[$category[$i]])을 $ez_contents 배열에 담기 */
+	$ez_contents=$ez_helpers[$category[$i]];
+
+	/* 8-2. 첫 번째의 경우는 in active class를 활성화 한다. */
+	print('<div class="container">');
+	print('   <h5 class="text-bold text-md-left">&nbsp;</h5>');
+	print('   <h5 class="text-bold text-md-left"><span style="font-family:\'굴림\';"></span>');
+
+	if($ez_contents[$i]['ez_category']=="1")
+	{
+	print('교역자');
+	}else if($ez_contents[$i]['ez_category']=="2")
+	{
+	print('섬기는이');
+
+	}else if($ez_contents[$i]['ez_category']=="3")
+	{
+	print('쇼파르, תְּרוּעָה (반주자)');
+	}else{
+	print('헌신한 이들');
+	} 
+	print('   </h5>');
+	print('   <hr>');
+	print('   <div class="row flow-offset-2">');
+	print('<div class="container">');
+	/* 8-3. $ez_contents 정보만큼 반복한다. */
+	for($j=0;$j<count($ez_contents);$j++)
+	{
+		print('	  <div class="col-xs-6 col-md-3 offset-4">');
+		printf('         <div class="thumbnail thumbnail-4"><img title="namgunghyunwoo" class="img-circle" src="%s" alt="nghy.png">',addslashes($ez_contents[$j]['ez_image']));
+	if($ez_contents[$i]['ez_category']=="1")
+	{
+		print('            <div class="caption offset-1" style="font-family:\'맑은 고딕\', \'malgun gothic\';font-size:11px;">');
+	}else{
+		print('            <div class="caption offset-1">');
+	}
+		printf('               <h6><span style="font-family:\'돋움\';">%s</span></h6>',$ez_contents[$j]['ez_name']);
+	if($ez_contents[$i]['ez_category']=="1")
+	{
+printf('               <p class="small text-light-clr text-uppercase" style="text-align:justify;"><span style="font-family:\'돋움\';">%s</span></p>',$ez_contents[$j]['ez_position']);
+	}else{
+	printf('               <p class="small text-light-clr text-uppercase"><span style="font-family:\'돋움\';">%s</span></p>',$ez_contents[$j]['ez_position']);
+	}
+		
+		printf('               <p>%s</p>',$ez_contents[$j]['ez_career']);
+		print('               </div>');
+		print('            </div>');
+		print('         </div>');
+	}
+	print('</div>');
+	print('</div>');
+
+}
+?>
+</div><!-- .row -->
+
+</section>
+</main>
+<?php
+include_once(G5_PATH.'/tail.php');
+?>

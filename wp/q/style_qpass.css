@@ -1,0 +1,46 @@
+img {  border:none;  }
+
+.border_common_qpass { border:solid 1px #ccc; }
+
+.btn01_qpass {  color:#222222; border:2px outset; background-color:#f0f0f0; cursor:pointer;  }
+.count_qpass { padding:0px; padding-top:7px; font-weight:bold; }
+
+.help01_qpass { border:2px solid #BDBEC6; padding:6px; background:#F9F9F9; text-align:left;  line-height:140%; }
+
+
+.td_border_common_qpass { border:solid 1px #cccccc; border-right:none; border-bottom:none; }
+.td_border_right_qpass  { border:solid 1px #cccccc; border-bottom:none; }
+
+.td_border_bottom_qpass { border:solid 1px #cccccc; border-right:none; }
+.td_border_bottomright_qpass  { border:solid 1px #cccccc; }
+
+
+.td_border_commonTitle_qpass { border:solid 1px #cccccc; border-right:none; border-bottom:none; font-weight:bold; color:#222222; text-align:center; padding:3px;}
+.td_border_rightTitle_qpass  { border:solid 1px #cccccc; border-bottom:none; font-weight:bold; color:#222222; text-align:center; padding:3px; }
+
+.td_border_bottomTitle_qpass { border:solid 1px #cccccc; border-right:none; font-weight:bold; color:#222222; text-align:center; padding:3px; }
+.td_border_bottomrightTitle_qpass  { border:solid 1px #cccccc; font-weight:bold; color:#222222; text-align:center; padding:3px; }
+
+.textInput_qpass { text-align:center; border:solid 1px #cccccc; }
+
+.title01_qpass {font-weight:bold; color:#222222; padding:3px; }
+.title02_qpass {font-weight:bold; color:#222222; padding:3px; text-align:center;background-color: aliceblue;}
+.title03_qpass { text-align:center; font-size:13px; font-weight:bold; color:#bb6600; margin-top:5px; }
+
+.question01_qpass { padding-left: 5px; font-weight:bold; line-height:1.5; word-break:break-all; }
+.question02_qpass{ padding-left: 18px; padding-top:3px; line-height:1.5; word-break:break-all;  }
+
+.qpass_copyright {   margin: 3px; 0 0 0; background-color:white; font-size:11px;  }
+
+button, input, textarea, select {
+border:1px solid #ccc;
+-webkit-appearance:auto;
+padding: 5px;
+}
+
+
+input[type="checkbox"] {
+  visibility: visible;
+  opacity: 1;
+  -webkit-appearance:auto;
+}

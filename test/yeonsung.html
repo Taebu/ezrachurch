@@ -1,0 +1,365 @@
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>연성대학교</title>
+<link rel="stylesheet" type="text/css" href="./css/kor/common.css">
+<link rel="stylesheet" type="text/css" href="./css/kor/youtube.css">
+<link rel="stylesheet" type="text/css" href="./css/kor/kor.css"><!-- 국문 -->
+<!--[if lt IE 9]>
+<script src="./yeonsung/yeonsung/dept/js/html5shiv.js"></script>
+<![endif]-->
+<script type="text/javascript" src="./js/dept/jquery-2.2.1.min.js"></script>
+<script src="./js/netfunnel.js"></script>
+
+<!-- Swiper JS -->
+<script src="./js/swiper-bundle.min.js"></script>
+<script src="./js/youtube.js"></script>
+
+<script>
+
+$(window).on('load resize', function(){
+    if($(window).width() > 360 && $(window).width() <= 768){
+        var orientation = window.orientation;
+        switch(orientation) {
+        case 0:
+            $("#introIndex .menu").css("bottom", $("#introIndex footer").height()-100);
+ //           $("#introIndex").css("height",$("#introIndex footer").height()+150);
+            break;
+        case 90:
+            $("#introIndex .menu").removeAttr('style');
+            break;
+        case -90:
+            $("#introIndex .menu").removeAttr('style');
+            break;
+        }
+    }else{
+        $("#introIndex .menu").removeAttr('style');
+    }
+    
+    if($(window).width()<750){
+        $(".swiper-button-next").css("right",0).css("left",$(window).width()-75);
+    }else{
+        $(".swiper-button-next").css("right",10).css("left","auto");
+    }
+ 
+});
+
+function action2(url){
+    NetFunnel_Action({},url);
+}
+
+function complete(){
+    NetFunnel_Complete({});
+    return true;
+}
+
+</script>
+<style type="text/css">
+.topBar {
+    background: #263238;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 10px;
+    max-width: 800px;
+}
+
+.navBar {
+    background: #455A64;
+}
+
+.nav {
+    margin: 0 -10px;
+    padding: 0 10px;
+    list-style: none;
+    display: flex;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav > li > a {
+    padding: 14px 16px;
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.nav > li > a.active {
+    border-bottom: 2px solid #E64A19;
+}
+.swiper-slide {background-color: rgba(255,255,255,0.0) !important;}
+.resp-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%;
+}
+.resp-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+#mobile_logo,#gemflix_logo{display:none;padding-top: 10px;padding-left: 10px;}
+.swiper-button-next{color: rgb(239,35,142) !important;}.swiper-button-prev{color: rgb(239,35,142) !important;}
+</style>
+</head>
+<body onload="complete();" cz-shortcut-listen="true">
+
+
+<div id="introIndex">
+    <header>
+    <div>
+        <img alt="연성대학교" src="./img/kor/ys_logo.png">
+        <span class="gemflix"><img alt="GEMFLIX" src="./img/kor/gemflix.png"></span>   </div>
+
+    </header>
+<img alt="연성대학교" src="./img/kor/ys_logo.png" id="mobile_logo">
+<span class="gemflix"  id="gemflix_logo"><img alt="GEMFLIX" src="./img/kor/gemflix.png"></span>
+    <article>
+  <div class="tit"><!-- 타이틀 미 사용시엔 strong,p태그만 삭제 / div class="tit"은 구조상 삭제불가 -->
+    <!--<strong>Yeonsung University</strong>
+    <p>
+      끊임없는 도전과 멈추지 않는 열정<br />
+      전문직업인 양성의 요람 연성대학교
+    </p>-->
+        
+  </div>
+<div id="youtube_area" >
+<div class="resp-container">
+    <div id="iframe_youtube"></div>
+        </div> <!-- resp-container -->
+
+        <!-- <iframe class="resp-iframe" src="https://www.youtube.com/embed/?rel=0;&autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="iframe_youtube"></iframe> -->
+<div id="youtube_area2">
+        <p>연성STORY</p>
+        <div class="youtube_list swiper-container" id="univ_intro"></div>
+        <p>연.학.소 - 연성대 학과를 소개합니다</p>
+        <div class="youtube_list swiper-container" id="dept_intro"></div>
+        <p>어서와 연성대는 처음이지?</p>
+        <div class="youtube_list swiper-container" id="enter_intro"></div>
+        <p>슬기로운 연성생활</p>
+        <div class="youtube_list swiper-container" id="life1_intro"></div>
+        <p>Gem페스티벌</p>
+        <div class="youtube_list swiper-container" id="life2_intro"></div>
+        <p>코로나19 vs 연성대</p>
+        <div class="youtube_list swiper-container" id="corona"></div>
+        </div><!-- youtube_area2 -->
+</div><!-- #youtube_area -->
+
+<!---swipe---->
+  <!-- Link Swiper's CSS -->
+  <link rel="stylesheet" href="./css/kor/swiper-bundle.min.css">
+
+  <!-- Demo styles -->
+  <style>
+    html,
+    body {
+      position: relative;
+      height: 100%;
+    }
+
+    body {
+      background: #eee;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      width:250px;
+
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+
+        <ul class="menu">
+            <li class="menu_univ">
+                <a href="javascript:action2('https://www.yeonsung.ac.kr/ko/index.do')">대학 홈페이지</a>
+            </li>
+            <li class="menu_ipsi">
+                <a href="javascript:action2('https://ipsi.yeonsung.ac.kr/ipsi/index.do')">입학 홈페이지</a>
+            </li>
+    <li class="menu_01">
+                <a href="http://ipsi.yeonsung.ac.kr/ipsi/cms/FR_CON/index.do?MENU_ID=910" target="_blank">WHY YSU</a>
+             </li>
+<li class="menu_02">
+                <a href="https://www.youtube.com/channel/UCQ2YfM-XrdxA02ye1i679lA" target="_blank">소개영상보기</a>
+             </li>
+        </ul>
+    </article>
+<script type="text/javascript">
+      
+         // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('iframe_youtube', {
+          height: '360',
+          width: '640',
+          videoId: 'uqPDO70PUCo',
+    playerVars: { 'autoplay': 1, 'disablekb':'m'},
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+                        'onError':onPlayerError
+          }
+        });
+
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+     var done = false;
+      function onPlayerStateChange(event) {
+        if(event.data == YT.PlayerState.BUFFERING)
+        {
+             playVideo();
+        }
+        if(event.data == YT.PlayerState.UNSTARTED)
+        {
+             playVideo();
+        }
+        if(event.data == YT.PlayerState.ENDED)
+        {
+             nextVideo();
+        }
+
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+         //setTimeout(unMute, 1000);
+          done = true;
+        }
+      }
+
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      function unMute()
+      {
+         player.unMute();
+      }
+
+     var is_first = true;
+      function playVideo(){
+        $("#iframe_youtube").addClass("resp-iframe");
+        
+         if(typeof player.playVideo === "function")
+         {
+            if(is_first)
+             {
+              player.mute(); 
+             }
+
+             is_first = false;
+             player.playVideo();
+             
+             
+             player.setVolume(30);
+         }
+    }
+    
+    var play_index = 1;
+    function nextVideo()
+    {
+      player.unMute();
+      if(univ_intro_array.length==play_index)
+      {
+        play_index=0;
+      }
+     console.log(play_index+" : "+univ_intro_array[play_index]);
+      player.loadVideoById({'videoId': univ_intro_array[play_index],
+              'suggestedQuality': 'large'});
+
+        play_index++; 
+    }
+
+    function onPlayerError(event)
+    {
+        console.log(event);
+    }
+       
+   $(window).load(function() {
+    console.log( "ready!" );
+    playVideo();
+    }); 
+      function isBrowserCheck(){ 
+    const agt = navigator.userAgent.toLowerCase(); 
+    if (agt.indexOf("chrome") != -1) return 'Chrome'; 
+    if (agt.indexOf("opera") != -1) return 'Opera'; 
+    if (agt.indexOf("staroffice") != -1) return 'Star Office'; 
+    if (agt.indexOf("webtv") != -1) return 'WebTV'; 
+    if (agt.indexOf("beonex") != -1) return 'Beonex'; 
+    if (agt.indexOf("chimera") != -1) return 'Chimera'; 
+    if (agt.indexOf("netpositive") != -1) return 'NetPositive'; 
+    if (agt.indexOf("phoenix") != -1) return 'Phoenix'; 
+    if (agt.indexOf("firefox") != -1) return 'Firefox'; 
+    if (agt.indexOf("safari") != -1) return 'Safari'; 
+    if (agt.indexOf("skipstone") != -1) return 'SkipStone'; 
+    if (agt.indexOf("netscape") != -1) return 'Netscape'; 
+    if (agt.indexOf("mozilla/5.0") != -1) return 'Mozilla'; 
+    if (agt.indexOf("msie") != -1) { 
+        let rv = -1; 
+        if (navigator.appName == 'Microsoft Internet Explorer') { 
+            let ua = navigator.userAgent; var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})"); 
+        if (re.exec(ua) != null) 
+            rv = parseFloat(RegExp.$1); 
+        } 
+        return 'Internet Explorer '+rv; 
+    } 
+}
+</script>
+</div>
+
+
+</body></html>

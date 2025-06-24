@@ -1,0 +1,18 @@
+<?php
+include_once("../common.php");
+$sql[]="select count(*) cnt from ez_lecture where ";
+$sql[]="em_no='{$em_no}' and ";
+$sql[]="el_hp='{$el_hp}';";
+
+$query=join($sql,"");
+//$json['query']=$query;
+$result=sql_query($query);
+$row=sql_fetch_array($result);
+if($row['cnt']==0)
+{
+$json['result']=true;
+}else{
+$json['result']=false;
+}
+echo json_encode($json);
+?>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+<head>
+<title>westminster</title>
+<meta charset="utf-8"/>
+<meta name="author" content="Mntn&reg; c/o Benjamin Lips"/>
+
+<link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet"/>
+
+<style type="text/css">
+<!--
+::selection{background:aquamarine;color:white;}
+::-webkit-selection{background:aquamarine;color:white;}
+::-moz-selection{background:aquamarine;color:white;}
+body{background:black;color:white;}
+*{cursor:default;line-height:9vw;font-size:7vw;padding:0;outline:0;margin:0;}
+#t{position:absolute;top:20%;left:10%;right:10%;width:7	0%;margin-left:5px;visibility:hidden;white-space:pre-wrap;}
+a{color:mediumslateblue;text-decoration:none;border-bottom:1px solid aquamarine;}
+code{background:yellow;}
+.g{color:#0f0;}
+.p{color:pink;}
+/* t.js-related: */
+ins,del{text-decoration:none;}
+s{display:none;}
+kbd{font-family:inherit;}
+ 
+.t-caret{font-size:inherit;color:magenta;}
+//@media(max-width:800px){#t{width:400px;margin-left:-200px;}}
+-->
+</style>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script> <!-- 3.3.1 -->
+<script src="https://cdn.jsdelivr.net/gh/mntn-dev/t.js/t.min.js"></script> 
+<script type="text/javascript">
+var i = 0;
+var array_word=[
+"흩어 구제하여도\n더욱 부하게 되는 일이 있나니\n과도히 아껴도\n가난하게 될 뿐이니라",
+"믿는 사람이 다 함께 있어 모든 물건을 서로 통용하고",
+"어느 때나 하나님을 본 사람이 없으되 만일 우리가 서로 사랑하면 하나님이 우리 안에 거하시고 그의 사랑이 우리 안에 온전히 이루어지느니라",
+"누구든지 하나님을 사랑하노라 하고 그 형제를 미워하면 이는 거짓말하는 자니 보는 바 그 형제를 사랑하지 아니하는 자는 보지 못하는 바 하나님을 사랑할 수 없느니라",
+"내가 내 언약을 나와 너 및 네 대대 후손 사이에 세워서 영원한 언약을 삼고 너와 네 후손의 하나님이 되리라",
+"오직 이면적 유대인이 유대인이며 할례는 마음에 할지니 영에 있고 율법 조문에 있지 아니한 것이라 그 칭찬이 사람에게서가 아니요 다만 하나님에게서니라",
+"우리가 축복하는 바 축복의 잔은 그리스도의 피에 참여함이 아니며 우리가 떼는 떡은 그리스도의 몸에 참여함이 아니냐",
+"그러므로 너희는 가서 모든 민족을 제자로 삼아 아버지와 아들과 성령의 이름으로 세례를 베풀고",
+"믿고 세례를 받는 사람은 구원을 얻을 것이요 믿지 않는 사람은 정죄를 받으리라\n",
+"누구든지 그리스도와 합하기 위하여 세례를 받은 자는 그리스도로 옷 입었느니라\n",
+"베드로가 이르되 너희가 회개하여 각각 예수 그리스도의 이름으로 세례를 받고 죄 사함을 받으라 그리하면 성령의 선물을 받으리니\n",
+"우리를 구원하시되 우리가 행한 바 의로운 행위로 말미암지 아니하고 오직 그의 긍휼하심을 따라 중생의 씻음과 성령의 새롭게 하심으로 하셨나니\n",
+"내 살을 먹고 내 피를 마시는 자는 영생을 가졌고 마지막 날에 내가 그를 다시 살리리니\n55 내 살은 참된 양식이요 \n내 피는 참된 음료로다",
+"너희가 이 떡을 먹으며 이 잔을 마실 때마다 주의 죽으심을 그가 오실 때까지 전하는 것이니라\n",
+"주의 몸을 분별하지 못하고 먹고 마시는 자는 자기의 죄를 먹고 마시는 것이니라\n",
+"이런 자를 사탄에게 내주었으니 이는 육신은 멸하고 영은 주 예수의 날에 구원을 받게 하려 함이라",
+"그 가운데 후메내오와 알렉산더가 있으니 내가 사탄에게 내준 것은 그들로 훈계를 받아 신성을 모독하지 못하게 하려 함이라\n",
+"잘 다스리는 장로들은 배나 존경할 자로 알되 말씀과 가르침에 수고하는 이들에게는 더욱 그리할 것이니라\n",
+"범죄한 자들을 모든 사람 앞에서 꾸짖어 나머지 사람들로 두려워하게 하라\n",
+"그런즉 군왕들아 너희는 지혜를 얻으며 세상의 재판관들아 너희는 교훈을 받을지어다\n11 여호와를 경외함으로 섬기고 떨며 즐거워할지어다",
+"각 사람은 위에 있는 권세들에게 복종하라 권세는 하나님으로부터 나지 않음이 없나니 모든 권세는 다 하나님께서 정하신 바라\n",
+"뭇 사람을 공경하며 형제를 사랑하며 하나님을 두려워하며 왕을 존대하라\n",
+"이에 사도와 장로와 온 교회가 그 중에서 사람들을 택하여 바울과 바나바와 함께 안디옥으로 보내기를 결정하니 곧 형제 중에 인도자인 바사바라 하는 유다와 실라더라",
+"대제사장들과 온 공회가 예수를 죽이려고 그를 칠 증거를 찾되 얻지 못하니\n",
+"네가 흙으로 돌아갈 때까지 얼굴에 땀을 흘려야 먹을 것을 먹으리니 네가 그것에서 취함을 입었음이라 너는 흙이니 흙으로 돌아갈 것이니라 하시니라",
+"여전히 땅으로 돌아가고 영은 그것을 주신 하나님께로 돌아가기 전에 기억하라\n",
+"죽은 자의 부활도 그와 같으니 썩을 것으로 심고 썩지 아니할 것으로 다시 살아나며\n43 욕된 것으로 심고 영광스러운 것으로 다시 살아나며 약한 것으로 심고 강한 것으로 다시 살아나며",
+"하나님은 모든 행위와 모든 은밀한 일을 선악 간에 심판하시리라",
+"그들은 영벌에, 의인들은 영생에 들어가리라 하시니라\n",
+"내가 진실로 진실로 너희에게 이르노니 내 말을 듣고 또 나 보내신 이를 믿는 자는 영생을 얻었고 심판에 이르지 아니하나니 사망에서 생명으로 옮겼느니라\n",
+"이는 우리가 다 반드시 그리스도의 심판대 앞에 나타나게 되어 각각 선악간에 그 몸으로 행한 것을 따라 받으려 함이라\n",
+"주의 약속은 어떤 이들이 더디다고 생각하는 것 같이 더딘 것이 아니라 오직 주께서는 너희를 대하여 오래 참으사 아무도 멸망하지 아니하고 다 회개하기에 이르기를 원하시느니라\n",
+"이것들을 증언하신 이가 이르시되 내가 진실로 속히 오리라 하시거늘 아멘 주 예수여 오시옵소서"
+];
+
+//<![CDATA[
+$(function(){
+
+	$('#t').t(
+array_word.join(x='<ins>2</ins><del>*</del>')+x,
+{speed:80,delay:1,  repeat:true,pause_on_click:true}
+);
+	/*
+ $('#t').t(array_word,{
+  
+  delay:2,                   // start delay in seconds [default:0]
+  
+  speed:250,                  // typing speed (ms) [default:50]
+  speed_vary:false,          // 'human like' speed variation [default:false]
+  
+  beep:true,                 // beep while typing (Web Audio API) [default:false]
+  
+  mistype:false,                 // mistype rate: 1:N per char [default:false]
+  locale:'en',               // keyboard layout (to fit mistype); supported: 'en' (english) or 'de' (german) [default:'en']
+  
+  caret:'\u2589',            // caret content; can be html too [default:true (\u258e)]
+  blink:false,                // blink-interval in ms; if TRUE, speed*3  [default:true]
+  blink_perm:false,          // permanent blinking? if FALSE, caret blinks only on delay/pause/finish [default:false]
+  repeat:0,                  // repeat typing: if TRUE, infinite or N times [default:0]
+  tag:'span',    	            // wrapper tag (.t-container, .t-caret) [default:'span']
+  pause_on_click:true,       // pauses/continues typing on click/tap (elm) [default:false]
+  pause_on_tab_switch:true,  // pauses typing if window is inactive (Page Visibility API) [default:false]
+  
+  // init callback (ready-to-type)
+  init:function(elm){},        
+  // typing callback
+  typing:function(elm,chr_or_elm,left,total){},
+  // finished callback
+  fin:function(elm){
+
+  	set_word(i);
+  }          
+ 
+ });
+ */
+/*
+        
+Methods
+  $(elm).t('add',content);         // adds content; shorthand: $(elm).a(content);
+  $(elm).t('queue',content);       // queued type processing; shorthand: $(elm).q(content);
+  $(elm).t('pause'[,true/false]);  // pauses typing (toggles if 2nd param omitted); shorthand: $(elm).p([true/false]);
+  $(elm).t('beep');                // manual beepin' (initialised/not-typing); shorthand: $(elm).b();
+  $(elm).t('speed',ms);            // typing speed change at runtime; shorthand: $(elm).s(ms);
+  $(elm).t_off([true]);            // destroys typer's instance; if TRUE, also clears content; shorthand: n/a
+Data/properties
+  $(elm).data().t;                 // TRUE if initialised
+  $(elm).data().is_typing;                 // typing
+  $(elm).data().paused;                    // paused
+# How to stop caret blinking? (e.g., if finished)
+ -> https://github.com/mntn-dev/t.js/issues/5#issuecomment-340739907
+# Hint: unset default/unwatend styles via CSS
+ ins,del{text-decoration:none;}
+ kbd{font-family:inherit;}
+ s{display:none;}
+ [...]
+--------
+# "Hypertyping Markup Language" Cheatsheet:
+<del>*</del> -> clears everything typed before (still stored in case of repeating [repeat:N])
+<del>foo</del> -> deletes 'foo' (by default, t.js delays 0.25s before removing)
+<del>foo<ins>2</ins></del> -> custom del-delay: numeric-filled <ins> inside <del>
+<del>select me<s>red,white</s></del> -> text selection: <s> inside <del> (comma seperated background/forground color values, or .class name)
+(!) Note: except <ins> and <s>, <del> doesn't handle nested html-tags (dropped)
+<ins>2.5</ins> -> stops typing for 2.5 seconds (numeric-filled)
+<ins>content to <u>insert</u></ins> -> inserts instantly (non-numeric)
+<kbd>some <strong>typing text</strong></kbd> -> will apply setting's mistype[=1:N] rate here (will be 10 if unset)
+<s>20</s> -> changes typing speed to 20 milliseconds
+*/
+  
+});
+//]]>
+</script>
+</head>
+<body>
+<div id="t"></div>
+
+<br/>
+</body>
+</html>

@@ -1,0 +1,36 @@
+body{padding: 15px;font-family: "lee_sun_shin_dotum_b";font-size: 42px;background-color: #000;}
+textarea{margin: 0px; width: 337px; height: 239px;}
+/* 게시판용 버튼 */
+.btn{
+ display:inline-block;
+ border:0px solid #fff;
+ color:#fff !important;
+ background:#ccc;
+ padding:5px 5px 2px 5px;
+ border-radius:5px;
+ font-size: 9pt;
+ text-decoration:none;
+ cursor:pointer
+}
+.btn:focus,.btn:hover {text-decoration:none}
+
+.btn_lg{padding:15px;padding-right:18px;font-size:15pt !important;}
+.btn_md{padding:10px;padding-right:13px;font-size:12pt !important;}
+.btn_sm{padding:8px;padding-right:10px;font-size:10pt !important;}
+
+.btn_primary{background:#1c84c6;}
+.btn_warning{background:#f7ac59;}
+.btn_danger{background:#ed5565;}
+.btn_success{background:#5cb85c;}
+.btn_info{background:#5bc0de;}
+.btn_black{background:#292b2c;}
+.btn_secondary{background:#fff;color:#652b67 !important;border:1px solid #ccc ;}
+.wm_content{
+    line-height: 2.9;
+    padding: 25px;}
+
+.ml90{margin-left: 90px;}
+p{text-indent:70px;}
+
+sup{font-size:large;}
+.col_4{width:30.3333%}

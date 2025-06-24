@@ -1,0 +1,11 @@
+#### 그누보드5 rewrite BEGIN #####
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /vote/
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^([0-9]+)$  index.php?q=$1      [QSA,L]
+RewriteRule ^q/([0-9a-zA-Z_]+)$  question.php?q=$1      [QSA,L]
+</IfModule>
+#### 그누보드5 rewrite END #####

@@ -1,0 +1,42 @@
+var bible_chapter = [];
+bible_chapter.push("1 이방 5개국 심판 예언다메섹, 가사, 두로에돔, 암몬");
+bible_chapter.push("2 모압과 유다북IS심판 예언");
+bible_chapter.push("3 북이스라엘 심판,벧엘의 금송아지 심판");
+bible_chapter.push("4 북이스라엘 상류층 심판 예언");
+bible_chapter.push("5 북이스라엘 멸망에대한 아모스의 애가");
+bible_chapter.push("6 북이스라엘멸망 예언");
+bible_chapter.push("7 다림줄 환상과아모스의 직업");
+bible_chapter.push("8 여름 실과의 환상");
+bible_chapter.push("9 선민 이스라엘의 회복");
+
+
+var comment = [];
+comment.push("<img src='./img/Amos.png'>");
+comment.push("▪부자들의 사치가 극에 달하였다");
+comment.push("▪물질주의 향락주의에 빠져 있었다");
+comment.push("▪은을 받고 의인을 팔았다");
+comment.push("▪한 사람의 가치가 신발 한 켤레 값 이었다");
+comment.push("▪모든 것을 가늠하는 척도가 오직 돈 이었다");
+comment.push("▪나실인을 끌어다가 술을 마시게 했다");
+comment.push("▪예언자의 입을 막고 예언하지 말라고 했다");
+comment.push("▪권력자들이 여름궁전 겨울 궁전을 지었다");
+comment.push("▪상아 궁전을 지어 놓고 사치하고 타락했다");
+comment.push("▪여자들도 술을 퍼 마시고 놀아났다");
+comment.push("▪상아 침대에서 늦잠 자고 기지개 켜고");
+comment.push("▪비파에 맞추어 헛된 노래를 지절대고");
+comment.push("▪대접으로 포도주를 퍼서 마셔댔다");
+comment.push("▪온갖 귀한 향수를 몸에 뿌리고");
+comment.push("▪우유에 목욕하고");
+comment.push("▪공법을 쓸개 같이");
+comment.push("▪정의를 인진같이 쓰게 하였다");
+comment.push("▪에바는 크게 세겔은 작게하여");
+comment.push("▪부당 이득으로 치부했다");
+comment.push("▪안식일이 다가오는 것을 귀찮아 했다");
+
+comment.push("<아모스를 통하여 전해진 하나님의 말씀은>");
+comment.push("▪내가 너희의 절기를 미워한다");
+comment.push("▪내가 너희의 성회도 미워한다");
+comment.push("▪내가 너희의 번제도 미워한다");
+comment.push("▪내가 너희의 희생의 화목제도 미워한다");
+comment.push("▪내가 너희의 노래소리도 미워한다");
+comment.push("▪내가 너희의 비파소리도 미워한다");

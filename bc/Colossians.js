@@ -1,0 +1,17 @@
+var bible_chapter = [];
+bible_chapter.push('1 그리스도의 신성');
+bible_chapter.push('2 유대 절기를 지키는 유대교에 대한 경계');
+bible_chapter.push('3 아내는 남편에게 복종 남편은 아내에게 사랑');
+bible_chapter.push('4 전도의 문을 열어주소서');
+var comment = [];
+comment.push('선재하시는 그리스도');
+comment.push('창조주가 되시는 그리스도');
+comment.push('하나님의 형상이신 그리스도');
+comment.push('천사들 위에 있는 그리스도');
+comment.push('하나님의 비밀인 그리스도');
+comment.push('구세주가 되시는 그리스도');
+comment.push('하나님 우편에서 중보하시는 그리스도');
+comment.push('하나님의 아들이신 그리스도');
+comment.push('교회의 머리가 되시는 그리스도');
+comment.push('다시 오실 그리스도');
+comment.push('너희 안에 거하시는 그리스도');

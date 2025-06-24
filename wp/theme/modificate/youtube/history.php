@@ -1,0 +1,119 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+include_once('./_common.php');
+define('_INDEX_', true);
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once('../head.php');
+
+/* 0. years 배열 초기화 */
+$years=array();
+
+/* 0. ez_history 배열 초기화 */
+$ez_history=array();
+
+/* 0. ez_histories 배열 초기화  */
+$ez_histories=array();
+
+/* 1. newezra.ez_history 정보를 조회하는 쿼리 명령어를 선언한다. */
+$sql= "SELECT * FROM newezra.ez_history order by ez_date desc ";
+
+/* 2. sql_query 처리한 정보를 result에 담는다. */
+$result = sql_query($sql);
+
+/* 3. newezra.ez_history 정보만큼 반복한다. */
+for ($i=0; $row=sql_fetch_array($result); $i++)
+{
+	/* 3-1. newezra.ez_history 정보를 ez_history 배열에 담는다. */
+	array_push($ez_history,$row);
+	/* 3-2. 연혁(ez_history)에 담긴 모든 정보(ez_date)를 년도만 추출하여 연혁 배열(years)에 입력 한다. */
+	$years[]=date("Y",strtotime($row['ez_date']));
+}
+
+/* 4. 연혁 정보를 유일(array_unique)한 변수로 처리하고, 재정렬(array_values) 하여 years 배열 변수에 담는다. */
+$years = array_values(array_unique($years));
+
+/* 5. years 배열 크기 만큼 반복한다. */
+for($i=0;$i<count($years);$i++)
+{
+	/* 5-1. 연혁을 연도별 $ez_histories['2000']의 형태의 배열로 초기화 */
+	$ez_histories[$years[$i]]=array();
+}
+
+/* 6. ez_history 배열 크기만큼 반복한다. */
+for ($i=0; $i<count($ez_history);$i++)
+{
+	/* 6-1. ez_date를 date 변수 에 연도만 추출하여 입력한다. */
+	$date=date("Y",strtotime($ez_history[$i]['ez_date']));
+	/* 6-2. $ez_histories의 연도 별로 배열을 담기  */
+	array_push($ez_histories[$date],$ez_history[$i]);
+}
+
+?>
+<script src="js/jquery.js"></script>
+<!-- This is what you need -->
+<script src="js/sweetalert.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<main class="page-content">
+<section class="well text-center text-md-left">
+<div class="row">
+<div class="container">
+   <div class="row">
+      <div class="col-sm-3">
+         <ul class="nav nav-tabs vertical-tabs text-center"  id="myTabs2" role="tablist">
+<?php
+/* 7. 연혁 연도별로 출력한다. */
+for($i=0; $i<count($years);$i++)
+{
+	/* 7-1. 첫 번째 연도만 active 처리한다. */
+	printf('<li role="presentation" class="round-xl%s">',$i==0?" active":"");
+
+	/* 7-2. 연도 별 연혁을 클릭하면 이벤트 처리하여 콜랩스 하도록 처리하는 클래스와 tag를 선언합니다. */
+	printf('<a href="#vtab%s"  aria-controls="tab%s" role="tab" class="round-xl">%s년</a>',$years[$i],$years[$i],$years[$i]);
+	print('</li>');
+}
+?>
+</ul>
+</div>
+<div class="col-sm-9">
+<div class="tab-content tab-conten-vert text-sm-left">
+<?php
+/* 8. 연도 별로 배열 출력 */
+for($i=0;$i<count($years);$i++)
+{
+	/* 8-1. 연도별 배열($ez_histories[$years[$i]])을 $ez_contents 배열에 담기 */
+	$ez_contents=$ez_histories[$years[$i]];
+
+	/* 8-2. 첫 번째의 경우는 in active class를 활성화 한다. */
+	printf('<div class="tab-pane fade%s" role="tabpanel" id="vtab%s">',$i==0?" in active":"",$years[$i]);
+	
+	/* 8-3. $ez_contents 정보만큼 반복한다. */
+	for($j=0;$j<count($ez_contents);$j++)
+	{
+		/* 8-3-1. $ez_contents[$j]['ez_date'] Y-m-d를 n월 j일 형태로 변환하여 date 변수에 입력 한다. */
+		$date=date("n월 j일",strtotime($ez_contents[$j]['ez_date']));
+
+		print('<p>');
+		/* 8-3-2. <strong>ez_date, </strong>ez_content 형태로 출력 한다. */
+		printf('<strong>%s </strong>%s',$date,$ez_contents[$j]['ez_content']);
+		/*
+		if($is_admin)
+		{
+			print('edit');
+			print('delete');
+		}
+		*/
+		print('</p>');
+	}
+	print('</div>');
+}
+?>
+		</div>
+      </div>
+   </div>
+</div><!-- .row -->
+
+</section>
+</main>
+<?php
+include_once(G5_PATH.'/tail.php');
+?>

@@ -1,0 +1,27 @@
+var bible_title = "ΠΡΟΣ ΕΒΡΑΙΓΣ";
+var bible_chapter = [];
+bible_chapter.push("1 천사보다 우월하신JX");
+bible_chapter.push("2 친히 시험 받으셨으므로시험받는자도우심");
+bible_chapter.push("3 모세보다 우월하신 그리스도");
+bible_chapter.push("4 대제사장이신 그리스도");
+bible_chapter.push("5 멜기세덱의반차인 그리스도");
+bible_chapter.push("6 한번 비췸을 얻고 타락한 자들");
+bible_chapter.push("7 예수그리스도의 대제사장직");
+bible_chapter.push("8 새 언약을 새우리라");
+bible_chapter.push("9 성막의 규례는 개혁때까지만.");
+bible_chapter.push("10 황소와 염소의피는 죄없이못함");
+bible_chapter.push("11 믿음장 믿음의조상");
+bible_chapter.push("12 예수를바라 보자");
+bible_chapter.push("13 돈을 사랑치말고 있는 자족하라");
+
+var comment = [];
+comment.push("1. AD 70년전 기록 (AD 96년 클레멘스 1서 영향 줌)");
+comment.push("2. 유대인 그리스도인들에게 보내는 서신");
+comment.push("3. 저자는 바울, 바나바, 클레멘스, 누가, 아볼로 등으로 추정");
+comment.push("4. 저자는 분명 누가와 친구며 유대인 성도들 지인");
+comment.push("5. 남성 분사로 자신을 지칭하므로 남성 저자[11:32]");
+comment.push("6. 예수님의 직계 제자는 아니며 전해 들음[2:1, 3]");
+comment.push("7. '우리가' 라는 1인칭 복수를 사용");
+comment.push("8. 이탈리아 쪽에서 활동하고 있음[13:24]");
+comment.push("9. 디모데의 석방이 얼마 안됨을 기록[13:23]");
+comment.push("10. 모세 시대 제도의 열등함 강조");

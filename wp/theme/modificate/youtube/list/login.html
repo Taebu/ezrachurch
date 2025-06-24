@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		input{width: 100%;}
+
+	</style>
+</head>
+  <body>
+  <form action="https://accounts.google.com/o/oauth2/v2/auth" method="GET">
+	<input type="text" name="scope" id="scope" value="https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtubepartner">
+	<input type="text" name="access_type" id="access_type" value="offline">
+	<input type="text" name="include_granted_scopes" id="" value="true">
+	<input type="text" name="state" id="state" value="state_parameter_passthrough_value">
+	<input type="text" name="redirect_uri" id="redirect_uri" value="https://ezrachurch.kr/wp/theme/modificate/youtube/list/receiveCode.php">
+	<input type="text" name="response_type" id="response_type" value="code">
+	<input type="text" name="client_id" id="client_id" value="753250705258-nhf4q46qm8p4j3k5bnalg91ogm0lume6.apps.googleusercontent.com">
+	<input type="submit" value="발송">
+  </form>
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?
+	scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.force-ssl%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutube.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fyoutubepartner&access_type=offline&include_granted_scopes=true&state=state_parameter_passthrough_value&redirect_uri=https%3A%2F%2Fezrachurch.kr%2Fwp%2Ftheme%2Fmodificate%2Fyoutube%2Flist%2FreceiveCode.php&response_type=code&client_id=753250705258-nhf4q46qm8p4j3k5bnalg91ogm0lume6.apps.googleusercontent.com">구글 API를 사용할 수 있도록 허용하러 가기</a>
+  </body>
+</html>

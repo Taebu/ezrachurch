@@ -1,0 +1,90 @@
+<?php
+include_once "./db_con.php";
+include_once "./subject.php";
+include_once($_SERVER['DOCUMENT_ROOT'].'/wp/common.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/ac/commons.php');
+?>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<script src="/wp/js/jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/wm/lib/css/main.css" media="all" />
+<link rel="stylesheet" type="text/css" href="/wm/lib/css/stdtheme.css" media="all" />
+<?php
+function change_type($key)
+{
+	
+	$array = array();
+	$array['In']="입금";
+	$array['Out']="출금";
+	$array['Expenditure']="지출결의";
+	$array['Budget']="예산신청액";
+
+	if (array_key_exists($key, $array)) {
+		$result=$array[$key];
+	}else{
+		$result="알수 없는 코드";
+	}
+	return $result;
+}
+
+if($is_admin){
+$sql="select * from account_book order by ab_no desc ";
+}else{
+$sql=sprintf("select * from account_book where ab_class='%s' order by ab_no desc ",$executive['ab_class']);
+}
+$query=$mysqli->query($sql);
+if(!empty($keyword))
+{
+printf('<input type="text" name="keyword" id="" value="%s">',$keyword);
+echo '<input type="submit" value="검색">';
+printf("<tr><td colspan='5' class='tac'>\"%s\"로 검색된 결과 %d개 검색 되었습니다.</td></tr>",$keyword,$query->num_rows);
+}else{
+print('<input type="text" name="keyword" id="" value="" placeholder="검색어를 입력 해 주세요.">');
+echo '<input type="submit" value="검색">';
+}
+echo "<table class=\"reference\">";
+echo "<tr>";
+echo "<th>no</th>";
+echo "<th>class</th>";
+echo "<th>ab_date</th>";
+echo "<th>ab_type</th>";
+echo "<th>amount</th>";
+echo "<th>countents</th>";
+echo "<th>datetime</th>";
+echo "<th>datetime</th>";
+echo "<th>datetime</th>";
+echo "</tr>";
+while($list=$query->fetch_assoc()){
+
+print "<tr>";
+printf('<td>%s</td>',$list['ab_no']);
+printf('<td>%s</td>',$list['ab_class']);
+printf('<td>%s</td>',$list['ab_date']);
+printf('<td>%s</td>',change_type($list['ab_type']));
+printf('<td>%s</td>',number_format($list['ab_amount']));
+printf('<td>%s</td>',$list['ab_contents']);
+printf('<td>%s</td>',$list['ab_datetime']);
+printf("<td><a href='./modify.php?ab_no=%s'>수정</a></td>",$list['ab_no']);
+printf("<td><a href='javascript:set_delete(%s);'>삭제</a></td>",$list['ab_no']);
+print "</tr>";
+
+}
+	if($query->num_rows==0)
+	{
+		printf("<tr><td colspan='5' class='tac'>\"%s\"로 검색된 결과가 없습니다.</td></tr>",$keyword);
+	}
+
+echo "</table>";
+
+printf("<input type='button' value='쓰기' onclick=\"location.href='./write.php?ab_class=%s'\">",$executive['ab_class']);
+echo "<input type='button' value='통계' onclick=\"location.href='./total.php'\">";
+print "<br>";
+foreach($SUBJECT['ko'] as $key =>$value)
+{
+	if($is_admin){
+		printf("<input type='button' value='%s 회계보고' onclick=\"location.href='/ac/report.php?ab_class=%s'\">&nbsp;&nbsp;",$value,$key);
+		printf("<input type='button' value='%s 지출결의서' onclick=\"location.href='/ac/next_quater.php?ab_class=%s'\"><br>",$value,$key);
+	}else if($key==$executive['ab_class']) {
+		printf("<input type='button' value='%s 회계보고' onclick=\"location.href='/ac/report.php?ab_class=%s'\">&nbsp;&nbsp;",$value,$key);
+		printf("<input type='button' value='%s 지출결의서' onclick=\"location.href='/ac/next_quater.php?ab_class=%s'\"><br>",$value,$key);
+	}
+}

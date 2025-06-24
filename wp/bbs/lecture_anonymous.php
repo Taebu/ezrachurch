@@ -1,0 +1,157 @@
+<!-- list.php -->
+<?php
+include_once('../common.php');
+
+include_once(G5_THEME_PATH.'/head.php');
+
+function get_status_name($key)
+{
+    # code...
+    $array['ap']="신청완료";
+    $array['pc']="입금완료";
+    $array['co']="신청취소";
+    $array['cp']="신청완료";
+    $array['rf']="환불요청";
+    $array['rc']="환불완료";
+    $array['etc']="기타";
+    $array['waiting']="대기중";
+    $array['receipt']="접수완료";
+    $array['meet']="강좌중";
+    $array['close']="종강";
+
+	if (array_key_exists($key, $array)) {
+        $result=$array[$key];
+    }else{
+        $result="신청";
+    }
+    return $result;
+}
+?>
+
+
+
+      <main class="page-content">
+
+        <section class="well well-inset-2">
+          <div class="container">
+
+
+<div class="sub_content">
+
+				<!-- 연중집회일정 계획표  -->
+				<div class="trainee_list">
+				    <form name="fboardlist" id="fboardlist" onsubmit="return fboardlist_submit(this);" method="post">
+
+				<table class="table table-striped table-mobile mobile-primary">
+					<thead>
+						<tr class="bg-primary" style=text-align:center>
+							<td class="t_session_2 border-rad_l">회차</td>
+							<td class="t_period_3">이름</td>
+							<td class="t_period_3">집회기간</td>
+							<td class="t_place_2">집회장소</td>
+<!-- 							<td class="t_sum_2">강좌내용</td> -->
+							<td class="t_teacher_2">강사</td>
+							<td class="t_phone_2 border-rad_r">접수상태</td>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- 데이터 유무에 따라서 빈박스 처리  -->
+<?php
+$where = " ";
+$order = " order by el_no desc;";
+
+if(isset($em_lecture_type)&&strlen($em_lecture_type)>0)
+{
+	$where.=sprintf(" and em_lecture_type='%s' ",$em_lecture_type);
+}
+
+$count=0;
+	$sql="select * from ez_lecture where el_hp='".$el_hp."' ";
+	$query=sql_query($sql.$where.$order);
+	$count=sql_num_rows($query);
+
+
+
+if($count==0){
+echo '<tr><td colspan="6" style="text-align:center;font-weight:900">접수한 강좌가 확인되지 않았습니다. 아래 핸드폰 번호로 조회를 해보세요.</td></tr>';
+}
+while($list=sql_fetch_array($query))
+{
+    $em_no=$list['em_no'];
+		$sql2="select * from ez_meet where em_no={$em_no};";
+		$row=sql_fetch_array(sql_query($sql2));
+    echo "<tr  style=text-align:center><td>";
+    echo '<input type="checkbox" name="chk_seq[]" >';
+    echo $list['em_lecture_no']."회";
+    echo "</td><td>";
+    echo sprintf("%s ( %s )",$list['el_name'],$list['el_birth']);
+    echo "</td><td>";
+    echo $list['el_stdt']." ~ ". $list['el_eddt'];
+    echo "</td><td>";
+    echo $row['em_place'];
+    echo "</td><td>";
+    //echo $row[em_lecture_name];
+    //echo "</td><td>";
+    echo $row['em_author'];
+    echo "</td><td>";
+    echo get_status_name($list['el_status']);
+    echo "</td></tr>";
+	if(strlen($list['el_addperson'])>0&&$list['el_total']>1)
+	{
+		$arr_person=explode("&",$list['el_addperson']);
+    	foreach($arr_person as $ap){
+    		$arr_items=explode("|",$ap);
+    		printf("<tr class=\"%s\" style=text-align:center>",$bg);	
+    			foreach($arr_items as $ai)
+    			{
+    				
+    				$arr_keys=explode("=",$ai);
+    				
+	    			if($arr_keys[0]=="add_name")
+	    			{
+							printf("<td>-</td><td>%s",$arr_keys[1]);	
+	    			}
+    				if($arr_keys[0]=="add_birth")
+	    			{
+	    					printf(" (%s)</td><td>동반참석</td>",date('Y-m-d', strtotime($arr_keys[1])));
+	    			}
+
+	    			if($arr_keys[0]=="add_sex")
+	    			{
+						$mb_sex=$arr_keys[1]=="M"?"남자":"여자";
+	    					printf("<td>%s</td><td colspan=6></td>",$mb_sex);	
+	    			}
+    				
+    			}
+    			echo "</tr>";
+    	}
+	}
+}
+?>
+</tbody>
+</table>
+
+                
+          
+<?php
+printf('<div class="col-xs-12 col-sm-10"><input type="text" name="el_hp" value="%s" required="" id="el_hp" size="15" maxlength="20" class="col-xs-5 form-control round-small frm_input required" placeholder="\'핸드폰\'을 기입하고 파란 \'검색\'버튼을 눌러주세요! 예) 010-xxxx-xxxx"></div>',$el_hp);
+echo '<div class="col-xs-12 col-sm-2">
+                <div class="form-group">
+                <button type="submit" class="offset-5 btn-primary btn-xs round-small col-xs-3 btn-block" data-target="#btn_map" id="btn_map">검색</button></div>
+          </div>';
+?>
+</div>
+</div>
+</div><!-- .container -->
+</section>
+<script>
+	
+// 출처: https://cublip.tistory.com/326 [HeBhy, since 1983.]
+$(document).on("keyup", "#el_hp", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+
+
+
+</script>
+<?php
+include_once(G5_THEME_PATH.'/tail.php');
+?>

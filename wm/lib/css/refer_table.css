@@ -1,0 +1,569 @@
+table.reference {
+	width: 100%; border-collapse: collapse;margin-bottom: 50px;;
+}
+table.tecspec {
+	width: 100%; border-collapse: collapse
+}
+table.reference tr:nth-child(2n+1) {
+	background-color: rgb(246, 244, 240);
+}
+table.reference tr:nth-child(2n) {
+	background-color: rgb(255, 255, 255);
+}
+
+table.reference tr.del:nth-child(2n+1){
+	background-color: rgb(250, 174, 180);
+}
+table.reference tr.del:nth-child(2n){
+	background-color: rgb(230, 174, 180);
+}
+
+
+table.reference tr.green:nth-child(2n+1){
+	background-color: #aed994;
+}
+table.reference tr.green:nth-child(2n){
+	background-color: #4ad994;
+}
+
+table.reference tr.fixzebra {
+	background-color: rgb(246, 244, 240);
+}
+table.reference th {
+	padding: 3px; 
+	border: 1px solid rgb(85, 85, 85);
+	text-align: center; 
+	color: rgb(255, 255, 255); 
+	font-size: 12px; 
+	vertical-align: top; 
+	background-color: rgb(85, 85, 85);
+}
+
+table.reference tr.skyblue th{
+	background-color: rgba(27, 154, 254, 1);border: 1px solid rgb(255, 255, 255);
+}
+
+
+table.reference th a:link {
+	color: rgb(255, 255, 255);
+}
+table.reference th a:visited {
+	color: rgb(255, 255, 255);
+}
+table.reference th a:hover {
+	color: rgb(238, 135, 42);
+}
+table.reference th a:active {
+	color: rgb(238, 135, 42);
+}
+table.reference td {
+	padding: 7px 5px; border: 1px solid rgb(212, 212, 212);border-top-width:0;border-left-width:0;border-right-width:0; 
+	vertical-align: top;
+}
+
+table.reference td.red{background:'#ffc7cd';color:'#9c0006'}
+table.reference td.yellow{background:'#ffeb9c';color:'#9c6500'}
+table.reference td.blue{background:'#c6efcc';color:'#006100'}
+
+table.reference td.example_code {
+	vertical-align: bottom;
+}
+/*2015-07-03 (ê¸ˆ)*/
+table.reference2 {
+	width: 100%; border-collapse: collapse;
+}
+
+table.reference2 tr:nth-child(2n+1) {
+	background-color: rgb(246, 244, 240);
+}
+table.reference2 tr:nth-child(2n) {
+	background-color: rgb(255, 255, 255);
+}
+table.reference2 tr.fixzebra {
+	background-color: rgb(246, 244, 240);
+}
+table.reference2 th {
+	padding: 3px; border: 1px solid rgb(85, 85, 85);text-align:center;
+	color: rgb(255, 255, 255); font-size: 12px; vertical-align: top; background-color: rgb(85, 85, 85);
+}
+
+table.reference2 tr.skyblue th{
+	background-color: rgba(27, 154, 254, 1);border: 1px solid rgb(255, 255, 255);
+}
+
+
+table.reference2 th a:link {
+	color: rgb(255, 255, 255);
+}
+table.reference2 th a:visited {
+	color: rgb(255, 255, 255);
+}
+table.reference2 th a:hover {
+	color: rgb(238, 135, 42);
+}
+table.reference2 th a:active {
+	color: rgb(238, 135, 42);
+}
+table.reference2 td {
+	padding: 7px 5px; border: 2px solid rgb(0, 0,0);text-align:center; 
+	vertical-align: top;
+}
+
+table.reference2 td.red{background:'#ffc7cd';color:'#9c0006'}
+table.reference2 td.yellow{background:'#ffeb9c';color:'#9c6500'}
+table.reference2 td.blue{background:'#c6efcc';color:'#006100'}
+
+table.reference2 td.example_code {
+	vertical-align: bottom;
+}
+/*//2015-07-03 (ê¸ˆ)*/
+
+table.pointde {
+	width: 100%; border-collapse: collapse;
+}
+table.pointde {
+	width: 100%; border-collapse: collapse;
+}
+table.pointde tr:nth-child(2n+1) {
+	background-color: rgb(246, 244, 240);
+}
+table.pointde tr:nth-child(2n) {
+	background-color: rgb(255, 255, 255);
+}
+table.pointde tr.fixzebra {
+	background-color: rgb(246, 244, 240);
+}
+table.pointde th {
+	padding: 3px; border: 1px solid #cccccc;
+	text-align:center; color:#333333; font-size: 12px; vertical-align: top; background-color:#dddddd;
+}
+table.pointde th a:link {
+	color: rgb(255, 255, 255);
+}
+table.pointde th a:visited {
+	color: rgb(255, 255, 255);
+}
+table.pointde th a:hover {
+	color: rgb(238, 135, 42);
+}
+table.pointde th a:active {
+	color: rgb(238, 135, 42);
+}
+table.pointde td {
+	padding: 7px 5px; border: 1px solid rgb(212, 212, 212);border-top-width:0;border-left-width:0;border-right-width:0; 
+	vertical-align: top;
+}
+table.pointde td.example_code {
+	vertical-align: bottom;
+}
+
+table.oranget {
+	width: 100%; border-collapse: collapse;
+}
+table.oranget tr:nth-child(2n+1) {
+	background-color: rgb(252, 213, 180);
+}
+table.oranget tr:nth-child(2n) {
+	background-color: rgb(253, 233, 217);
+}
+table.oranget tr.fixzebra {
+	background-color: rgb(246, 244, 240);
+}
+table.oranget th {
+	padding: 3px; border: 0px solid rgb(85, 85, 85);
+	text-align: center; color: rgb(255, 255, 255); font-size: 12px; vertical-align: top; background-color: rgb(247, 150, 70);
+}
+table.oranget th a:link {
+	color: rgb(255, 255, 255);
+}
+table.oranget th a:visited {
+	color: rgb(255, 255, 255);
+}
+table.oranget th a:hover {
+	color: rgb(238, 135, 42);
+}
+table.oranget th a:active {
+	color: rgb(238, 135, 42);
+}
+table.oranget td {
+	padding: 7px 5px; border: 0px solid rgb(212, 212, 212);border-top-width:0;border-left-width:0;border-right-width:0; 
+	vertical-align: top;
+}
+table.oranget td.example_code {
+	vertical-align: bottom;
+}
+
+table.summary {
+	padding: 5px; border: 1px solid rgb(212, 212, 212); color: rgb(85, 85, 85); font-size: 100%; background-color: rgb(250, 250, 210);
+}
+h2.example {
+	color: rgb(97, 127, 16); margin-top: 0px; background-color: transparent;
+}
+h2.example_head {
+	color: rgb(97, 127, 16); margin-top: 0px; background-color: transparent;
+}
+h2.example {
+	font-size: 120%;
+}
+h2.example_head {
+	font-size: 140%;
+}
+h2.home {
+	color: rgb(144, 11, 9); padding-top: 1px; padding-bottom: 1px; padding-left: 1px; font-size: 120%; margin-top: 0px; margin-bottom: 5px; background-color: rgb(255, 255, 255);
+}
+h2.tutheader {
+	margin: 0px; padding-top: 5px; clear: both; border-top-color: rgb(212, 212, 212); border-top-width: 1px; border-top-style: solid;
+}
+h2.left {
+	color: rgb(64, 64, 64); padding-top: 0px; padding-bottom: 0px; font-size: 120%; font-weight: bold; margin-top: 0px; margin-bottom: 4px; background-color: rgb(255, 255, 255);
+}
+span.marked {
+	color: rgb(232, 0, 0); background-color: transparent;
+}
+span.deprecated {
+	color: rgb(232, 0, 0); background-color: transparent;
+}
+p.tutintro {
+	font-size: 125%; margin-top: 0px;
+}
+div.tutintro {
+	width: 711px;
+}
+div.tutintro img {
+	margin-right: 20px; margin-bottom: 10px; float: left;
+}
+div.tutintro p {
+	font-size: 125%; margin-top: 0px;
+}
+p.intro {
+	color: rgb(64, 64, 64); font-size: 120%; margin-top: 10px; background-color: transparent;
+}
+pre {
+	font-family: "courier new"; font-size: 110%; margin-bottom: 0px; margin-left: 0px;
+}
+img.float {
+	float: left;
+}
+img.navup {
+	width: 18px; height: 22px; vertical-align: middle;
+}
+hr {
+	border: 0px currentColor; height: 1px; color: rgb(212, 212, 212); clear: both; background-color: rgb(212, 212, 212);
+}
+a.example {
+	font-weight: bold;
+}
+a.plain:link {
+	color: rgb(144, 11, 9); text-decoration: none; background-color: transparent;
+}
+a.plain:visited {
+	color: rgb(144, 11, 9); text-decoration: none; background-color: transparent;
+}
+a.plain:hover {
+	color: rgb(255, 0, 0); text-decoration: underline; background-color: transparent;
+}
+a.plain:active {
+	color: rgb(255, 0, 0); text-decoration: underline; background-color: transparent;
+}
+a.header:link {
+	color: black; text-decoration: none; background-color: transparent;
+}
+a.header:visited {
+	color: black; text-decoration: none; background-color: transparent;
+}
+a.header:hover {
+	color: black; text-decoration: underline; background-color: transparent;
+}
+a.header:active {
+	color: black; text-decoration: underline; background-color: transparent;
+}
+table.sitemap a:link {
+	color: black; text-decoration: none; background-color: transparent;
+}
+table.sitemap a:visited {
+	color: black; text-decoration: none; background-color: transparent;
+}
+table.sitemap a:hover {
+	color: black; text-decoration: underline; background-color: transparent;
+}
+table.sitemap a:active {
+	color: black; text-decoration: underline; background-color: transparent;
+}
+.toprect_txt a:link {
+	color: rgb(144, 11, 9); text-decoration: none; background-color: transparent;
+}
+.toprect_txt a:visited {
+	color: rgb(144, 11, 9); text-decoration: none; background-color: transparent;
+}
+.toprect_txt a:hover {
+	color: rgb(255, 0, 0); text-decoration: underline; background-color: transparent;
+}
+.toprect_txt a:active {
+	color: rgb(255, 0, 0); text-decoration: underline; background-color: transparent;
+}
+a.m_item:link {
+	color: white; text-decoration: none; background-color: transparent;
+}
+a.m_item:visited {
+	color: white; text-decoration: none; background-color: transparent;
+}
+a.m_item:hover {
+	color: white; text-decoration: underline; background-color: transparent;
+}
+a.m_item:active {
+	color: white; text-decoration: underline; background-color: transparent;
+}
+a.chapter:link {
+	color: rgb(138, 192, 7); text-decoration: none; background-color: transparent;
+}
+a.chapter:visited {
+	color: rgb(138, 192, 7); text-decoration: none; background-color: transparent;
+}
+a.chapter:hover {
+	color: rgb(138, 192, 7); text-decoration: underline; background-color: transparent;
+}
+a.chapter:active {
+	color: rgb(138, 192, 7); text-decoration: none; background-color: transparent;
+}
+a.tryitbtn {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.tryitbtn:link {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.tryitbtn:visited {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.showbtn {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.showbtn:link {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.showbtn:visited {
+	padding: 3px 10px 4px; border-radius: 5px; border: 1px solid rgb(170, 170, 170); text-align: center; color: rgb(255, 255, 255); font-size: 12px; font-weight: bold; text-decoration: none; margin-top: 0px; margin-bottom: 5px; margin-left: 5px; display: inline-block; white-space: nowrap; background-color: rgb(138, 192, 7);
+}
+a.tryitbtn:hover {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+a.tryitbtn:active {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+a.showbtn:hover {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+a.showbtn:active {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+a.playitbtn {
+	padding: 1px 10px 2px; border-radius: 5px; border: 1px solid rgb(255, 173, 51); text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bold; text-decoration: none; margin-left: 1px; display: inline-block; white-space: nowrap; background-color: rgb(255, 173, 51);
+}
+a.playitbtn:link {
+	padding: 1px 10px 2px; border-radius: 5px; border: 1px solid rgb(255, 173, 51); text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bold; text-decoration: none; margin-left: 1px; display: inline-block; white-space: nowrap; background-color: rgb(255, 173, 51);
+}
+a.playitbtn:visited {
+	padding: 1px 10px 2px; border-radius: 5px; border: 1px solid rgb(255, 173, 51); text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bold; text-decoration: none; margin-left: 1px; display: inline-block; white-space: nowrap; background-color: rgb(255, 173, 51);
+}
+a.playitbtn:hover {
+	color: rgb(255, 173, 51); background-color: rgb(255, 255, 255);
+}
+a.playitbtn:active {
+	color: rgb(255, 173, 51); background-color: rgb(255, 255, 255);
+}
+a.tryitbtnsyntax:link {
+	border: 1px solid rgb(170, 170, 170); padding-top: 0px; padding-bottom: 2px; font-family: verdana; float: right; background-color: rgb(138, 192, 7);
+}
+a.tryitbtnsyntax:visited {
+	border: 1px solid rgb(170, 170, 170); padding-top: 0px; padding-bottom: 2px; font-family: verdana; float: right; background-color: rgb(138, 192, 7);
+}
+a.tryitbtnsyntax:active {
+	border: 1px solid rgb(170, 170, 170); padding-top: 0px; padding-bottom: 2px; font-family: verdana; float: right; background-color: rgb(138, 192, 7);
+}
+a.tryitbtnsyntax:hover {
+	border: 1px solid rgb(170, 170, 170); padding-top: 0px; padding-bottom: 2px; font-family: verdana; float: right; background-color: rgb(138, 192, 7);
+}
+a.tryitbtnsyntax:active {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+a.tryitbtnsyntax:hover {
+	color: rgb(138, 192, 7); background-color: rgb(255, 255, 255);
+}
+table.chapter {
+	margin: 0px; padding: 0px 3px; font-size: 140%;
+}
+table.chapter td.prev {
+	text-align: left;
+}
+table.chapter td.next {
+	text-align: right;
+}
+div.chapter {
+	margin: 0px; padding: 0px; width: 100%; height: 20px; font-size: 140%;
+}
+div.chapter div.prev {
+	width: 40%; text-align: left; float: left;
+}
+div.chapter div.next {
+	width: 40%; text-align: right; float: right;
+}
+span.color_h1 {
+	color: rgb(138, 192, 7);
+}
+span.left_h2 {
+	color: rgb(138, 192, 7);
+}
+span.new {
+	outline: rgb(138, 192, 7) solid 1px; border: 1px solid rgb(255, 255, 255); color: rgb(255, 255, 255); padding-right: 1px; padding-left: 1px; font-weight: bold; float: right; background-color: rgb(138, 192, 7);
+}
+.notsupported {
+	color: rgb(197, 128, 128);
+}
+.notsupported:hover {
+	color: rgb(197, 128, 128);
+}
+.notsupported:active {
+	color: rgb(197, 128, 128);
+}
+.notsupported:visited {
+	color: rgb(197, 128, 128);
+}
+.notsupported:link {
+	color: rgb(197, 128, 128);
+}
+#err_form {
+	padding: 10px 10px 0px; border: 1px solid rgb(212, 212, 212); width: 95%; color: rgb(0, 0, 0); margin-top: 10px; margin-right: auto; margin-left: auto; display: none; position: relative; z-index: 1; background-repeat: repeat-x; background-color: rgb(246, 244, 240);
+}
+#err_sent {
+	padding: 10px 10px 0px; border: 1px solid rgb(212, 212, 212); width: 95%; color: rgb(0, 0, 0); margin-top: 10px; margin-right: auto; margin-left: auto; display: none; position: relative; z-index: 1; background-repeat: repeat-x; background-color: rgb(246, 244, 240);
+}
+#err_form h2 {
+	margin-top: 0px;
+}
+#err_sent h2 {
+	margin-top: 0px;
+}
+#err_form label {
+	margin-bottom: 3px; display: block;
+}
+#err_form input {
+	padding: 4px; border: 1px solid gray; width: 590px; height: 16px; display: block;
+}
+#err_form textarea {
+	padding: 4px; border: 1px solid gray; width: 590px; height: 100px; display: block;
+}
+#err_form .submit input {
+	padding: 0px 0px 2px; border: 1px solid gray; width: 100px; height: 18px;
+}
+.err_close {
+	padding: 0px; top: 5px; width: 58px; right: 5px; text-decoration: underline; position: absolute; cursor: pointer;
+}
+table#bottomlinks {
+	border: currentColor; width: 100%;
+}
+#bottomlinks td {
+	padding: 10px; text-align: left;
+}
+.bottomlinksraquo {
+	color: rgb(255, 72, 0); font-weight: bold;
+}
+#bottomlinks h3 {
+	color: rgb(85, 85, 85); font-size: 14px; font-weight: bold;
+}
+#bottomlinks a {
+	color: rgb(85, 85, 85); font-size: 11px; text-decoration: none;
+}
+.expandingMenu {
+	width: 170px; overflow: hidden;
+}
+.expandingMenuItem {
+	width: 158px; padding-left: 12px; margin-top: 1px; margin-bottom: 0px;
+}
+.expandingMenuSelected {
+	background-position: 1px 7px; border-radius: 2px; border: 1px solid rgb(229, 229, 229); margin-top: 1px; background-image: url("images/minus_arrow.gif"); background-repeat: no-repeat; background-color: rgb(246, 244, 240);
+}
+.expandingMenuNotSelected {
+	background-position: 1px 7px; padding: 0px; margin-top: 0px; margin-bottom: 0px; background-image: url("images/plus_arrow.gif"); background-repeat: no-repeat;
+}
+#leftcolumn .expandingMenuHeader {
+	padding: 2px; border-radius: 2px; border: 1px solid rgb(229, 229, 229); width: 152px; color: rgb(0, 0, 0); text-decoration: none; margin-top: 1px; margin-bottom: 0px; margin-left: 12px; cursor: pointer; background-color: rgb(246, 244, 240);
+}
+#leftcolumn .expandingMenuHeader:hover {
+	background-color: rgb(255, 255, 255);
+}
+#leftcolumn div.expandingMenuSelected a:link {
+	border: 1px solid rgb(229, 229, 229); margin-bottom: 0px; background-color: rgb(255, 255, 255);
+}
+#leftcolumn div.expandingMenuSelected a:visited {
+	border: 1px solid rgb(229, 229, 229); margin-bottom: 0px; background-color: rgb(255, 255, 255);
+}
+#leftcolumn div.expandingMenuItem a:link {
+	margin-bottom: 0px;
+}
+#leftcolumn div.expandingMenuItem a:visited {
+	margin-bottom: 0px;
+}
+#leftcolumn div.expandingMenuItem a:hover {
+	margin-bottom: 0px;
+}
+#leftcolumn div.expandingMenuItem a:active {
+	margin-bottom: 0px;
+}
+#leftcolumn div.expandingMenuSelected a:hover {
+	text-decoration: underline;
+}
+#leftcolumn div.expandingMenuSelected a:active {
+	text-decoration: underline;
+}
+#leftcolumn div.expandingMenuSelected .expandingMenuHeader {
+	border: 1px solid transparent; background-color: transparent;
+}
+#leftcolumn div.expandingMenuSelected .expandingMenuItem {
+	width: 160px; padding-left: 5px; margin-bottom: 3px;
+}
+#as_q {
+	margin: 0px; padding: 0px 0px 0px 2px; border: 1px solid rgb(212, 212, 212); width: 150px; height: 20px;
+}
+div#google_translate_element .goog-te-gadget-simple {
+	padding: 0px; border: 1px solid rgb(217, 217, 217); height: 25px; margin-top: 2px;
+}
+#google_translate_element a {
+	color: rgb(128, 128, 128); padding-top: 0px; font-family: verdana; font-size: 11px; text-decoration: none;
+}
+#google_translate_element a:hover {
+	color: rgb(34, 34, 34);
+}
+div.cse .gsc-control-cse {
+	margin: 0px; padding: 0px; border: currentColor; background-color: transparent;
+}
+div.gsc-control-cse {
+	margin: 0px; padding: 0px; border: currentColor; background-color: transparent;
+}
+.cse input.gsc-search-button {
+	border: 1px solid rgb(102, 102, 102); background-image: none; background-color: rgb(85, 85, 85);
+}
+input.gsc-search-button {
+	border: 1px solid rgb(102, 102, 102); background-image: none; background-color: rgb(85, 85, 85);
+}
+div.gsc-selected-option-container {
+	padding: 0px; max-width: 50%;
+}
+div.gsc-option-menu {
+	width: 200px;
+}
+div.gsc-option-menu-item {
+	width: 140px;
+}
+td.gsc-search-button input.gsc-search-button {
+	border-color: rgb(85, 85, 85); background-image: none; background-color: rgb(85, 85, 85);
+}
+div.goog-te-gadget-simple {
+	font-size: 11pt;
+}
+img.goog-te-gadget-icon {
+	margin-top: 3px;
+}
+
+.tac{
+	text-align: center;
+}
+

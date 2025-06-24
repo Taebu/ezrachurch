@@ -1,0 +1,19 @@
+{
+    "authors": [
+        {
+            "name": "MoonTaebu",
+            "email": "erm00@naver.com",
+            "homepage": "https://erm00.naver.com",
+            "role": "Developer"
+        },
+        {
+            "name": "NamGungHyunWoo",
+            "email": "nhyunwoo@empas.com",
+            "homepage": "https://ezrachurch.kr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "google/apiclient": "~2.0"
+    }
+}

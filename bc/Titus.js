@@ -1,0 +1,13 @@
+var bible_chapter = [];
+bible_chapter.push("1 밧모섬의사도 요한");
+var comment = [];
+comment.push('1. 바울의 투옥 사건 이후와 연관');
+comment.push('2. AD 65년경 [제4차 선교 여행 기간으로 주정 ESV]');
+comment.push('3. 디도를 그레데에 남겨 둠');
+comment.push('4. 믿음과 실천은 불가분의 관계 복음은 경건을 낳음');
+comment.push('5. 목사와 장로 지도자의 자격에 대해서');
+comment.push('6. 참 성도는 복음을 소개하는 전도자로 실');
+comment.push('7. 거짓 교사의 가르침 주의');
+comment.push('8. 성도의 중요한 요소는 선행 [성화]');
+comment.push('9. 교회의 교리, 진리, 윤리에 관한 오류는');
+comment.push('10. 기독교 윤리의 기초는 복음');

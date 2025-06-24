@@ -1,0 +1,10 @@
+#### 그누보드5 rewrite BEGIN #####
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /bc/
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^([0-9a-zA-Z_]+)$  index.php?c=$1      [QSA,L]
+</IfModule>
+#### 그누보드5 rewrite END #####

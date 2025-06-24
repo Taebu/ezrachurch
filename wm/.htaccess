@@ -1,0 +1,10 @@
+Options -MultiViews
+RewriteEngine On
+Options -Indexes
+RewriteCond %{REQUEST_URI} !(.js$)
+RewriteCond %{REQUEST_URI} !(.css$)
+RewriteCond %{REQUEST_URI} !(.ico$)
+RewriteCond %{REQUEST_URI} !(.woff2$)
+RewriteCond %{REQUEST_URI} !(.woff$)
+RewriteCond %{REQUEST_URI} !(.eot$)
+RewriteRule ^(.*)/(.*)$ index.php?chapter=$1&verse=$2 [QSA,L]

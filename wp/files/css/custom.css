@@ -1,0 +1,250 @@
+/* Font */
+
+h1,h2,h3,h4,h5,h6{
+   color:#f6640c !important;
+   font-weight: 400;
+}
+
+.font11 {font-size:11px; color:#333333;}
+.font18 {font-size:18px; color:#333333;}
+.font24 {font-size:24px; color:#333333;}
+.font28 {font-size:28px; color:#333333;}
+
+.font_color {color:#2e9bf1;}
+.font16_color {font-size:16px; color:#f6640c;}
+.font20_color {font-size:20px; color:#f6640c;}
+.font24_color {font-size:24px; color:#f6640c;}
+.font26_color {font-size:26px; color:#f6640c;}
+.font30_color {font-size:30px; color:#f6640c;}
+
+.font13_color {font-size:13px; color:#ff0103;}
+.font18_color {font-size:18px; color:#ffffff;}
+
+
+
+.font_color {color:#ffffff; text-shadow: 1px 1px 3px black;}
+
+
+
+
+
+
+/* Features one */
+
+.features-one{
+	margin: 10px 0px;
+}
+
+.features-one h2{
+	line-height: 40px;
+	margin: 0px 0px 5px 0px;
+}
+
+.features-one .features-meta{
+	font-size: 16px;
+	font-weight: bold;
+	color: #888;
+	margin-top: 10px;
+	font-weight: 600;
+}
+
+.features-one .features-meta i{
+	margin-right: 5px;
+	font-size: 15px;
+}
+
+.features-one p{
+	margin: 15px 0px !important;
+	line-height: 25px;
+}
+
+.features-one .btn{
+	margin-top: 10px;
+}
+
+.features-one img{
+	width: 90%;
+	max-width: 500px;
+	height: auto;
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+	padding: 10px 0px;
+}
+
+
+
+
+
+/* Events */
+
+.events .accordion-heading h3{
+color:#fff;
+padding:15px;
+margin: 0px;
+font-size: 22px;
+line-height: 25px;
+}
+
+.events .accordion-heading h3 span{
+display:block !important;
+font-size:13px !important;
+}
+
+.events .accordion-heading a, .events .accordion-heading a:visited, .events .accordion-heading a:hover{
+margin:0px;
+}
+
+.events .accordion-inner span{
+	background: #fafafa;
+	font-size: 12px;
+	padding: 5px 10px;
+	border: 1px solid #eee;
+	margin-bottom: 10px;
+	display: block;
+}
+
+.events .accordion-inner p{
+	font-size: 13px;
+}
+
+/* Resume */
+
+.rblock .rmeta{
+	font-size: 13px;
+}
+
+.rskills span{
+	display: inline-block;
+	background: #f8f8f8;
+	border: 1px solid #eee;
+	margin: 5px;
+	padding: 3px 10px;
+	font-size: 12px;
+}
+
+
+
+
+
+
+/* Portfolio */
+
+.img-portfolio ul{
+   margin:0;
+   padding:0;
+}
+
+
+
+
+.portfolio li{
+   display:inline !important;
+   border:none !important;
+}
+
+.portfolio li a, .portfolio li a:visited{
+   color:#777;
+   padding:5px 10px;
+   margin:0px 5px;
+}
+
+.portfolio li a:hover{
+   color:#555;
+}
+
+#portfolio{
+   text-align:center;
+}
+
+#portfolio .element{
+   margin:20px 10px 10px 0px;
+   padding: 0px;
+}
+
+#portfolio .pcap{
+   padding:3px 0px;
+   background:#f9f9f9;
+}
+
+#portfolio h4{
+   margin:4px 0px;
+   padding:0px;
+   margin-top: 10px;
+   color: #666;
+	font-size: 15px;
+}
+
+#portfolio a, #portfolio a:visited, #portfolio a:hover{
+   color:#666;
+   text-decoration:none;
+}
+
+#portfolio .pcap p{
+	padding: 0px 10px 10px 10px;
+	font-size: 12px;
+}
+
+#portfolio .pcap{
+   max-width:200px;
+}
+
+#portfolio .pcap{
+   line-height:20px;
+}
+
+#portfolio img{
+   width:200px;
+   max-width:200px;
+   height:150px;
+}
+
+
+
+
+/* Easy Slider */
+
+	#slider ul, #slider li,
+	#slider2 ul, #slider2 li{
+		margin:0;
+		padding:0;
+		list-style:none;
+		}
+	#slider2{margin-top:1em;}
+	#slider li, #slider2 li{ 
+		/* 
+			define width and height of list item (slide)
+			entire slider area will adjust according to the parameters provided here
+		*/ 
+		width:892px;
+		height:700px;
+		overflow:hidden; 
+		}	
+	#prevBtn, #nextBtn,
+	#slider1next, #slider1prev{ 
+		display:block;
+		width:30px;
+		height:77px;
+		position:absolute;
+		left:-40px;
+		top:280px;
+		z-index:1000;
+		}	
+	#nextBtn, #slider1next{ 
+		left:835px;
+		}														
+	#prevBtn a, #nextBtn a,
+	#slider1next a, #slider1prev a{  
+		display:block;
+		position:relative;
+		width:300px;
+		height:77px;
+		background:url(img/btn_prev.png) no-repeat 0 0;	
+		}	
+	#nextBtn a, #slider1next a{ 
+		background:url(img/btn_next.png) no-repeat 0 0;	
+		}	
+		
+
+	
+/* // Easy Slider */

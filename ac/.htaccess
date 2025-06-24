@@ -1,0 +1,17 @@
+#### 그누보드5 rewrite BEGIN #####
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /ac/
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^content/([0-9a-zA-Z_]+)$  bbs/content.php?co_id=$1&rewrite=1  [QSA,L]
+RewriteRule ^test/([0-9]+)/([0-9]+)$  test.php?year=$1&quater=$2  [QSA,L]
+RewriteRule ^print/([0-9]+)/([0-9]+)$  print.php?year=$1&quater=$2  [QSA,L]
+RewriteRule ^report/([^/]+)/([0-9]+)/([0-9]+)$  report.php?ab_class=$1&year=$2&quater=$3  [QSA,L]
+RewriteRule ^next/([^/]+)/([0-9]+)/([0-9]+)$  next_quater.php?ab_class=$1&year=$2&quater=$3  [QSA,L]
+RewriteRule ^budget_plan/([^/]+)/([0-9]+)/([0-9]+)$  budget_plan.php?ab_class=$1&year=$2&quater=$3  [QSA,L]
+RewriteRule ^settlement/([^/]+)/([0-9]+)$  settlement.php?ab_class=$1&year=$2  [QSA,L]
+RewriteRule ^receipt/([^/]+)/([0-9]+)/([0-9]+)$  receipt.php?ab_class=$1&year=$2&quater=$3  [QSA,L]
+</IfModule>
+#### 그누보드5 rewrite END #####

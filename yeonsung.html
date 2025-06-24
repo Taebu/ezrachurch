@@ -1,0 +1,82 @@
+<base href="http://yeonsung.ac.kr">
+<html lang="ko"><head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>연성대학교</title>
+<link rel="stylesheet" type="text/css" href="/css/kor/common.css">
+<link rel="stylesheet" type="text/css" href="/css/kor/kor.css"><!-- 국문 -->
+<!--[if lt IE 9]>
+<script src="/yeonsung/yeonsung/dept/js/html5shiv.js"></script>
+<![endif]-->
+<script type="text/javascript" src="/js/dept/jquery-2.2.1.min.js"></script>
+<script src="/js/netfunnel.js"></script>
+<script>
+
+$(window).on('load resize', function(){
+    if($(window).width() > 360 && $(window).width() <= 768){
+        var orientation = window.orientation;
+        switch(orientation) {
+        case 0:
+            $("#introIndex .menu").css("bottom", $("#introIndex footer").height() + 65)
+            break;
+        case 90:
+            $("#introIndex .menu").removeAttr('style');
+            break;
+        case -90:
+            $("#introIndex .menu").removeAttr('style');
+            break;
+        }
+    }else{
+        $("#introIndex .menu").removeAttr('style');
+    }
+});
+
+function action2(url){
+    NetFunnel_Action({},url);
+}
+
+function complete(){
+    NetFunnel_Complete({});
+    return true;
+}
+
+</script>
+</head>
+<body onload="complete();" cz-shortcut-listen="true">
+
+<div id="introIndex">
+    <header>
+    </header>
+
+    <article>
+	<div class="tit"><!-- 타이틀 미 사용시엔 strong,p태그만 삭제 / div class="tit"은 구조상 삭제불가 -->
+		<!--<strong>Yeonsung University</strong>
+		<p>
+			끊임없는 도전과 멈추지 않는 열정<br />
+			전문직업인 양성의 요람 연성대학교
+		</p>-->
+	</div>
+
+        <ul class="menu">
+            <li class="menu_univ">
+                <a href="javascript:action2('https://www.yeonsung.ac.kr/ko/index.do')">대학 홈페이지</a>
+            </li>
+            <li class="menu_ipsi">
+                <a href="javascript:action2('https://ipsi.yeonsung.ac.kr/ipsi/index.do')">입학 홈페이지</a>
+            </li>
+    <li class="menu_01">
+                <a href="http://ipsi.yeonsung.ac.kr/ipsi/cms/FR_CON/index.do?MENU_ID=910" target="_blank">WHY YSU</a>
+             </li>
+<li class="menu_02" style="background:#9564D9">
+                <a href="https://www.youtube.com/channel/UCQ2YfM-XrdxA02ye1i679lA" target="_blank">소개영상보기</a>
+             </li>
+        </ul>
+    </article>
+
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,111 @@
+<?php
+include "./db_con.php";
+$quater=isset($quater)?$quater:"";
+$year=isset($year)?$year:"2023";
+$sign_yn=isset($sign_yn)?$sign_yn:"";
+$where = "";
+$In=0;
+$Out=0;
+switch ($quater) {
+    case 1:
+		$last_year = date("Y",strtotime(sprintf("%s -1 year",$year)));
+		$start_date=date("Y-m-d",strtotime($last_year."-12-09"));
+		$end_date=date("Y-m-d",strtotime($year."-03-10"));
+        break;
+    case 2:
+		$start_date=date("Y-m-d",strtotime($year."-03-10"));
+		$end_date=date("Y-m-d",strtotime($year."-06-09"));
+        break;
+    case 3:
+		$start_date=date("Y-m-d",strtotime($year."-06-09"));
+		$end_date=date("Y-m-d",strtotime($year."-09-08"));
+        break;
+    case 4:
+		$start_date=date("Y-m-d",strtotime($year."-09-08"));
+		$end_date=date("Y-m-d",strtotime($year."-12-08"));
+        break;
+}
+$start_date=isset($start_date)?$start_date:"";
+$end_date=isset($end_date)?$end_date:"";
+echo "각 팀별 입출금 분기 잔액";
+
+$balance_array = array();
+$sql="SELECT ab_class,ab_type,sum(ab_amount) as ab_amount FROM newezra.account_book ";
+if($quater!=""){
+$where=sprintf(" where ab_date>='%s' and ab_date<='%s' ",$start_date,$end_date);
+}
+
+$group=" group by ab_class,ab_type;";
+$query=$mysqli->query($sql.$where.$group);
+while($list=$query->fetch_assoc())
+{
+	if($list['ab_type']=="In")
+	{
+		$In = $list['ab_amount'];
+	}else if($list['ab_type']=="Out") {
+		$Out = $list['ab_amount'];
+	}
+	if (!isset($balance_array[$list['ab_class']])) {
+	$balance_array[$list['ab_class']]=array();
+	}
+
+	array_push($balance_array[$list['ab_class']],$list);
+}
+
+$total= 0;
+echo "<table>";
+print "<tr>";
+print "<td>팀명</td>";
+print "<td>입금</td>";
+print "<td>출금</td>";
+print "<td>예산청구액</td>";
+echo "</tr>";
+foreach($balance_array as $key =>$value){
+$In=0;
+$Out=0;
+$Budget=0;
+$Expenditure=0;
+	foreach($value as $keys => $list){
+		if($list['ab_type']=="In")
+		{
+			$In = $list['ab_amount'];
+		}else if($list['ab_type']=="Out") {
+			$Out = $list['ab_amount'];
+		}else if($list['ab_type']=="Budget") {
+			$Budget = $list['ab_amount'];
+		}else if($list['ab_type']=="Expenditure") {
+			$Expenditure = $list['ab_amount'];
+		}
+
+	}
+	$balance = $In - $Out;
+	print "<tr>";
+	print "<td>";
+	echo $key;
+	print "</td>";
+	print "<td>";
+	echo number_format($In);
+	print "</td>";
+	print "<td>";
+	echo number_format($Out);
+	print "</td>";
+	print "<td>";
+	echo number_format($Budget);
+	print "</td>";
+//	print "<td>";
+//	echo number_format($Expenditure);
+//	print "</td>";
+	echo "</tr>";
+
+	$total = $total + $balance;
+
+}
+print "<tr>";
+print "<td>";
+echo "각 팀별 총 잔고 : ";
+print "</td>";
+print "<td>";
+echo number_format($total);
+print "</td>";
+echo "</tr>";
+echo "</table>";

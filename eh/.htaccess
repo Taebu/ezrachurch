@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /eh/
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^(.*)/(.*)$ index.php?chapter=$1&verse=$2 [QSA,L]
+</IfModule>
+#### 그누보드5 rewrite END #####
