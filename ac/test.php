@@ -91,6 +91,8 @@ $page_yn=isset($page_yn)?$page_yn:"N";
   </style>
 </head>
 <?php 
+echo date('Y-m-d', strtotime('second saturday of december 2025'));
+echo date('Y-m-d', strtotime('두번째 토요일 12월 2025'));
 
 ?>
 <body>
