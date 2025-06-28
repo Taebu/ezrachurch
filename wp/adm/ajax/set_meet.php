@@ -46,11 +46,13 @@ if($mode=="write")
 	}
 	 
 	// 확장자 확인
+	/*
 	if( !in_array($ext, $allowed_ext) ) {
 		$json['message']="허용되지 않는 확장자입니다.";
 		echo json_encode($json);
 		exit;
 	}
+	*/
 	 
 	// 파일 이동
 	if(isset($_FILES))
@@ -73,6 +75,8 @@ $sql[]=sprintf("em_author='%s',",$em_author);
 $sql[]=sprintf("em_phone='%s',",$em_phone);
 $sql[]=sprintf("em_status='%s',",$em_status);
 $sql[]=sprintf("em_contents='%s',",$em_contents);
+$sql[]=sprintf("em_new_win_yn='%s',",$em_new_win_yn);
+$sql[]=sprintf("em_new_win_position='%s',",$em_new_win_position);
 if(isset($_FILES['em_image_file']))
 {
 $sql[]=sprintf("em_image_file='%s',",$file_name);
@@ -139,11 +143,13 @@ if(isset($_FILES['em_image_file']))
 	}
 	 
 	// 확장자 확인
+	/*
 	if( !in_array($ext, $allowed_ext) ) {
 		$json['message']="허용되지 않는 확장자입니다.";
 		echo json_encode($json);
 		exit;
 	}
+	*/
 	
 
 	// 파일 이동
@@ -166,6 +172,8 @@ $sql[]=sprintf("em_author='%s',",$em_author);
 $sql[]=sprintf("em_phone='%s',",$em_phone);
 $sql[]=sprintf("em_status='%s',",$em_status);
 $sql[]=sprintf("em_contents='%s',",$em_contents);
+$sql[]=sprintf("em_new_win_yn='%s',",$em_new_win_yn);
+$sql[]=sprintf("em_new_win_position='%s',",$em_new_win_position);
 if(isset($_FILES['em_image_file']))
 {
 $sql[]=sprintf("em_image_file='%s',",$file_name);

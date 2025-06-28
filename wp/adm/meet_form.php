@@ -10,6 +10,9 @@ $row = sql_fetch($sql);
 
 if($em_no){
     $meet = sql_fetch(" select * from ez_meet where em_no = '$em_no' ");
+}else{
+	$meet = array();
+	$meet['em_lecture_type']="EA";
 }
 if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
@@ -167,8 +170,8 @@ $mode=$mode==""?"write":$mode;
 //mode=update&em_no=2
 ?>
 
-  <link rel="stylesheet" href="/wp/css/jquery.ui.min.css">
-  <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+  <link rel="stylesheet" href="/wp/css/jquery.ui.min.css">  
+  <script src="/wp/js/jquery-1.12.4.min.js"></script>
   <script src="/wp/js/jquery.ui.min.js"></script>
 <style>
     label{cursor:pointer;}
@@ -212,12 +215,32 @@ $mode=$mode==""?"write":$mode;
         <tr>
             <th scope="row"><label for="em_lecture_no">강의구분<?php echo $sound_only ?></label></th>
             <td colspan="2">
-                <?php //echo $meet['em_lecture_type'] ?>
-                <input type="radio" name="em_lecture_type" id="em_lecture_type_1" value="SEBL" checked="checked"><label for="em_lecture_type_1">&nbsp;&nbsp;성경강좌</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<?php
+$eml_type = array();
+// $eml_type['SEAL'] = "서울에스라아카데미강좌(SEAL:SeoulEzraAcademyLecture)";
+// $eml_type['EBL_TEACHER'] = "교사고시반";
+// $eml_type['CHONGCHIN_EZRA_CIRCLES'] = "총신에스라동아리";
+// $eml_type['YONSEI_UNIVERSITY_EZRA_CIRCLES'] = "연세대학교에스라동아리";
+// $eml_type['CONFERENCE'] = "학술대회";
+
+$eml_type['EA'] = "에스라아카데미";
+$eml_type['EBC'] = "에스라사경회";
+$eml_type['EBS'] = "에스라바이블스쿨";
+$eml_type['EBTS'] = "에스라성서신학회";
+$eml_type['EBCT'] = "교사고시반";
+$eml_type['CEBA'] = "총신에스라동아리";
+$i=1;
+foreach($eml_type as $key => $value)
+{
+	printf('<input type="radio" name="em_lecture_type" id="em_lecture_type_%s" value="%s"><label for="em_lecture_type_%s">&nbsp;&nbsp;%s(%s)&nbsp;&nbsp;</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$i,$key,$i,$value,$key);
+	$i++;
+}
+?>
+<!--                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_2" value="EBL_TEACHER"><label for="em_lecture_type_2">&nbsp;&nbsp;교사고시반</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_3" value="CHONGCHIN_EZRA_CIRCLES"><label for="em_lecture_type_3">&nbsp;&nbsp;총신에스라동아리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input type="radio" name="em_lecture_type" id="em_lecture_type_4" value="YONSEI_UNIVERSITY_EZRA_CIRCLES"><label for="em_lecture_type_4">&nbsp;&nbsp;연세대학교에스라동아리</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" name="em_lecture_type" id="em_lecture_type_5" value="CONFERENCE"><label for="em_lecture_type_5">&nbsp;&nbsp;학술대회</label>
+                <input type="radio" name="em_lecture_type" id="em_lecture_type_5" value="CONFERENCE"><label for="em_lecture_type_5">&nbsp;&nbsp;학술대회</label> -->
             </td>
         </tr>
         <tr>
@@ -322,7 +345,37 @@ $mode=$mode==""?"write":$mode;
             </td>
         </tr>
         <?php } ?>
-        </tbody>
+        <tr>
+            <th scope="row"><label for="em_lecture_contents">팝업 상태</label></th>
+            <td colspan="2">
+                <?php echo help("강좌를 메인화면에 게시할지 게시하지 않을지 결정합니다.");?>
+                <p>
+                      <label>
+                        <input type="radio" name="em_new_win_yn" id="em_new_win_yn_1" value="Y" <?php echo get_text($meet['em_new_win_yn'])=="Y"?"checked":"";?>><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">팝업 바로 올리기</span>
+                      </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" name="em_new_win_yn" id="em_new_win_yn_2" value="N" <?php echo get_text($meet['em_new_win_yn'])=="N"?"checked":"";?>><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">팝업 사용치 않기</span>
+                      </label>
+                    </p>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="em_lecture_contents">팝업 좌우 여부</label></th>
+            <td colspan="2">
+                <?php echo help("팝업 위치를 결정합니다.");?>
+                <p>
+                      <label>
+                        <input type="radio" name="em_new_win_position" id="em_new_win_position_1" value="L" <?php echo get_text($meet['em_new_win_position'])=="L"?"checked":"";?>><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">팝업 위치 좌측</span>
+                      </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                      <label>
+                        <input type="radio" name="em_new_win_position" id="em_new_win_position_2" value="R" <?php echo get_text($meet['em_new_win_position'])=="R"?"checked":"";?>><span class="radio-field"></span><span class="text-dark-variant-2 font-secondary">팝업 위치 우측</span>
+                      </label>
+                    </p>
+            </td>
+        </tr>
+		</tbody>
         </table>
     </div>
 </section>
@@ -370,7 +423,7 @@ $(function(){
     });
 
 
-    $('input:radio[name=em_lecture_type]:input[value=<?php echo $meet['em_lecture_type'];?>]').attr("checked", true);
+    $('input:radio[name=em_lecture_type]:input[value=<?php echo $meet["em_lecture_type"];?>]').attr("checked", true);
 });
 
 function board_copy(bo_table) {
@@ -573,7 +626,9 @@ var dateoption={dateFormat: "yy-mm-dd",
 dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ],
 dayNames: [ "일", "월", "화", "수", "목", "금", "토" ],
 monthNames: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-showOn:"both"
+showOn:"both",
+buttonImageOnly: true, //이미지표시
+buttonImage: '/wp/img/btn_calendar.gif', //이미지주소
 };
 
   $( function() {
