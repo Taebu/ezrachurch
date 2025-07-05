@@ -33,7 +33,7 @@ print "<thead>";
 	print "<th>";
 	print "차량번호";
 	print "</th>";
-	if($is_admin)
+	if($member['mb_level']>1)
 	{
 	print "<th>";
 	print "핸드폰번호";
@@ -55,7 +55,7 @@ for ($i=0; $list=sql_fetch_array($result); $i++)
 	print "<td>";
 	print $list['car_number'];
 	print "</td>";	
-	if($is_admin)
+	if($member['mb_level']>1)
 	{
 	print "<td>";
 	print $list['car_phone'];
